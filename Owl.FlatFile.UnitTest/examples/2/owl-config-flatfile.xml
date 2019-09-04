@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<owl version="1.0">
+  <section id="ENC" name="ENC">
+    <element name="enc_0" start-position="0" length="3" />
+    <element name="enc_1" start-position="3" length="5" required="true" />
+    <element name="enc_2" start-position="8" length="5" />
+    <element name="enc_3" start-position="13" length="8" />
+  </section>
+
+  <section id="DET" name="DET">
+    <element name="det_0" start-position="0" length="3" />
+    <element name="det_1" start-position="3" length="3" />
+    <element name="det_2" start-position="6" length="12" />
+    <element name="det_3" start-position="18" length="2" />
+
+    <section id="LOC" name="LOC">
+      <element name="loc_0" start-position="0" length="3" />
+      <element name="loc_1" start-position="3" length="3" />
+    </section>
+  </section>
+</owl>
