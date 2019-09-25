@@ -2,12 +2,12 @@
 using System.IO;
 using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Owl.Core.Exceptions;
-using Owl.Core.Extensions;
-using Owl.FlatFile.Config;
-using Owl.FlatFile.Structure;
+using Fiive.Owl.Core.Exceptions;
+using Fiive.Owl.Core.Extensions;
+using Fiive.Owl.FlatFile.Config;
+using Fiive.Owl.FlatFile.Structure;
 
-namespace Owl.FlatFile.UnitTest
+namespace Fiive.Owl.FlatFile.UnitTest
 {
     [TestClass]
     public class StringTests

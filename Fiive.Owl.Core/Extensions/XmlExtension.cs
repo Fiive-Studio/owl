@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Owl.Core.Extensions
+namespace Fiive.Owl.Core.Extensions
 {
     /// <summary>
     /// Provide Xml extensions methods

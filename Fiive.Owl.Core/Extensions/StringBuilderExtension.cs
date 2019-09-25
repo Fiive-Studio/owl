@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Owl.Core.Extensions
+namespace Fiive.Owl.Core.Extensions
 {
     /// <summary>
     /// Provide StringBuilder extensions methods

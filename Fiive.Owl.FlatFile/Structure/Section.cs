@@ -1,7 +1,7 @@
-﻿using Owl.Core.Exceptions;
-using Owl.Core.Extensions;
-using Owl.Core.Structure;
-using Owl.FlatFile.Config;
+﻿using Fiive.Owl.Core.Exceptions;
+using Fiive.Owl.Core.Extensions;
+using Fiive.Owl.Core.Structure;
+using Fiive.Owl.FlatFile.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Owl.FlatFile.Structure
+namespace Fiive.Owl.FlatFile.Structure
 {
     public class Section
     {

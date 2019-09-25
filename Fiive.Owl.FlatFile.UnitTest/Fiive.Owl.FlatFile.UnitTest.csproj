@@ -96,13 +96,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Owl.Core\Owl.Core.csproj">
-      <Project>{86c98b40-d1c9-401f-b77f-220dc0572290}</Project>
-      <Name>Owl.Core</Name>
+    <ProjectReference Include="..\Fiive.Owl.Core\Fiive.Owl.Core.csproj">
+      <Project>{b65d25fe-d62b-4860-9529-d000664426cf}</Project>
+      <Name>Fiive.Owl.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Owl.FlatFile\Owl.FlatFile.csproj">
-      <Project>{90ee1652-21cd-42de-9f1b-ef379bbbeb73}</Project>
-      <Name>Owl.FlatFile</Name>
+    <ProjectReference Include="..\Fiive.Owl.FlatFile\Fiive.Owl.FlatFile.csproj">
+      <Project>{4b4a4a8e-e23a-404a-8226-9cb9a8cd5583}</Project>
+      <Name>Fiive.Owl.FlatFile</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

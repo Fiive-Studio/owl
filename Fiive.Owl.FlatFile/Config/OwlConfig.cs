@@ -1,4 +1,4 @@
-﻿using Owl.Core.Structure;
+﻿using Fiive.Owl.Core.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Owl.FlatFile.Config
+namespace Fiive.Owl.FlatFile.Config
 {
     [Serializable]
     [XmlRoot("owl")]

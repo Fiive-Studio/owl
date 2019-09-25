@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Owl.Core.Structure
+namespace Fiive.Owl.Core.Structure
 {
     public enum DataType
     {

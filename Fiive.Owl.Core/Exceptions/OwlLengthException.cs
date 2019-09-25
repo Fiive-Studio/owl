@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Owl.Core.Exceptions
+namespace Fiive.Owl.Core.Exceptions
 {
     public class OwlLengthException : ApplicationException
     {

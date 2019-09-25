@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Owl.Core.Extensions
+namespace Fiive.Owl.Core.Extensions
 {
     /// <summary>
     /// Provide String extensions methods

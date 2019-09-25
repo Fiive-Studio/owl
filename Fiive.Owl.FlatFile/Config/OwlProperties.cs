@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Owl.FlatFile.Config
+namespace Fiive.Owl.FlatFile.Config
 {
     public class OwlProperties : ICloneable
     {

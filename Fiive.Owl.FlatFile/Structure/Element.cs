@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Owl.FlatFile.Structure
+namespace Fiive.Owl.FlatFile.Structure
 {
     public class Element
     {
