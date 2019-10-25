@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Owl" version="5.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="section">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="element" type="element" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="section" type="section" minOccurs="0" maxOccurs="unbounded" />
+    </xs:choice>
+    <xs:attribute name="id" type="xs:string" use="required" />
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="description" type="xs:string" use="optional" />
+    <!--flat-->
+    <xs:attribute name="separator" type="xs:string" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="element">
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="description" type="xs:string" use="optional" />
+    <xs:attribute name="required" type="xs:boolean" use="optional" />
+    <xs:attribute name="start-position" type="xs:int" use="optional" />
+    <xs:attribute name="length" type="xs:int" use="optional" />
+    <xs:attribute name="data-type" type="DataType" use="optional" />
+  </xs:complexType>
+
+  <xs:simpleType name="DataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="int"/>
+      <xs:enumeration value="decimal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="owl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element name="section" type="section" minOccurs="0" maxOccurs="unbounded" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:decimal" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
