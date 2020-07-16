@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.Keywords;
+using System.Xml;
+
+namespace Fiive.Owl.Core.Keywords
+{
+    /// <summary>
+    /// Valor de una Variable PGA
+    /// </summary>
+    public class Variable : IKeyword
+    {
+        #region Properties
+
+        /// <summary>
+        /// Obtiene / Establece el Valor
+        /// </summary>
+        public string Valor { get; set; }
+
+        #endregion
+
+        #region IXPMLObject
+
+        /// <summary>
+        /// Obtiene la firma XPML del objeto
+        /// </summary>
+        /// <returns>Firma XPML</returns>
+        public XPMLSigning GetSigning()
+        {
+            return new XPMLSigning
+            {
+                Restrictions = new List<XPMLSigning.XPMLRestriction>() 
+                { 
+                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                }
+            };
+        }
+
+        public void SetPropertyValue(string property, string value) { }
+
+        #endregion
+
+        #region IKeyword
+
+        /// <summary>
+        /// Obtiene / Establece el tipo de palabra clave
+        /// </summary>
+        public KeywordsType KeywordType { get; set; }
+
+        /// <summary>
+        /// Obtiene el valor de la palabra clave
+        /// </summary>
+        /// <param name="handler">Orquestador</param>
+        /// <returns>Valor</returns>
+        public string GetValue(object handler)
+        {
+            OwlHandler config = (OwlHandler)handler;
+
+            // Si es una instancia y no existe la variable se retorna un valor generico
+            if (config.Settings.Instance && !config.ExistVariable(Valor)) { return config.KeywordsManager.DefaultAlphanumericInstanceValue; }
+            return config[Valor];
+        }
+
+        #endregion
+    }
+}

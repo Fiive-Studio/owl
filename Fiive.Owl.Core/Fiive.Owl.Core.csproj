@@ -5,7 +5,7 @@
     <Authors>Fiive</Authors>
     <Product>Owl</Product>
     <Copyright>Fiive 2019</Copyright>
-    <RepositoryUrl>https://github.com/fiivestudio/owl-flatfile</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Fiive-Studio/owl</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <PackageTags>owl flatfile mapping validations</PackageTags>
@@ -13,5 +13,10 @@
     <PackageId>Fiive.Owl.Core</PackageId>
     <Description>Core Mapping library</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Keywords\ve-18F5.tmp" />
+    <None Remove="Keywords\ve-4859.tmp" />
+  </ItemGroup>
 
 </Project>

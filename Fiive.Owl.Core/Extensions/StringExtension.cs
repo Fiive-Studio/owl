@@ -25,6 +25,8 @@ namespace Fiive.Owl.Core.Extensions
         /// <returns>Validation result</returns>
         public static bool IsDecimal(this string value) { return decimal.TryParse(value, out _); }
 
+        public static bool IsNullOrWhiteSpace(this string value) { return string.IsNullOrWhiteSpace(value); }
+
         #endregion
 
         #region Substring
@@ -114,6 +116,22 @@ namespace Fiive.Owl.Core.Extensions
 
             if (trim) { stringReturn = stringReturn.Trim(); }
             return stringReturn;
+        }
+
+        #endregion
+
+        #region Get Values
+
+        /// <summary>
+        /// Invierte una cadena
+        /// </summary>
+        /// <param name="value">Cadena a invertir</param>
+        /// <returns>Cadena Invertida</returns>
+        public static string ReverseString(this string value)
+        {
+            char[] arr = value.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
         }
 
         #endregion

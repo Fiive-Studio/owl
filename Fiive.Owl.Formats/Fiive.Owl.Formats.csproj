@@ -1,16 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Fiive</Authors>
+    <Company>Fiive</Company>
     <Product>Owl</Product>
-    <Copyright>Fiive 2019</Copyright>
+    <Description>Core Mapping library</Description>
+    <Copyright>Fiive 2020</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Fiive-Studio/owl</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>owl flatfile mapping validations</PackageTags>
-    <Description>Mapping library</Description>
-    <PackageId>Fiive.Owl.Flatfile</PackageId>
+    <PackageTags>owl mapping validations output flatfile edi ansi json xml sql</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
