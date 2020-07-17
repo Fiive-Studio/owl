@@ -1,6 +1,6 @@
 ﻿using Fiive.Owl.Core;
 using Fiive.Owl.Core.XPML;
-using Fiive.Owl.Core.Mapper;
+using Fiive.Owl.Core.Adapters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

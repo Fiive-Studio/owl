@@ -106,8 +106,10 @@ namespace Fiive.Owl.FlatFile.Structure
 
         string GetSegmentContent(StringBuilder content, OwlSection section)
         {
-            // If the content doesn't start with the section name break the process
-            if (!content.StartsWith(string.Concat(section.Id, section.Separator)) && !string.IsNullOrEmpty(section.Name)) { return string.Empty; }
+            // Two options
+                // Content start with the section id
+                // Id is empty and the process get always the line
+            if (!content.StartsWith(string.Concat(section.Id, section.Separator)) && !string.IsNullOrEmpty(section.Id)) { return string.Empty; }
 
             int intEndSegment = content.IndexOf(Properties.SegmentTerminator);
             if (intEndSegment == -1) { return string.Empty; } // if the index is 0 the segment terminator wasn't found

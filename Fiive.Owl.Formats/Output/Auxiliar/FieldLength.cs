@@ -177,7 +177,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 if (parts[1] == "*") { _decimalPart = -1; }
                 else
                 {
-                    if (parts[1].IsNumber()) { _decimalPart = Convert.ToInt32(parts[1]); }
+                    if (parts[1].IsInt()) { _decimalPart = Convert.ToInt32(parts[1]); }
                     else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[1], "Length")); }
                 }
 
@@ -191,7 +191,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
             if (parts[0] == "*") { _integerPart = -1; }
             else
             {
-                if (parts[0].IsNumber()) { _integerPart = Convert.ToInt32(parts[0]); }
+                if (parts[0].IsInt()) { _integerPart = Convert.ToInt32(parts[0]); }
                 else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[0], "Length")); }
             }
 

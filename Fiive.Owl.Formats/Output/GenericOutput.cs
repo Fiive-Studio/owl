@@ -618,7 +618,7 @@ namespace Fiive.Owl.Formats.Output
                     if (parameters.GetSafeValue(1) == "ValorActual") { valor = element.Valor; }
                     else { valor = parameters.GetSafeValue(1); }
 
-                    if (!valor.IsNumber())
+                    if (!valor.IsDecimal())
                     {
                         throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorParameterIsForNumbers), "2", element.Contador, valor), nElement.OuterXml, element.Nombre, _OutputSection);
                     }
@@ -630,7 +630,7 @@ namespace Fiive.Owl.Formats.Output
                     decimal nuevoValor;
                     if (_handler.ExistVariable(parameters.GetSafeValue(0)))
                     {
-                        if (!_handler[parameters.GetSafeValue(0)].IsNumber())
+                        if (!_handler[parameters.GetSafeValue(0)].IsDecimal())
                         {
                             throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorVariableModified), parameters.GetSafeValue(0), _handler[parameters.GetSafeValue(0)], element.Contador), nElement.OuterXml, element.Nombre, _OutputSection);
                         }
@@ -683,7 +683,7 @@ namespace Fiive.Owl.Formats.Output
                             // Se hace el cambio para poder hacer la validacion, ya que podria llegar a fallar con un separador propio
                             string tempValue = element.Valor.Replace(element.SeparadorDecimalesEntrada, Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
 
-                            if (!tempValue.IsNumber())
+                            if (!tempValue.IsDecimal())
                             {
                                 throw new OwlElementException(string.Format(ETexts.GT(ErrorType.FormatIsForNumbers), element.Valor, format), nElement.OuterXml, element.Nombre, _OutputSection);
                             }
@@ -791,7 +791,7 @@ namespace Fiive.Owl.Formats.Output
                         // Se hace el cambio para poder hacer la validacion, ya que podria llegar a fallar con un separador propio
                         string tempValue = element.Valor.Replace(element.SeparadorDecimalesEntrada, Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
 
-                        if (!tempValue.IsNumber())
+                        if (!tempValue.IsDecimal())
                         {
                             throw new OwlElementException(string.Format(ETexts.GT(ErrorType.LengthIsForNumbers), element.Valor), nElement.OuterXml, element.Nombre, _OutputSection);
                         }

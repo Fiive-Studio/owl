@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Fiive.Owl.Formats.Output.XPML;
-using Fiive.Owl.Core.Mapper;
+using Fiive.Owl.Core.Adapters;
 using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Core.Extensions;
 
@@ -64,7 +64,7 @@ namespace Fiive.Owl.Formats.Output
 
             #region Segments
 
-            Type type = Type.GetType(string.Format(PGAMapperSettings.Settings.MapperEDILibrary, section.Nombre));
+            Type type = Type.GetType(string.Format(OwlAdapterSettings.Settings.MapperEDILibrary, section.Nombre));
             if (type == null) { throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.InvalidSegment), section.Nombre), node.OuterXml, node.Name, section.Nombre); }
 
             IEDISegment segment = (IEDISegment)Activator.CreateInstance(type);

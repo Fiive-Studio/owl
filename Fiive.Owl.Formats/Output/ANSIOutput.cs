@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Fiive.Owl.Formats.Output.XPML;
-using Fiive.Owl.Core.Mapper;
+using Fiive.Owl.Core.Adapters;
 using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Core.Extensions;
 
@@ -63,7 +63,7 @@ namespace Fiive.Owl.Formats.Output
 
             string name = section.Nombre;
             if (name == "CON") { name = "CON_"; }
-            Type type = Type.GetType(string.Format(PGAMapperSettings.Settings.MapperANSILibrary, name));
+            Type type = Type.GetType(string.Format(OwlAdapterSettings.Settings.MapperANSILibrary, name));
             if (type == null) { throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.InvalidSegment), section.Nombre), node.OuterXml, node.Name, section.Nombre); }
 
             IANSISegment segment = (IANSISegment)Activator.CreateInstance(type);

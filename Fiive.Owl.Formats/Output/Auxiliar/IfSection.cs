@@ -136,10 +136,10 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
 
                             #region Validaciones
 
-                            if (!strValor1.IsNumber()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "TipoComparacion", strValor1, "Valor1")); }
+                            if (!strValor1.IsDecimal()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "TipoComparacion", strValor1, "Valor1")); }
                             else { vValor1 = Convert.ToDecimal(strValor1); }
 
-                            if (!strValor2.IsNumber()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "TipoComparacion", strValor2, "Valor2")); }
+                            if (!strValor2.IsDecimal()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "TipoComparacion", strValor2, "Valor2")); }
                             else { vValor2 = Convert.ToDecimal(strValor2); }
 
                             #endregion
