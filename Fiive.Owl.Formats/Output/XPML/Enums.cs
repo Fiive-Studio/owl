@@ -8,66 +8,58 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
 	/// Define el tipo de dato del elemento
 	/// </summary>
-	public enum ElementoTipoDato
+	public enum ElementDataType
     {
         /// <summary>
         /// Indica Alfanumerico
         /// </summary>
-        Alfanumerico = 1,
+        Alphanumeric = 1,
         /// <summary>
         /// Indica Numerico
         /// </summary>
-        Numerico = 2
+        Numeric = 2
     }
 
     /// <summary>
 	/// Define el tipo de etiqueta XML
 	/// </summary>
-	public enum TipoEtiquetaXml
+	public enum XmlTagType
     {
         /// <summary>
         /// No Aplica
         /// </summary>
-        NoAplica = 0,
-        /// <summary>
-        /// Indica Apertura
-        /// </summary>
-        Apertura = 1,
+        NotApply = 0,
         /// <summary>
         /// Indica Simple
         /// </summary>
-        Simple = 2,
+        Simple = 1,
         /// <summary>
         /// Indica Compuesta
         /// </summary>
-        Compuesta = 3,
-        /// <summary>
-        /// Indica Cierre
-        /// </summary>
-        Cierre = 4,
+        Complex = 2,
         /// <summary>
         /// Indica Comentario
         /// </summary>
-        Comentario = 5,
+        Comment = 3,
         /// <summary>
         /// Indica CData
         /// </summary>
-        CData = 6
+        CData = 4
     }
 
     /// <summary>
 	/// Define el tipo de elemento XML
 	/// </summary>
-	public enum TipoElementoXml
+	public enum XmlElementType
     {
         /// <summary>
         /// No Aplica
         /// </summary>
-        NoAplica = 0,
+        NotApply = 0,
         /// <summary>
         /// Indica Comentario
         /// </summary>
-        Comentario = 1,
+        Comment = 1,
         /// <summary>
         /// Indica CData
         /// </summary>
@@ -77,7 +69,7 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
 	/// Define el tipo de SQL que se va a generar
 	/// </summary>
-    public enum TipoSQL
+    public enum SqlType
     {
         /// <summary>
         /// Indica que la sentencia es de consulta
@@ -100,7 +92,7 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
 	/// Define el tipo de elemento SQL
 	/// </summary>
-	public enum TipoElementoSQL
+	public enum SqlElementType
     {
         /// <summary>
         /// Indica Select
@@ -115,7 +107,7 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
 	/// Define el tipo de elemento SQL
 	/// </summary>
-	public enum TipoWhere
+	public enum WhereType
     {
         /// <summary>
         /// Indica Igual

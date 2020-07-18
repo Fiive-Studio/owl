@@ -123,9 +123,9 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
 
             if (parts.Length == 4)
             {
-                if (parts[3] == "Completar") { PaddingWhenIsEmpty = Padding.Pad; }
-                else if (parts[3] == "NoCompletar") { PaddingWhenIsEmpty = Padding.NotPad; }
-                else if (parts[3] == "Completar-S") { PaddingWhenIsEmpty = Padding.PadWithoutSeparator; }
+                if (parts[3] == "pad") { PaddingWhenIsEmpty = Padding.Pad; }
+                else if (parts[3] == "not-pad") { PaddingWhenIsEmpty = Padding.NotPad; }
+                else if (parts[3] == "pad-s") { PaddingWhenIsEmpty = Padding.PadWithoutSeparator; }
                 else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), parts[3], "PaddingWhenIsEmpty")); }
             }
 
@@ -134,7 +134,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 if (parts[2].Length > 0)
                 {
                     string[] partsPadding = parts[2].Split(',');
-                    if (partsPadding.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), eval, "Length")); }
+                    if (partsPadding.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), eval, "length")); }
 
                     if (partsPadding[0].Length > 0) { PaddingChar = partsPadding[0][0]; }
                     if (partsPadding.Length == 2 && partsPadding[1].Length > 0) { PaddingCharDecimalPart = partsPadding[1][0]; }
@@ -143,10 +143,10 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
 
             if (parts.Length >= 2)
             {
-                if (parts[1] == "Izquierda") { Aligment = AligmentType.Left; }
-                else if (parts[1] == "Derecha") { Aligment = AligmentType.Right; }
-                else if (parts[1] == "Numero") { Aligment = AligmentType.Number; }
-                else if (parts[1] == "Numero-S") { Aligment = AligmentType.NumberWithoutSeparator; }
+                if (parts[1] == "left") { Aligment = AligmentType.Left; }
+                else if (parts[1] == "right") { Aligment = AligmentType.Right; }
+                else if (parts[1] == "number") { Aligment = AligmentType.Number; }
+                else if (parts[1] == "number-s") { Aligment = AligmentType.NumberWithoutSeparator; }
                 else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), parts[1], "Aligment")); }
             }
             else { Aligment = AligmentType.NotApply; }
@@ -167,7 +167,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
             // 5,2 <-- Expresion a evaluar
             string[] parts = eval.Split(',');
 
-            if (parts.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), eval, "Length")); }
+            if (parts.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), eval, "length")); }
 
             #region Parte Decimal
 
@@ -178,7 +178,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 else
                 {
                     if (parts[1].IsInt()) { _decimalPart = Convert.ToInt32(parts[1]); }
-                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[1], "Length")); }
+                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[1], "length")); }
                 }
 
                 ValidateDecimalPart = true;
@@ -192,7 +192,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
             else
             {
                 if (parts[0].IsInt()) { _integerPart = Convert.ToInt32(parts[0]); }
-                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[0], "Length")); }
+                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[0], "length")); }
             }
 
             #endregion
@@ -212,10 +212,10 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
             if (ValidateDecimalPart) { numero += "," + (_decimalPart == -1 ? "*" : _decimalPart.ToString()); }
 
             string alineacion = string.Empty;
-            if (Aligment == AligmentType.Right) { alineacion = "/Derecha"; }
-            else if (Aligment == AligmentType.Left) { alineacion = "/Izquierda"; }
-            else if (Aligment == AligmentType.Number) { alineacion = "/Numero"; }
-            else if (Aligment == AligmentType.NumberWithoutSeparator) { alineacion = "/Numero-S"; }
+            if (Aligment == AligmentType.Right) { alineacion = "/right"; }
+            else if (Aligment == AligmentType.Left) { alineacion = "/left"; }
+            else if (Aligment == AligmentType.Number) { alineacion = "/number"; }
+            else if (Aligment == AligmentType.NumberWithoutSeparator) { alineacion = "/number-s"; }
 
             string relleno = string.Empty;
             string padding = string.Empty;
@@ -224,9 +224,9 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 relleno = "/" + PaddingChar.ToString();
                 if(PaddingCharDecimalPart != char.MinValue) { relleno += string.Concat(",", PaddingCharDecimalPart); }
 
-                if (PaddingWhenIsEmpty == Padding.Pad) { padding = "/Completar"; }
-                else if (PaddingWhenIsEmpty == Padding.NotPad) { padding = "/NoCompletar"; }
-                else if (PaddingWhenIsEmpty == Padding.PadWithoutSeparator) { padding = "/Completar-S"; }
+                if (PaddingWhenIsEmpty == Padding.Pad) { padding = "/pad"; }
+                else if (PaddingWhenIsEmpty == Padding.NotPad) { padding = "/not-pad"; }
+                else if (PaddingWhenIsEmpty == Padding.PadWithoutSeparator) { padding = "/pad-s"; }
             }
 
             return string.Concat(numero, alineacion, relleno, padding);

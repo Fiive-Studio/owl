@@ -15,28 +15,28 @@ namespace Fiive.Owl.Formats.Output
     /// </summary>
     public class FlatFileOutput : GenericOutput
     {
-        protected override string GenerateSection(SeccionOutput section, XmlNode node)
+        protected override string GenerateSection(SectionOutput section, XmlNode node)
         {
             StringBuilder sb = new StringBuilder();
-            FlatFileSeccionOutput sectionFlat = (FlatFileSeccionOutput)section;
+            FlatFileSectionOutput sectionFlat = (FlatFileSectionOutput)section;
             bool hasElements = false;
 
             #region Obtener informacion de la seccion
 
             foreach (XmlNode nElement in _handler.ConfigMap.GetOutputElements(node))
             {
-                ElementoOutput element = (ElementoOutput)_handler.XPMLValidator.GetXPMLObject(new ElementoOutput(), nElement, _handler);
+                ElementOutput element = (ElementOutput)_handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, _handler);
                 GetElementValue(element, nElement, section);
 
-                if (!element.Oculto) { sb.Append(string.Concat(element.Valor, sectionFlat.Separador)); hasElements = true; }
+                if (!element.Hidden) { sb.Append(string.Concat(element.Value, sectionFlat.Separator)); hasElements = true; }
             }
 
             string resultValue = string.Empty;
-            if (sectionFlat.QuitarSeparadoresFinal) { resultValue = sb.ToString().TrimEnd(sectionFlat.Separador.ToCharArray()); }
+            if (sectionFlat.RemoveFinalSeparators) { resultValue = sb.ToString().TrimEnd(sectionFlat.Separator.ToCharArray()); }
             else
             {
                 resultValue = sb.ToString();
-                if (resultValue.Length > 0) { resultValue = resultValue.GetSafeSubstring(0, resultValue.Length - sectionFlat.Separador.Length); }
+                if (resultValue.Length > 0) { resultValue = resultValue.GetSafeSubstring(0, resultValue.Length - sectionFlat.Separator.Length); }
             }
 
             #endregion
@@ -51,6 +51,6 @@ namespace Fiive.Owl.Formats.Output
 
         protected override string ExtraInformation() { return Environment.NewLine; }
 
-        protected override SeccionOutput GetSection(XmlNode node) { return (FlatFileSeccionOutput)_handler.XPMLValidator.GetXPMLObject(new FlatFileSeccionOutput(), node, _handler); }
+        protected override SectionOutput GetSection(XmlNode node) { return (FlatFileSectionOutput)_handler.XPMLValidator.GetXPMLObject(new FlatFileSectionOutput(), node, _handler); }
     }
 }

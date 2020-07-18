@@ -9,17 +9,17 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
     /// Represent a Xml Section configuration
     /// </summary>
-    public class XmlSeccionOutput : SeccionOutput
+    public class XmlSectionOutput : SectionOutput
     {
         #region Constructor
 
-        public XmlSeccionOutput() { TipoEtiqueta = TipoEtiquetaXml.Compuesta; }
+        public XmlSectionOutput() { XmlTagType = XmlTagType.Complex; }
 
         #endregion
 
         #region Properties
 
-        public TipoEtiquetaXml TipoEtiqueta { get; set; }
+        public XmlTagType XmlTagType { get; set; }
 
         #endregion
 
@@ -29,14 +29,14 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             XPMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "TipoEtiqueta", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "xml-tag-type", PropertyName = "XmlTagType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
 
             return signing;
         }
 
         public override void SetPropertyValue(string property, string value)
         {
-            if (property == "TipoEtiqueta") { TipoEtiqueta = (TipoEtiquetaXml)Enum.Parse(typeof(TipoEtiquetaXml), value); }
+            if (property == "XmlTagType") { XmlTagType = (XmlTagType)Enum.Parse(typeof(XmlTagType), value); }
             else { base.SetPropertyValue(property, value); }
         }
 

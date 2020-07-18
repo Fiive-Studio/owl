@@ -35,25 +35,26 @@ namespace Fiive.Owl.Core
 
         #region XPath
 
-        readonly string _xpathOutputStructures = "/Configuracion/Documento/Salida/Estructura";
-        readonly string _xpathOutputBaseStructure = "/Configuracion/Documento/Salida/Estructura[@Id='{0}']";
-        readonly string _xpathOutputNoBaseStructure = "/Configuracion/Documento/Salida/Estructura[not(@Id='{0}')]";
-        readonly string _xpathXPMLStructure = "*[starts-with(name(), 'Estructura.')]";
-        readonly string _xpathXPMLSection = "*[starts-with(name(), 'Seccion.')]";
-        readonly string _xpathXPMLElement = "*[starts-with(name(), 'Elemento.')]";
-        readonly string _xpathSections = "Seccion";
-        readonly string _xpathElements = "Elemento";
-        readonly string _xpathSingleElement = "Elemento[@Nombre='{0}']";
-        readonly string _xpathHiddenElements = "Elemento[@Oculto='Si']";
-        readonly string _xpathNotHiddenElements = "Elemento[(@Oculto='No') or not(@Oculto='Si')]";
-        readonly string _xpathValidateElements = "count(Elemento)";
-        readonly string _xpathRequiredsNode = "Seccion.Requeridos";
-        readonly string _xpathRequiredsGroupNode = "Seccion.RequeridosGrupo";
-        readonly string _xpathIfNode = "Seccion.Si";
-        readonly string _xpathRequiredsAttribute = "Requeridos";
-        readonly string _xpathRequiredsGroupAttribute = "RequeridosGrupo";
-        readonly string _xpathConditionNode = "Condicion";
-        readonly string _xpathElementValue = "Elemento.Valor";
+        readonly string _xpathOutputStructures = "/owl/structure";
+        readonly string _xpathOutputBaseStructure = "/owl/structure[@id='{0}']";
+        readonly string _xpathOutputNoBaseStructure = "/owl/structure[not(@id='{0}')]";
+        readonly string _xpathXPMLStructure = "*[starts-with(name(), 'structure.')]";
+        readonly string _xpathXPMLSection = "*[starts-with(name(), 'section.')]";
+        readonly string _xpathXPMLElement = "*[starts-with(name(), 'element.')]";
+        readonly string _xpathSections = "section";
+        readonly string _xpathElements = "element";
+        readonly string _xpathSingleElement = "element[@name='{0}']";
+        readonly string _xpathHiddenElements = "element[@hidden='Si']";
+        readonly string _xpathNotHiddenElements = "element[(@hidden='No') or not(@hidden='Si')]";
+        readonly string _xpathValidateElements = "count(element)";
+        readonly string _xpathRequiredsNode = "section.required";
+        readonly string _xpathRequiredsGroupNode = "section.required-group";
+        readonly string _xpathIfNode = "section.if";
+        readonly string _xpathRequiredsAttribute = "required";
+        readonly string _xpathRequiredsGroupAttribute = "required-group";
+        readonly string _xpathConditionNode = "condition";
+        readonly string _xpathElementValue = "element.value";
+        readonly string _tmpValue = "temp";
 
         #endregion
 
@@ -243,7 +244,7 @@ namespace Fiive.Owl.Core
         {
             foreach (XmlNode nStructureChild in GetOutputStructures())
             {
-                string idConfigBase = GetAttributeValue("Base", nStructureChild);
+                string idConfigBase = GetAttributeValue("base", nStructureChild);
 
                 // Si la estructura tiene configuracion base se carga
                 if (!idConfigBase.IsNullOrWhiteSpace())
@@ -259,7 +260,7 @@ namespace Fiive.Owl.Core
                     #region Procesa estructura
 
                     // Procesa las configuraciones para unirlas
-                    ProcessAttributes(nStructureBase, nStructureChild, "Id", "Base");
+                    ProcessAttributes(nStructureBase, nStructureChild, "id", "base");
                     ProcessSections(nStructureChild.SelectNodes(_xpathSections), string.Format(_xpathOutputBaseStructure, idConfigBase));
                     ProcessXPMLConfiguration(nStructureChild.SelectNodes(_xpathXPMLStructure), nStructureBase);
 
@@ -316,20 +317,20 @@ namespace Fiive.Owl.Core
                 InheritancePosition ubicacion;
                 bool overrideSection = false;
                 string strAttribute;
-                string overrideValue = GetAttributeValue("Sobreescribir", nChildNode);
-                if (overrideValue == "Si") { overrideSection = true; }
+                string overrideValue = GetAttributeValue("overwrite", nChildNode);
+                if (overrideValue == "yes") { overrideSection = true; }
 
                 #endregion
 
                 #region Procesa Xpath
 
-                XmlAttribute idSeccion = nChildNode.Attributes["Id"];
+                XmlAttribute idSeccion = nChildNode.Attributes["id"];
                 if (idSeccion == null)
                 {
-                    string nombre = nChildNode.Attributes["Nombre"] != null ? nChildNode.Attributes["Nombre"].Value : string.Empty;
-                    xpathSection = string.Concat(xpath, string.Format("/Seccion[@Nombre='{0}']", nombre));
+                    string nombre = nChildNode.Attributes["name"] != null ? nChildNode.Attributes["name"].Value : string.Empty;
+                    xpathSection = string.Concat(xpath, string.Format("/section[@name='{0}']", nombre));
                 }
-                else { xpathSection = string.Concat(xpath, string.Format("/Seccion[@Id='{0}']", idSeccion.Value)); }
+                else { xpathSection = string.Concat(xpath, string.Format("/section[@id='{0}']", idSeccion.Value)); }
 
                 #endregion
 
@@ -342,7 +343,7 @@ namespace Fiive.Owl.Core
                 else
                 {
                     XmlNode nBase = _xmlConfigBase.SelectSingleNode(xpathSection);
-                    ProcessAttributes(nBase, nChildNode, "Nombre", "Id", "Sobreescribir", "AntesDe", "DespuesDe");
+                    ProcessAttributes(nBase, nChildNode, "name", "id", "overwrite", "before", "after");
                     ProcessUbications(xpathSection, ubicacion, strAttribute, ConfigTagType.Section);
                     ProcessXPMLConfiguration(nChildNode.SelectNodes(_xpathXPMLSection), nBase);
 
@@ -355,16 +356,16 @@ namespace Fiive.Owl.Core
                     foreach (XmlNode nElement in nChildNode.SelectNodes(_xpathElements))
                     {
                         bool overrideElement = false;
-                        overrideValue = GetAttributeValue("Sobreescribir", nElement);
-                        if (overrideValue == "Si") { overrideElement = true; }
+                        overrideValue = GetAttributeValue("overwrite", nElement);
+                        if (overrideValue == "yes") { overrideElement = true; }
 
-                        XmlAttribute idElement = nElement.Attributes["Id"];
+                        XmlAttribute idElement = nElement.Attributes["id"];
                         if (idElement == null)
                         {
-                            string nombre = nElement.Attributes["Nombre"] != null ? nElement.Attributes["Nombre"].Value : string.Empty;
-                            xpathElemento = string.Concat(xpathSection, string.Format("/Elemento[@Nombre='{0}']", nombre));
+                            string nombre = nElement.Attributes["name"] != null ? nElement.Attributes["name"].Value : string.Empty;
+                            xpathElemento = string.Concat(xpathSection, string.Format("/element[@name='{0}']", nombre));
                         }
-                        else { xpathElemento = string.Concat(xpathSection, string.Format("/Elemento[@Id='{0}']", idElement.Value)); }
+                        else { xpathElemento = string.Concat(xpathSection, string.Format("/element[@id='{0}']", idElement.Value)); }
 
                         GetInheritanceUbication(nElement, out ubicacion, out strAttribute);
 
@@ -408,10 +409,10 @@ namespace Fiive.Owl.Core
         private void GetInheritanceUbication(XmlNode nNodo, out InheritancePosition ubicacion, out string strAtributo)
         {
             ubicacion = InheritancePosition.NotApply;
-            strAtributo = GetAttributeValue("AntesDe", nNodo);
+            strAtributo = GetAttributeValue("before", nNodo);
             if (strAtributo.IsNullOrWhiteSpace())
             {
-                strAtributo = GetAttributeValue("DespuesDe", nNodo);
+                strAtributo = GetAttributeValue("after", nNodo);
                 if (!strAtributo.IsNullOrWhiteSpace()) { ubicacion = InheritancePosition.After; }
             }
             else { ubicacion = InheritancePosition.Before; }
@@ -442,7 +443,7 @@ namespace Fiive.Owl.Core
             #region Duplicate Node
 
             XmlNode nodoOrigen = _xmlConfigBase.SelectSingleNode(xpath);
-            XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, "Temporal", "");
+            XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, _tmpValue, "");
             nodoTemp.InnerXml = nChildNode.OuterXml;
 
             #endregion
@@ -452,8 +453,8 @@ namespace Fiive.Owl.Core
             string strXpathRef = string.Empty;
             // Se realiza este proceso si se configura la etiqueta AntesDe o DespuesDe ya que se requiere hacer la consulta
             // para acomodar la etiqueta
-            if (tipoEtiqueta == ConfigTagType.Section) { strXpathRef = string.Format("Seccion[@Id='{0}']", valorReferencia); }
-            else if (tipoEtiqueta == ConfigTagType.Element) { strXpathRef = string.Format("Elemento[@Id='{0}']", valorReferencia); }
+            if (tipoEtiqueta == ConfigTagType.Section) { strXpathRef = string.Format("section[@id='{0}']", valorReferencia); }
+            else if (tipoEtiqueta == ConfigTagType.Element) { strXpathRef = string.Format("element[@id='{0}']", valorReferencia); }
 
             #endregion
 
@@ -519,7 +520,7 @@ namespace Fiive.Owl.Core
         {
             // Se obtiene el nodo base
             XmlNode nodoOrigen = _xmlConfigBase.SelectSingleNode(xpath);
-            XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, "Temporal", "");
+            XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, _tmpValue, "");
             nodoTemp.InnerXml = nodoOrigen.OuterXml;
 
             #region Xpath Referencia
@@ -527,8 +528,8 @@ namespace Fiive.Owl.Core
             string strXpathRef = string.Empty;
             // Se realiza este proceso si se configura la etiqueta AntesDe o DespuesDe ya que se requiere hacer la consulta
             // para acomodar la etiqueta
-            if (tipoEtiqueta == ConfigTagType.Section) { strXpathRef = string.Format("Seccion[@Id='{0}']", valorReferencia); }
-            else if (tipoEtiqueta == ConfigTagType.Element) { strXpathRef = string.Format("Elemento[@Id='{0}']", valorReferencia); }
+            if (tipoEtiqueta == ConfigTagType.Section) { strXpathRef = string.Format("section[@id='{0}']", valorReferencia); }
+            else if (tipoEtiqueta == ConfigTagType.Element) { strXpathRef = string.Format("element[@id='{0}']", valorReferencia); }
 
             #endregion
 
@@ -562,8 +563,8 @@ namespace Fiive.Owl.Core
             #region Atributos
 
             // Actualiza los atributos de la config hija a la base
-            List<string> lstRestringidos = new List<string>(new string[] { "Nombre", "Id", "Sobreescribir", "AntesDe", "DespuesDe" });
-            List<string> lstPalabrasClave = new List<string>(new string[] { "Predeterminado", "Variable", "Reservada", "Buscar" });
+            List<string> lstRestringidos = new List<string>(new string[] { "name", "id", "overwrite", "before", "after" });
+            List<string> lstPalabrasClave = new List<string>(new string[] { "default", "variable", "key", "xpath" });
 
             Dictionary<string, string> dicPalabraClave = new Dictionary<string, string>();
 
@@ -627,7 +628,7 @@ namespace Fiive.Owl.Core
             XmlNode nodoPC = nodoHijo.SelectSingleNode(_xpathElementValue);
             if (nodoPC != null)
             {
-                XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, "Temporal", "");
+                XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, _tmpValue, "");
                 nodoTemp.InnerXml = nodoPC.OuterXml;
 
                 XmlNode nodoPCBase = nodoBase.SelectSingleNode(_xpathElementValue);
@@ -648,7 +649,7 @@ namespace Fiive.Owl.Core
         {
             foreach (XmlNode nChild in nChildNodes)
             {
-                XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, "Temporal", "");
+                XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, _tmpValue, "");
                 nodoTemp.InnerXml = nChild.OuterXml;
 
                 XmlNode nodoXPMLBase = nBase.SelectSingleNode(nChild.Name);

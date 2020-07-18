@@ -9,19 +9,17 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
     /// Represent a Xml Structure configuration
     /// </summary>
-    public class XmlEstructuraOutput : EstructuraOutput
+    public class XmlStructureOutput : StructureOutput
     {
         #region Constructor
 
-        public XmlEstructuraOutput() { EscaparCaracteres = true; }
+        public XmlStructureOutput() { XmlReleaseChars = true; }
 
         #endregion
 
         #region Properties
 
-        public bool EscaparCaracteres { get; set; }
-
-        public string XMLValor { get; set; }
+        public bool XmlReleaseChars { get; set; }
 
         #endregion
 
@@ -35,8 +33,7 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             XPMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "XMLValor", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "EscaparCaracteres", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "xml-release-chars", PropertyName = "XmlReleaseChars", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
 
             return signing;
         }

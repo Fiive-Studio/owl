@@ -25,13 +25,13 @@ namespace Fiive.Owl.Formats.Output.XPML
         /// <param name="section">Parent Section</param>
         /// <param name="output">Output</param>
         /// <returns>Objeto con los datos</returns>
-        public IEDISegment GetEDISegment(IEDISegment segment, XmlNode node, OwlHandler handler, SeccionOutput section, GenericOutput output)
+        public IEDISegment GetEDISegment(IEDISegment segment, XmlNode node, OwlHandler handler, SectionOutput section, GenericOutput output)
         {
             foreach (XmlNode nElement in handler.ConfigMap.GetNotHiddenOutputElements(node))
             {
-                ElementoOutput element = (ElementoOutput)handler.XPMLValidator.GetXPMLObject(new ElementoOutput(), nElement, handler);
+                ElementOutput element = (ElementOutput)handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, handler);
                 output.GetElementValue(element, nElement, section);
-                SetProperty(element.Nombre, segment, element.Valor);
+                SetProperty(element.Name, segment, element.Value);
             }
 
             return segment;
@@ -46,13 +46,13 @@ namespace Fiive.Owl.Formats.Output.XPML
         /// <param name="section">Parent Section</param>
         /// <param name="output">Output</param>
         /// <returns>Objeto con los datos</returns>
-        public IANSISegment GetANSISegment(IANSISegment segment, XmlNode node, OwlHandler handler, SeccionOutput section, GenericOutput output)
+        public IANSISegment GetANSISegment(IANSISegment segment, XmlNode node, OwlHandler handler, SectionOutput section, GenericOutput output)
         {
             foreach (XmlNode nElement in handler.ConfigMap.GetNotHiddenOutputElements(node))
             {
-                ElementoOutput element = (ElementoOutput)handler.XPMLValidator.GetXPMLObject(new ElementoOutput(), nElement, handler);
+                ElementOutput element = (ElementOutput)handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, handler);
                 output.GetElementValue(element, nElement, section);
-                SetProperty(element.Nombre, segment, element.Valor);
+                SetProperty(element.Name, segment, element.Value);
             }
 
             return segment;

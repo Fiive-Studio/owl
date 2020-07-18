@@ -21,28 +21,28 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Current structure
         /// </summary>
-        ANSIEstructuraOutput _structureANSI;
+        ANSIStructureOutput _structureANSI;
         ANSISegmentProperties _segmentProperties;
 
         #endregion
 
-        protected override string GenerateSection(SeccionOutput section, XmlNode node)
+        protected override string GenerateSection(SectionOutput section, XmlNode node)
         {
             #region Separators
 
             if (validateSeparator)
             {
-                _structureANSI = (ANSIEstructuraOutput)_currentEstructuraOutput;
+                _structureANSI = (ANSIStructureOutput)_currentEstructuraOutput;
                 _segmentProperties = new ANSISegmentProperties();
 
-                if (_structureANSI.TerminadorSegmento == char.MinValue) { _structureANSI.TerminadorSegmento = _segmentProperties.SegmentTerminator; }
-                else if (_structureANSI.TerminadorSegmento != _segmentProperties.SegmentTerminator) { _segmentProperties.SegmentTerminator = _structureANSI.TerminadorSegmento; }
+                if (_structureANSI.SegmentSeparator == char.MinValue) { _structureANSI.SegmentSeparator = _segmentProperties.SegmentTerminator; }
+                else if (_structureANSI.SegmentSeparator != _segmentProperties.SegmentTerminator) { _segmentProperties.SegmentTerminator = _structureANSI.SegmentSeparator; }
 
-                if (_structureANSI.SeparadorElementos == char.MinValue) { _structureANSI.SeparadorElementos = _segmentProperties.ElementSeparator; }
-                else if (_structureANSI.SeparadorElementos != _segmentProperties.ElementSeparator) { _segmentProperties.ElementSeparator = _structureANSI.SeparadorElementos; }
+                if (_structureANSI.ElementSeparator == char.MinValue) { _structureANSI.ElementSeparator = _segmentProperties.ElementSeparator; }
+                else if (_structureANSI.ElementSeparator != _segmentProperties.ElementSeparator) { _segmentProperties.ElementSeparator = _structureANSI.ElementSeparator; }
 
-                if (_structureANSI.CaracterEscape == char.MinValue) { _structureANSI.CaracterEscape = _segmentProperties.ReleaseChar; }
-                else if (_structureANSI.CaracterEscape != _segmentProperties.ReleaseChar) { _segmentProperties.ReleaseChar = _structureANSI.CaracterEscape; }
+                if (_structureANSI.ReleaseChar == char.MinValue) { _structureANSI.ReleaseChar = _segmentProperties.ReleaseChar; }
+                else if (_structureANSI.ReleaseChar != _segmentProperties.ReleaseChar) { _segmentProperties.ReleaseChar = _structureANSI.ReleaseChar; }
 
                 validateSeparator = false;
             }
@@ -53,7 +53,7 @@ namespace Fiive.Owl.Formats.Output
 
             foreach (XmlNode nElement in _handler.ConfigMap.GetHiddenOutputElements(node))
             {
-                ElementoOutput element = (ElementoOutput)_handler.XPMLValidator.GetXPMLObject(new ElementoOutput(), nElement, _handler);
+                ElementOutput element = (ElementOutput)_handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, _handler);
                 GetElementValue(element, nElement, section);
             }
 
@@ -61,10 +61,10 @@ namespace Fiive.Owl.Formats.Output
 
             #region Segments
 
-            string name = section.Nombre;
+            string name = section.Name;
             if (name == "CON") { name = "CON_"; }
             Type type = Type.GetType(string.Format(OwlAdapterSettings.Settings.MapperANSILibrary, name));
-            if (type == null) { throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.InvalidSegment), section.Nombre), node.OuterXml, node.Name, section.Nombre); }
+            if (type == null) { throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.InvalidSegment), section.Name), node.OuterXml, node.Name, section.Name); }
 
             IANSISegment segment = (IANSISegment)Activator.CreateInstance(type);
             segment.Properties = _segmentProperties;
@@ -83,7 +83,7 @@ namespace Fiive.Owl.Formats.Output
             return null;
         }
 
-        protected override EstructuraOutput GetStructure(XmlNode node) { return (ANSIEstructuraOutput)_handler.XPMLValidator.GetXPMLObject(new ANSIEstructuraOutput(), node, _handler); }
+        protected override StructureOutput GetStructure(XmlNode node) { return (ANSIStructureOutput)_handler.XPMLValidator.GetXPMLObject(new ANSIStructureOutput(), node, _handler); }
 
         protected override void StartNewStructure() { validateSeparator = true; }
     }

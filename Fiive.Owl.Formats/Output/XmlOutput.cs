@@ -18,114 +18,100 @@ namespace Fiive.Owl.Formats.Output
         #region Variables
 
         /// <summary>
-        /// Nombre por defecto del elemento que trae el valor interno de la etiqueta
-        /// </summary>
-        readonly string _defaultXmlValue = "Owl_ValorXML";
-        /// <summary>
-        /// Indica si se valida el nombre del atributo del nombre de los valores de las etiquetas
-        /// </summary>
-        bool _validateXmlValue = true;
-        /// <summary>
         /// Current structure
         /// </summary>
-        XmlEstructuraOutput _structureXml;
+        XmlStructureOutput _structureXml;
+        bool _validateStructure = true;
 
         #endregion
 
-        protected override string GenerateSection(SeccionOutput section, XmlNode node)
+        protected override string GenerateSection(SectionOutput section, XmlNode node)
         {
             StringBuilder sb = new StringBuilder();
-            XmlSeccionOutput sectionXml = (XmlSeccionOutput)section;
+            XmlSectionOutput sectionXml = (XmlSectionOutput)section;
 
             #region Get the XmlValue
 
-            if (_validateXmlValue)
+            if (_validateStructure)
             {
-                // Valida si el nombre del elemento de valor es cambiado en la configuracion
-                _structureXml = (XmlEstructuraOutput)_currentEstructuraOutput;
-                if (_structureXml.XMLValor.IsNullOrWhiteSpace()) { _structureXml.XMLValor = _defaultXmlValue; }
-                _validateXmlValue = false;
+                _structureXml = (XmlStructureOutput)_currentEstructuraOutput;
+                _validateStructure = false;
             }
 
             #endregion
 
             #region Obtener informacion de la seccion
 
-            if (sectionXml.TipoEtiqueta == TipoEtiquetaXml.Cierre) { sb.Append(string.Format("</{0}>", sectionXml.Nombre)); }
-            else
+            string internalValue = string.Empty;
+
+            // Se valida ya que lo comentarios y CData se construyen de otra forma
+            if (sectionXml.XmlTagType != XmlTagType.Comment && sectionXml.XmlTagType != XmlTagType.CData)
+            { sb.Append("<" + sectionXml.Name); }
+
+            #region Recorre elementos
+
+            foreach (XmlNode nElement in _handler.ConfigMap.GetOutputElements(node))
             {
-                string internalValue = string.Empty;
+                XmlElementOutput element = (XmlElementOutput)_handler.XPMLValidator.GetXPMLObject(new XmlElementOutput(), nElement, _handler);
+                GetElementValue(element, nElement, section);
 
-                // Se valida ya que lo comentarios y CData se construyen de otra forma
-                if (sectionXml.TipoEtiqueta != TipoEtiquetaXml.Comentario && sectionXml.TipoEtiqueta != TipoEtiquetaXml.CData)
-                { sb.Append("<" + sectionXml.Nombre); }
-
-                #region Recorre elementos
-
-                foreach (XmlNode nElement in _handler.ConfigMap.GetOutputElements(node))
+                if (element.XmlValue)
                 {
-                    XmlElementoOutput element = (XmlElementoOutput)_handler.XPMLValidator.GetXPMLObject(new XmlElementoOutput(), nElement, _handler);
-                    GetElementValue(element, nElement, section);
-
-                    if (element.Nombre == _structureXml.XMLValor)
+                    if (element.XmlElementType == XmlElementType.NotApply)
+                    { internalValue += element.Value; }
+                    else if (element.XmlElementType == XmlElementType.Comment)
+                    { internalValue += string.Format("<!--{0}-->", element.Value); }
+                    else if (element.XmlElementType == XmlElementType.CData)
+                    { internalValue += string.Format("<![CDATA[{0}]]>", element.Value); }
+                }
+                else
+                {
+                    if (!element.Hidden)
                     {
-                        if (element.TipoElementoXml == TipoElementoXml.NoAplica)
-                        { internalValue += element.Valor; }
-                        else if (element.TipoElementoXml == TipoElementoXml.Comentario)
-                        { internalValue += string.Format("<!--{0}-->", element.Valor); }
-                        else if (element.TipoElementoXml == TipoElementoXml.CData)
-                        { internalValue += string.Format("<![CDATA[{0}]]>", element.Valor); }
-                    }
-                    else
-                    {
-                        if (!element.Oculto)
-                        {
-                            if (!element.ValorRequerido || (element.ValorRequerido && !string.IsNullOrEmpty(element.Valor)))
-                            { sb.Append(string.Format(" {0}=\"{1}\"", element.Nombre, element.Valor)); }
-                        }
+                        if (!element.MandatoryValue || (element.MandatoryValue && !string.IsNullOrEmpty(element.Value)))
+                        { sb.Append(string.Format(" {0}=\"{1}\"", element.Name, element.Value)); }
                     }
                 }
-
-                #endregion
-
-                #region Finalizar seccion
-
-                if (sectionXml.TipoEtiqueta == TipoEtiquetaXml.Compuesta) { sb.Append(string.Format(">{0}", internalValue)); }
-                else if (sectionXml.TipoEtiqueta == TipoEtiquetaXml.Simple) { sb.Append("/>"); }
-                else if (sectionXml.TipoEtiqueta == TipoEtiquetaXml.Comentario) { sb.Append(string.Format("<!--{0}-->", internalValue)); }
-                else if (sectionXml.TipoEtiqueta == TipoEtiquetaXml.CData) { sb.Append(string.Format("<![CDATA[{0}]]>", internalValue)); }
-                else if (sectionXml.TipoEtiqueta == TipoEtiquetaXml.Apertura) { sb.Append(">"); }
-
-                _segmentCount++;
-
-                #endregion
             }
+
+            #endregion
+
+            #region Finalizar seccion
+
+            if (sectionXml.XmlTagType == XmlTagType.Complex) { sb.Append(string.Format(">{0}", internalValue)); }
+            else if (sectionXml.XmlTagType == XmlTagType.Simple) { sb.Append("/>"); }
+            else if (sectionXml.XmlTagType == XmlTagType.Comment) { sb.Append(string.Format("<!--{0}-->", internalValue)); }
+            else if (sectionXml.XmlTagType == XmlTagType.CData) { sb.Append(string.Format("<![CDATA[{0}]]>", internalValue)); }
+
+            _segmentCount++;
+
+            #endregion
 
             #endregion
 
             return sb.ToString();
         }
 
-        protected override string CloseSection(SeccionOutput section, XmlNode node)
+        protected override string CloseSection(SectionOutput section, XmlNode node)
         {
-            XmlSeccionOutput sectionXml = (XmlSeccionOutput)section;
-            if (sectionXml.TipoEtiqueta == TipoEtiquetaXml.Compuesta) { return string.Format("</{0}>", sectionXml.Nombre); }
+            XmlSectionOutput sectionXml = (XmlSectionOutput)section;
+            if (sectionXml.XmlTagType == XmlTagType.Complex) { return string.Format("</{0}>", sectionXml.Name); }
             return string.Empty;
         }
 
-        protected override SeccionOutput GetSection(XmlNode node) { return (XmlSeccionOutput)_handler.XPMLValidator.GetXPMLObject(new XmlSeccionOutput(), node, _handler); }
+        protected override SectionOutput GetSection(XmlNode node) { return (XmlSectionOutput)_handler.XPMLValidator.GetXPMLObject(new XmlSectionOutput(), node, _handler); }
 
-        protected override EstructuraOutput GetStructure(XmlNode node) { return (XmlEstructuraOutput)_handler.XPMLValidator.GetXPMLObject(new XmlEstructuraOutput(), node, _handler); }
+        protected override StructureOutput GetStructure(XmlNode node) { return (XmlStructureOutput)_handler.XPMLValidator.GetXPMLObject(new XmlStructureOutput(), node, _handler); }
 
-        protected override void StartNewStructure() { _validateXmlValue = true; }
+        protected override void StartNewStructure() { _validateStructure = true; }
 
-        public override void GetElementValue(ElementoOutput element, XmlNode node, SeccionOutput section)
+        public override void GetElementValue(ElementOutput element, XmlNode node, SectionOutput section)
         {
-            XmlElementoOutput elementXml = (XmlElementoOutput)element;
-            if (!elementXml.EscaparCaracteres.HasValue) { elementXml.EscaparCaracteres = _structureXml.EscaparCaracteres; }
+            XmlElementOutput elementXml = (XmlElementOutput)element;
+            if (!elementXml.ReleaseChars.HasValue) { elementXml.ReleaseChars = _structureXml.XmlReleaseChars; }
 
             base.GetElementValue(element, node, section);
-            if (elementXml.EscaparCaracteres.Value) { element.Valor = SecurityElement.Escape(element.Valor); }
+            if (elementXml.ReleaseChars.Value) { element.Value = SecurityElement.Escape(element.Value); }
         }
     }
 }

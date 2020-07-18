@@ -16,12 +16,12 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Configuracion XPML
         /// </summary>
-        public ElementoOutput XPMLConfig { get; internal set; }
+        public ElementOutput XPMLConfig { get; internal set; }
 
         /// <summary>
         /// Configuracion XPML
         /// </summary>
-        public SeccionOutput Section { get; internal set; }
+        public SectionOutput Section { get; internal set; }
 
         #endregion
 

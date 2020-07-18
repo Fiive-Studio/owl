@@ -16,7 +16,7 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Configuracion XPML
         /// </summary>
-        public EstructuraOutput XPMLConfig { get; internal set; }
+        public StructureOutput XPMLConfig { get; internal set; }
         
         /// <summary>
         /// Obtiene la cantidad de veces que se repite, si es -1 es porque es una instancia o fallo al obtener el valor

@@ -21,31 +21,31 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Current structure
         /// </summary>
-        EDIEstructuraOutput _structureEDI;
+        EDIStructureOutput _structureEDI;
         EDISegmentProperties _segmentProperties;
 
         #endregion
 
-        protected override string GenerateSection(SeccionOutput section, XmlNode node)
+        protected override string GenerateSection(SectionOutput section, XmlNode node)
         {
             #region Separators
 
             if (validateSeparator)
             {
-                _structureEDI = (EDIEstructuraOutput)_currentEstructuraOutput;
-                _segmentProperties = new EDISegmentProperties { DecimalSeparator = _structureEDI.SeparadorDecimalesSalida };
+                _structureEDI = (EDIStructureOutput)_currentEstructuraOutput;
+                _segmentProperties = new EDISegmentProperties { DecimalSeparator = _structureEDI.OutputDecimalSeparator };
 
-                if (_structureEDI.TerminadorSegmento == char.MinValue) { _structureEDI.TerminadorSegmento = _segmentProperties.SegmentTerminator; }
-                else if (_structureEDI.TerminadorSegmento != _segmentProperties.SegmentTerminator) { _segmentProperties.SegmentTerminator = _structureEDI.TerminadorSegmento; }
+                if (_structureEDI.SegmentSeparator == char.MinValue) { _structureEDI.SegmentSeparator = _segmentProperties.SegmentTerminator; }
+                else if (_structureEDI.SegmentSeparator != _segmentProperties.SegmentTerminator) { _segmentProperties.SegmentTerminator = _structureEDI.SegmentSeparator; }
 
-                if (_structureEDI.SeparadorElementos == char.MinValue) { _structureEDI.SeparadorElementos = _segmentProperties.ElementSeparator; }
-                else if (_structureEDI.SeparadorElementos != _segmentProperties.ElementSeparator) { _segmentProperties.ElementSeparator = _structureEDI.SeparadorElementos; }
+                if (_structureEDI.ElementGroupSeparator == char.MinValue) { _structureEDI.ElementGroupSeparator = _segmentProperties.ElementSeparator; }
+                else if (_structureEDI.ElementGroupSeparator != _segmentProperties.ElementSeparator) { _segmentProperties.ElementSeparator = _structureEDI.ElementGroupSeparator; }
 
-                if (_structureEDI.SeparadorSubElementos == char.MinValue) { _structureEDI.SeparadorSubElementos = _segmentProperties.SubElementSeparator; }
-                else if (_structureEDI.SeparadorSubElementos != _segmentProperties.SubElementSeparator) { _segmentProperties.SubElementSeparator = _structureEDI.SeparadorSubElementos; }
+                if (_structureEDI.ElementSeparator == char.MinValue) { _structureEDI.ElementSeparator = _segmentProperties.SubElementSeparator; }
+                else if (_structureEDI.ElementSeparator != _segmentProperties.SubElementSeparator) { _segmentProperties.SubElementSeparator = _structureEDI.ElementSeparator; }
 
-                if (_structureEDI.CaracterEscape == char.MinValue) { _structureEDI.CaracterEscape = _segmentProperties.ReleaseChar; }
-                else if (_structureEDI.CaracterEscape != _segmentProperties.ReleaseChar) { _segmentProperties.ReleaseChar = _structureEDI.CaracterEscape; }
+                if (_structureEDI.ReleaseChar == char.MinValue) { _structureEDI.ReleaseChar = _segmentProperties.ReleaseChar; }
+                else if (_structureEDI.ReleaseChar != _segmentProperties.ReleaseChar) { _segmentProperties.ReleaseChar = _structureEDI.ReleaseChar; }
 
                 validateSeparator = false;
             }
@@ -56,7 +56,7 @@ namespace Fiive.Owl.Formats.Output
 
             foreach (XmlNode nElement in _handler.ConfigMap.GetHiddenOutputElements(node))
             {
-                ElementoOutput element = (ElementoOutput)_handler.XPMLValidator.GetXPMLObject(new ElementoOutput(), nElement, _handler);
+                ElementOutput element = (ElementOutput)_handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, _handler);
                 GetElementValue(element, nElement, section);
             }
 
@@ -64,8 +64,8 @@ namespace Fiive.Owl.Formats.Output
 
             #region Segments
 
-            Type type = Type.GetType(string.Format(OwlAdapterSettings.Settings.MapperEDILibrary, section.Nombre));
-            if (type == null) { throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.InvalidSegment), section.Nombre), node.OuterXml, node.Name, section.Nombre); }
+            Type type = Type.GetType(string.Format(OwlAdapterSettings.Settings.MapperEDILibrary, section.Name));
+            if (type == null) { throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.InvalidSegment), section.Name), node.OuterXml, node.Name, section.Name); }
 
             IEDISegment segment = (IEDISegment)Activator.CreateInstance(type);
             segment.Properties = _segmentProperties;
@@ -85,7 +85,7 @@ namespace Fiive.Owl.Formats.Output
             return null;
         }
 
-        protected override EstructuraOutput GetStructure(XmlNode node) { return (EDIEstructuraOutput)_handler.XPMLValidator.GetXPMLObject(new EDIEstructuraOutput(), node, _handler); }
+        protected override StructureOutput GetStructure(XmlNode node) { return (EDIStructureOutput)_handler.XPMLValidator.GetXPMLObject(new EDIStructureOutput(), node, _handler); }
 
         protected override void StartNewStructure() { validateSeparator = true; }
     }

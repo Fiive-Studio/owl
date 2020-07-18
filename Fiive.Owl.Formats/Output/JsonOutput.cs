@@ -13,57 +13,60 @@ namespace Fiive.Owl.Formats.Output
     /// </summary>
     public class JsonOutput : GenericOutput
     {
-        protected override string GenerateSection(SeccionOutput section, XmlNode node)
+        protected override string GenerateSection(SectionOutput section, XmlNode node)
         {
             StringBuilder sb = new StringBuilder();
+            JsonSectionOutput sectionJson = (JsonSectionOutput)section;
 
             #region Obtener informacion de la seccion
 
             bool addSeparator = false;
             foreach (XmlNode nElement in _handler.ConfigMap.GetOutputElements(node))
             {
-                ElementoOutput element = (ElementoOutput)_handler.XPMLValidator.GetXPMLObject(new ElementoOutput(), nElement, _handler);
+                ElementOutput element = (ElementOutput)_handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, _handler);
                 GetElementValue(element, nElement, section);
-                if (!element.Oculto)
+                if (!element.Hidden)
                 {
                     if (addSeparator) { sb.Append(","); }
-                    sb.Append($"\"{element.Nombre}\":\"{element.Valor}\"");
+                    sb.Append($"\"{element.Name}\":\"{element.Value}\"");
                     addSeparator = true;
                 }
             }
 
             #endregion
 
-            if (section.Repeticiones > 1 || !section.Itera.IsNullOrWhiteSpace())
+            if (section.Repetitions > 1 || !section.Itera.IsNullOrWhiteSpace() || sectionJson.JsonArray)
             {
                 if (section.Consecutive > 1) { sb.Insert(0, ",{"); }
                 else { sb.Insert(0, "{"); }
                 if (section.Consecutive == 1)
                 {
-                    sb.Insert(0, $"\"{section.Nombre}\":[");
-                    if (node.PreviousSibling != null && (node.PreviousSibling.Name == "Elemento" || node.PreviousSibling.Name == "Seccion")) { sb.Insert(0, ","); }
+                    sb.Insert(0, $"\"{section.Name}\":[");
+                    if (node.PreviousSibling != null && (node.PreviousSibling.Name == "element" || node.PreviousSibling.Name == "section")) { sb.Insert(0, ","); }
                 }
             }
             else
             {
-                sb.Insert(0, $"\"{section.Nombre}\":{{");
-                if (node.PreviousSibling != null && (node.PreviousSibling.Name == "Elemento" || node.PreviousSibling.Name == "Seccion")) { sb.Insert(0, ","); }
+                sb.Insert(0, $"\"{section.Name}\":{{");
+                if (node.PreviousSibling != null && (node.PreviousSibling.Name == "element" || node.PreviousSibling.Name == "section")) { sb.Insert(0, ","); }
             }
 
             _segmentCount++;
             return sb.ToString();
         }
 
-        protected override string CloseSection(SeccionOutput section, XmlNode node)
+        protected override string CloseSection(SectionOutput section, XmlNode node)
         {
-            if ((section.Repeticiones > 1 || !section.Itera.IsNullOrWhiteSpace()) && section.Consecutive == section.Repeticiones) { return "}]"; }
+            JsonSectionOutput sectionJson = (JsonSectionOutput)section;
+
+            if ((section.Repetitions > 1 || !section.Itera.IsNullOrWhiteSpace() || sectionJson.JsonArray) && section.Consecutive == section.Repetitions) { return "}]"; }
             else { return "}"; }
         }
 
-        public override void GetElementValue(ElementoOutput element, XmlNode node, SeccionOutput section)
+        public override void GetElementValue(ElementOutput element, XmlNode node, SectionOutput section)
         {
             base.GetElementValue(element, node, section);
-            element.Valor = element.Valor.Replace("\"", "\\\"").Replace("\\", "\\\\");
+            element.Value = element.Value.Replace("\"", "\\\"").Replace("\\", "\\\\");
         }
 
         protected override string OpenContent() { return "{"; }

@@ -9,18 +9,18 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
     /// Represent a Flat File Section configuration
     /// </summary>
-    public class FlatFileSeccionOutput : SeccionOutput
+    public class FlatFileSectionOutput : SectionOutput
     {
         #region Properties
 
-        public string Separador { get; set; }
-        public bool QuitarSeparadoresFinal { get; set; }
+        public string Separator { get; set; }
+        public bool RemoveFinalSeparators { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public FlatFileSeccionOutput() { this.Separador = string.Empty; }
+        public FlatFileSectionOutput() { this.Separator = string.Empty; }
 
         #endregion
 
@@ -34,8 +34,8 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             XPMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "Separador", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "QuitarSeparadoresFinal", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "separator", PropertyName = "Separator", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "remove-final-separators", PropertyName = "RemoveFinalSeparators", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
 
             return signing;
         }

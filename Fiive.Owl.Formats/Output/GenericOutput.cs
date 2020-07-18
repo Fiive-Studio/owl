@@ -38,7 +38,7 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Estructura que se esta procesando
         /// </summary>
-        protected EstructuraOutput _currentEstructuraOutput;
+        protected StructureOutput _currentEstructuraOutput;
         /// <summary>
         /// Valor de salida que se esta procesando
         /// </summary>
@@ -46,7 +46,7 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Current Elements list
         /// </summary>
-        List<ElementoOutput> _currentElements = null;
+        List<ElementOutput> _currentElements = null;
         /// <summary>
         /// Current Required Elements
         /// </summary>
@@ -54,7 +54,7 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
 		/// Seccion de salida
 		/// </summary>
-        protected string _OutputSection = "Documento/Salida";
+        protected string _OutputSection = "owl";
         /// <summary>
         /// Almacena la lista de variables globales creadas para posteriormente poderlas eliminar
         /// </summary>
@@ -116,8 +116,8 @@ namespace Fiive.Owl.Formats.Output
 
                 #region Validate Separators
 
-                if (_currentEstructuraOutput.SeparadorDecimalesEntrada == char.MinValue) { _currentEstructuraOutput.SeparadorDecimalesEntrada = _handler.Settings.InputNumberDecimalSeparator; }
-                if (_currentEstructuraOutput.SeparadorDecimalesSalida == char.MinValue) { _currentEstructuraOutput.SeparadorDecimalesSalida = _handler.Settings.OutputNumberDecimalSeparator; }
+                if (_currentEstructuraOutput.InputDecimalSeparator == char.MinValue) { _currentEstructuraOutput.InputDecimalSeparator = _handler.Settings.InputNumberDecimalSeparator; }
+                if (_currentEstructuraOutput.OutputDecimalSeparator == char.MinValue) { _currentEstructuraOutput.OutputDecimalSeparator = _handler.Settings.OutputNumberDecimalSeparator; }
 
                 #endregion
 
@@ -140,7 +140,7 @@ namespace Fiive.Owl.Formats.Output
 
                 if (_handler.Settings.Instance)
                 {
-                    _handler["CONSECUTIVO_ESTRUCTURA"] = iteraCount.ToString();
+                    _handler["CONSECUTIVE_STRUCTURE"] = iteraCount.ToString();
                     ProcessOutputSections();
                     _currentOutputValue.Insert(0, OpenContent());
                     _currentOutputValue.Append(CloseContent());
@@ -151,7 +151,7 @@ namespace Fiive.Owl.Formats.Output
                     // Iteracion configurada en la estructura
                     foreach (InputValue inputValue in _handler.Input.GetValues(_currentEstructuraOutput.Itera))
                     {
-                        _handler["CONSECUTIVO_ESTRUCTURA"] = iteraCount.ToString();
+                        _handler["CONSECUTIVE_STRUCTURE"] = iteraCount.ToString();
                         _handler.CurrentValue = inputValue; // Establece el valor actual
 
                         ProcessOutputSections();
@@ -191,14 +191,14 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="nodes">Nodos a procesar</param>
         /// <param name="iteraCount">Consecutivo de iteracion</param>
         /// <param name="elementsValidationParent">Objeto donde se guardan las validaciones de elementos</param>
-        protected virtual List<string> ProcessSection(IEnumerable<XmlNode> nodes, SeccionOutput parentSection)
+        protected virtual List<string> ProcessSection(IEnumerable<XmlNode> nodes, SectionOutput parentSection)
         {
             List<string> segmentsReturn = new List<string>();
 
             foreach (XmlNode nSection in nodes)
             {
-                if (parentSection != null) { _handler["CONSECUTIVO_ITERA_PADRE"] = parentSection.Consecutive.ToString(); }
-                SeccionOutput section = null;
+                if (parentSection != null) { _handler["CONSECUTIVE_ITERA_PARENT"] = parentSection.Consecutive.ToString(); }
+                SectionOutput section = null;
 
                 try
                 {
@@ -212,8 +212,8 @@ namespace Fiive.Owl.Formats.Output
 
                     if (!_handler.Settings.Instance)
                     {
-                        if (!_currentEstructuraOutput.Linea.IsNullOrWhiteSpace()) { section.XpahtLine = string.Concat(section.Nodo, "/", _currentEstructuraOutput.Linea).TrimStart('/'); }
-                        if (!_currentEstructuraOutput.NumeroLinea.IsNullOrWhiteSpace()) { section.XpathNumberLine = string.Concat(section.Nodo, "/", _currentEstructuraOutput.NumeroLinea).TrimStart('/'); }
+                        if (!_currentEstructuraOutput.Line.IsNullOrWhiteSpace()) { section.XpahtLine = string.Concat(section.Node, "/", _currentEstructuraOutput.Line).TrimStart('/'); }
+                        if (!_currentEstructuraOutput.NumberLine.IsNullOrWhiteSpace()) { section.XpathNumberLine = string.Concat(section.Node, "/", _currentEstructuraOutput.NumberLine).TrimStart('/'); }
                     }
 
                     #endregion
@@ -223,8 +223,8 @@ namespace Fiive.Owl.Formats.Output
                     bool launchSectionGroupEvent = false;
                     if (!_handler.Settings.Instance)
                     {
-                        if (!section.Itera.IsNullOrWhiteSpace()) { section.Repeticiones = _handler.CurrentValue.Count(section.Itera); launchSectionGroupEvent = true; }
-                        else if (section.Repeticiones > 1) { launchSectionGroupEvent = true; }
+                        if (!section.Itera.IsNullOrWhiteSpace()) { section.Repetitions = _handler.CurrentValue.Count(section.Itera); launchSectionGroupEvent = true; }
+                        else if (section.Repetitions > 1) { launchSectionGroupEvent = true; }
                     }
 
                     #endregion
@@ -239,7 +239,7 @@ namespace Fiive.Owl.Formats.Output
                     #region Itera / Repetition
 
                     // this validation is because when it's an instance always it does 2 repetitions
-                    if (_handler.Settings.Instance && !section.Itera.IsNullOrWhiteSpace()) { section.Repeticiones = 2; section.Itera = string.Empty; }
+                    if (_handler.Settings.Instance && !section.Itera.IsNullOrWhiteSpace()) { section.Repetitions = 2; section.Itera = string.Empty; }
 
                     #region Itera
 
@@ -290,7 +290,7 @@ namespace Fiive.Owl.Formats.Output
 
                         #endregion
 
-                        for (int i = 1; i <= section.Repeticiones; i++)
+                        for (int i = 1; i <= section.Repetitions; i++)
                         {
                             section.Consecutive = internalItera;
                             List<string> internalSections = ProcessInternalSection(section, nSection);
@@ -309,7 +309,7 @@ namespace Fiive.Owl.Formats.Output
                 catch (Exception e)
                 {
                     if (e is OwlElementException || e is OwlSectionException) { throw e; }
-                    throw new OwlSectionException(ETexts.GT(ErrorType.ErrorOutputSection), nSection.OuterXml, (section == null ? nSection.Name : section.Nombre), _OutputSection, e);
+                    throw new OwlSectionException(ETexts.GT(ErrorType.ErrorOutputSection), nSection.OuterXml, (section == null ? nSection.Name : section.Name), _OutputSection, e);
                 }
             }
 
@@ -326,7 +326,7 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="lineValue">Contenido linea</param>
         /// <param name="numberLineValue">Numero de linea</param>
         /// <returns></returns>
-        protected virtual List<string> ProcessInternalSection(SeccionOutput parentSection, XmlNode parentNode)
+        protected virtual List<string> ProcessInternalSection(SectionOutput parentSection, XmlNode parentNode)
         {
             List<string> localSegments = new List<string>();
 
@@ -433,7 +433,7 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="section">Seccion</param>
         /// <param name="node">Node</param>
         /// <returns>Contenido de la seccion, si falla alguna validacion null</returns>
-        protected string ProcessElements(SeccionOutput section, XmlNode node)
+        protected string ProcessElements(SectionOutput section, XmlNode node)
         {
             #region Previous validation
 
@@ -444,8 +444,8 @@ namespace Fiive.Owl.Formats.Output
             #region Initialize values
 
             int intCountCurrentSection = _segmentCount;
-            _currentElements = new List<ElementoOutput>();
-            _handler["CONSECUTIVO_ITERA"] = section.Consecutive.ToString();
+            _currentElements = new List<ElementOutput>();
+            _handler["CONSECUTIVE_ITERA"] = section.Consecutive.ToString();
             AddReservedVars();
 
             #endregion
@@ -454,7 +454,7 @@ namespace Fiive.Owl.Formats.Output
 
             #region Final Event
 
-            if (section.MostrarContenido) { section.Content = sectionContent; }
+            if (section.ShowContent) { section.Content = sectionContent; }
             if (LaunchSectionProcessed(section) & section.CancelWriteSection)
             {
                 if (intCountCurrentSection != _segmentCount) { _segmentCount = intCountCurrentSection; }
@@ -473,10 +473,10 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="element">Nodo del elemento que se esta procesando</param>
         /// <param name="nElement">Nodo Elemento</param>
         /// <param name="section">Seccion</param>
-        public virtual void GetElementValue(ElementoOutput element, XmlNode nElement, SeccionOutput section)
+        public virtual void GetElementValue(ElementOutput element, XmlNode nElement, SectionOutput section)
         {
             if (element == null) { return; }
-            element.Valor = string.Empty;
+            element.Value = string.Empty;
 
             #region Get Value
 
@@ -486,13 +486,13 @@ namespace Fiive.Owl.Formats.Output
                 element.Keyword = keyword;
 
                 // Valor cuando no es una instancia, si keyword es nulo el valor es string.Empty
-                if (keyword != null && !_handler.Settings.Instance) { element.Valor = keyword.GetValue(_handler); }
+                if (keyword != null && !_handler.Settings.Instance) { element.Value = keyword.GetValue(_handler); }
 
                 #region Instance
 
                 else if (keyword == null && _handler.Settings.Instance)
                 {
-                    element.Valor = element.TipoDato == ElementoTipoDato.Numerico ? _handler.KeywordsManager.DefaultNumericInstanceValue : element.Nombre;
+                    element.Value = element.DataType == ElementDataType.Numeric ? _handler.KeywordsManager.DefaultNumericInstanceValue : element.Name;
                 }
                 else if (_handler.Settings.Instance && (keyword.KeywordType == KeywordsType.Variable || keyword.KeywordType == KeywordsType.Key))
                 {
@@ -500,12 +500,12 @@ namespace Fiive.Owl.Formats.Output
                     // Esta validacion se hace ya que cuando es una Variable o una palabra Reservada puede que no exista
                     if (value == _handler.KeywordsManager.DefaultAlphanumericInstanceValue)
                     {
-                        if (element.TipoDato == ElementoTipoDato.Numerico) { element.Valor = _handler.KeywordsManager.DefaultNumericInstanceValue; }
-                        else { element.Valor = element.Nombre; }
+                        if (element.DataType == ElementDataType.Numeric) { element.Value = _handler.KeywordsManager.DefaultNumericInstanceValue; }
+                        else { element.Value = element.Name; }
                     }
-                    else { element.Valor = value; }
+                    else { element.Value = value; }
                 }
-                else if (_handler.Settings.Instance) { element.Valor = keyword.GetValue(_handler); }
+                else if (_handler.Settings.Instance) { element.Value = keyword.GetValue(_handler); }
 
                 #endregion
             }
@@ -520,19 +520,19 @@ namespace Fiive.Owl.Formats.Output
 
             if (!_handler.Settings.Instance)
             {
-                if (!element.Nodo.IsNullOrWhiteSpace())
+                if (!element.Node.IsNullOrWhiteSpace())
                 {
                     if (!section.XpahtLine.IsNullOrWhiteSpace())
                     {
                         string[] parts = section.XpahtLine.Split('/');
-                        string xpathLine = element.Nodo + "/" + (parts.Length == 2 ? parts[1] : parts[0]);
+                        string xpathLine = element.Node + "/" + (parts.Length == 2 ? parts[1] : parts[0]);
                         element.Line = _handler.CurrentValue.GetValue(xpathLine);
                     }
 
                     if (!section.XpathNumberLine.IsNullOrWhiteSpace())
                     {
                         string[] partes = section.XpathNumberLine.Split('/');
-                        string xpathNumberLine = element.Nodo + "/" + (partes.Length == 2 ? partes[1] : partes[0]);
+                        string xpathNumberLine = element.Node + "/" + (partes.Length == 2 ? partes[1] : partes[0]);
                         element.NumberLine = _handler.CurrentValue.GetValue(xpathNumberLine);
                     }
                 }
@@ -547,14 +547,14 @@ namespace Fiive.Owl.Formats.Output
 
             #region Validate Data
 
-            if (element.SeparadorDecimalesEntrada == char.MinValue) { element.SeparadorDecimalesEntrada = _currentEstructuraOutput.SeparadorDecimalesEntrada; }
-            if (element.SeparadorDecimalesSalida == char.MinValue) { element.SeparadorDecimalesSalida = _currentEstructuraOutput.SeparadorDecimalesSalida; }
+            if (element.InputDecimalSeparator == char.MinValue) { element.InputDecimalSeparator = _currentEstructuraOutput.InputDecimalSeparator; }
+            if (element.OutputDecimalSeparator == char.MinValue) { element.OutputDecimalSeparator = _currentEstructuraOutput.OutputDecimalSeparator; }
 
             #endregion
 
             #region Event
 
-            if (LaunchElementProcessed(element, section)) { if (element.ElementWithError) { element.Valor = string.Empty; return; } }
+            if (LaunchElementProcessed(element, section)) { if (element.ElementWithError) { element.Value = string.Empty; return; } }
 
             #endregion
 
@@ -566,17 +566,17 @@ namespace Fiive.Owl.Formats.Output
 
             #region Validate Section Event
 
-            if (!element.EventoSeccion.HasValue) { element.EventoSeccion = _currentEstructuraOutput.ElementoEventoSeccion; }
-            if (element.EventoSeccion.Value) { _currentElements.Add(element); }
+            if (!element.EventSection.HasValue) { element.EventSection = _currentEstructuraOutput.EventElementSection; }
+            if (element.EventSection.Value) { _currentElements.Add(element); }
 
             #endregion
 
             #region Global Vars
 
-            if (!element.VariableGlobal.IsNullOrWhiteSpace())
+            if (!element.NewVariable.IsNullOrWhiteSpace())
             {
-                _handler[element.VariableGlobal] = element.Valor;
-                if (!_lstGlobalVarsCreated.Contains(element.VariableGlobal)) { _lstGlobalVarsCreated.Add(element.VariableGlobal); }
+                _handler[element.NewVariable] = element.Value;
+                if (!_lstGlobalVarsCreated.Contains(element.NewVariable)) { _lstGlobalVarsCreated.Add(element.NewVariable); }
             }
 
             #endregion
@@ -586,16 +586,16 @@ namespace Fiive.Owl.Formats.Output
             // Solo se crean los contadores si no es una instancia
             if (!_handler.Settings.Instance)
             {
-                if (!element.Contador.IsNullOrWhiteSpace())
+                if (!element.Counter.IsNullOrWhiteSpace())
                 {
                     #region Valida Sintaxis
 
-                    string[] parameters = element.Contador.Split('/');
+                    string[] parameters = element.Counter.Split('/');
 
                     // Sintaxis contador: Nombre/Incremento
                     if (parameters.Length != 2)
                     {
-                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorCountParametersNotValid), element.Contador, parameters.Length), nElement.OuterXml, element.Nombre, _OutputSection);
+                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorCountParametersNotValid), element.Counter, parameters.Length), nElement.OuterXml, element.Name, _OutputSection);
                     }
 
                     #endregion
@@ -604,7 +604,7 @@ namespace Fiive.Owl.Formats.Output
 
                     if (parameters.GetSafeValue(0).IsNullOrWhiteSpace())
                     {
-                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorEmptyParameter), "1", element.Contador), nElement.OuterXml, element.Nombre, _OutputSection);
+                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorEmptyParameter), "1", element.Counter), nElement.OuterXml, element.Name, _OutputSection);
                     }
 
                     #endregion
@@ -614,12 +614,12 @@ namespace Fiive.Owl.Formats.Output
                     #region Incremento
 
                     string valor;
-                    if (parameters.GetSafeValue(1) == "ValorActual") { valor = element.Valor; }
+                    if (parameters.GetSafeValue(1) == "CurrentValue") { valor = element.Value; }
                     else { valor = parameters.GetSafeValue(1); }
 
                     if (!valor.IsDecimal())
                     {
-                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorParameterIsForNumbers), "2", element.Contador, valor), nElement.OuterXml, element.Nombre, _OutputSection);
+                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorParameterIsForNumbers), "2", element.Counter, valor), nElement.OuterXml, element.Name, _OutputSection);
                     }
 
                     decimal valorIncremento = Convert.ToDecimal(valor);
@@ -631,7 +631,7 @@ namespace Fiive.Owl.Formats.Output
                     {
                         if (!_handler[parameters.GetSafeValue(0)].IsDecimal())
                         {
-                            throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorVariableModified), parameters.GetSafeValue(0), _handler[parameters.GetSafeValue(0)], element.Contador), nElement.OuterXml, element.Nombre, _OutputSection);
+                            throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorVariableModified), parameters.GetSafeValue(0), _handler[parameters.GetSafeValue(0)], element.Counter), nElement.OuterXml, element.Name, _OutputSection);
                         }
 
                         // Si la variable ya existe se incrementa
@@ -649,7 +649,7 @@ namespace Fiive.Owl.Formats.Output
 
             #region Requeridos
 
-            _currentRequiredElements.AddValue(element.Nombre, element.Valor);
+            _currentRequiredElements.AddValue(element.Name, element.Value);
 
             #endregion
         }
@@ -659,15 +659,15 @@ namespace Fiive.Owl.Formats.Output
         /// </summary>
         /// <param name="element">Element</param>
         /// <param name="nElement">Nodo que representa el elemento</param>
-        protected virtual void ProcessElementValidators(ElementoOutput element, XmlNode nElement)
+        protected virtual void ProcessElementValidators(ElementOutput element, XmlNode nElement)
         {
             bool validateSeparator = false;
 
             #region Formato
 
-            if (!element.Valor.IsNullOrWhiteSpace() && !element.Formato.IsNullOrWhiteSpace())
+            if (!element.Value.IsNullOrWhiteSpace() && !element.Format.IsNullOrWhiteSpace())
             {
-                string[] formats = element.Formato.Split(new string[] { "|" }, StringSplitOptions.None);
+                string[] formats = element.Format.Split(new string[] { "|" }, StringSplitOptions.None);
 
                 foreach (string format in formats)
                 {
@@ -680,17 +680,17 @@ namespace Fiive.Owl.Formats.Output
                             #region Cambiar separador
 
                             // Se hace el cambio para poder hacer la validacion, ya que podria llegar a fallar con un separador propio
-                            string tempValue = element.Valor.Replace(element.SeparadorDecimalesEntrada, Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
+                            string tempValue = element.Value.Replace(element.InputDecimalSeparator, Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
 
                             if (!tempValue.IsDecimal())
                             {
-                                throw new OwlElementException(string.Format(ETexts.GT(ErrorType.FormatIsForNumbers), element.Valor, format), nElement.OuterXml, element.Nombre, _OutputSection);
+                                throw new OwlElementException(string.Format(ETexts.GT(ErrorType.FormatIsForNumbers), element.Value, format), nElement.OuterXml, element.Name, _OutputSection);
                             }
 
                             #endregion
 
                             decimal numero = Convert.ToDecimal(tempValue);
-                            element.Valor = numero.ToString(format.GetSafeSubstring(1)).Replace(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0], element.SeparadorDecimalesEntrada);
+                            element.Value = numero.ToString(format.GetSafeSubstring(1)).Replace(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0], element.InputDecimalSeparator);
                             validateSeparator = true;
                         }
                     }
@@ -704,25 +704,25 @@ namespace Fiive.Owl.Formats.Output
                         switch (format)
                         {
                             case "A":
-                                element.Valor = element.Valor.ToUpper();
+                                element.Value = element.Value.ToUpper();
                                 break;
                             case "a":
-                                element.Valor = element.Valor.ToLower();
+                                element.Value = element.Value.ToLower();
                                 break;
                             case "C":
-                                element.Valor = string.Concat(element.Valor[0].ToString().ToUpper(), element.Valor.GetSafeSubstring(1).ToLower());
+                                element.Value = string.Concat(element.Value[0].ToString().ToUpper(), element.Value.GetSafeSubstring(1).ToLower());
                                 break;
                             case "T":
-                                element.Valor = element.Valor.Trim();
+                                element.Value = element.Value.Trim();
                                 break;
                             case "TS":
-                                element.Valor = element.Valor.TrimStart();
+                                element.Value = element.Value.TrimStart();
                                 break;
                             case "TE":
-                                element.Valor = element.Valor.TrimEnd();
+                                element.Value = element.Value.TrimEnd();
                                 break;
                             default:
-                                throw new OwlElementException(string.Format(ETexts.GT(ErrorType.FormatNotValid), format), nElement.OuterXml, element.Nombre, _OutputSection);
+                                throw new OwlElementException(string.Format(ETexts.GT(ErrorType.FormatNotValid), format), nElement.OuterXml, element.Name, _OutputSection);
                         }
                     }
 
@@ -734,42 +734,42 @@ namespace Fiive.Owl.Formats.Output
 
             #region Longitud
 
-            if (element.Longitud != null)
+            if (element.Length != null)
             {
                 #region Validacion para instancia
 
                 // Se valida ya que cuando es una instancia no se procesan longitudes decimales
-                if (_handler.Settings.Instance && element.Longitud.ValidateDecimalPart)
+                if (_handler.Settings.Instance && element.Length.ValidateDecimalPart)
                 {
-                    element.TipoDato = ElementoTipoDato.Alfanumerico;
-                    element.Longitud.IntegerPart = element.Longitud.IntegerPart + 1 + element.Longitud.DecimalPart;
-                    element.Longitud.ValidateDecimalPart = false;
+                    element.DataType = ElementDataType.Alphanumeric;
+                    element.Length.IntegerPart = element.Length.IntegerPart + 1 + element.Length.DecimalPart;
+                    element.Length.ValidateDecimalPart = false;
                 }
 
                 #endregion
 
                 #region Numeric Validation
 
-                if (element.TipoDato == ElementoTipoDato.Numerico && !element.Longitud.ValidateDecimalPart)
+                if (element.DataType == ElementDataType.Numeric && !element.Length.ValidateDecimalPart)
                 {
-                    element.Longitud.ValidateDecimalPart = true;
-                    element.Longitud.DecimalPart = 0;
+                    element.Length.ValidateDecimalPart = true;
+                    element.Length.DecimalPart = 0;
                 }
 
                 #endregion
 
                 #region Validacion cuando solo hay parte entera
 
-                if (!element.Longitud.ValidateDecimalPart)
+                if (!element.Length.ValidateDecimalPart)
                 {
                     // Si parte entera es menor a 0 es decir que se envia toda la cadena
-                    if (element.Longitud.IntegerPart >= 0)
+                    if (element.Length.IntegerPart >= 0)
                     {
-                        if (!string.IsNullOrEmpty(element.Valor) || (string.IsNullOrEmpty(element.Valor) && element.Longitud.PaddingWhenIsEmpty == FieldLength.Padding.Pad))
+                        if (!string.IsNullOrEmpty(element.Value) || (string.IsNullOrEmpty(element.Value) && element.Length.PaddingWhenIsEmpty == FieldLength.Padding.Pad))
                         {
-                            element.Valor = element.Valor.GetSafeSubstring(0, element.Longitud.IntegerPart);
-                            if (element.Longitud.Aligment == FieldLength.AligmentType.Right) { element.Valor = element.Valor.PadLeft(element.Longitud.IntegerPart, element.Longitud.PaddingChar); }
-                            else if (element.Longitud.Aligment == FieldLength.AligmentType.Left) { element.Valor = element.Valor.PadRight(element.Longitud.IntegerPart, element.Longitud.PaddingChar); }
+                            element.Value = element.Value.GetSafeSubstring(0, element.Length.IntegerPart);
+                            if (element.Length.Aligment == FieldLength.AligmentType.Right) { element.Value = element.Value.PadLeft(element.Length.IntegerPart, element.Length.PaddingChar); }
+                            else if (element.Length.Aligment == FieldLength.AligmentType.Left) { element.Value = element.Value.PadRight(element.Length.IntegerPart, element.Length.PaddingChar); }
                         }
                     }
                 }
@@ -783,16 +783,16 @@ namespace Fiive.Owl.Formats.Output
                     bool validateLength = true;
                     string finalValue = string.Empty, parteEntera = string.Empty, parteDecimal = string.Empty;
 
-                    if (!string.IsNullOrEmpty(element.Valor))
+                    if (!string.IsNullOrEmpty(element.Value))
                     {
                         #region Valida el numero
 
                         // Se hace el cambio para poder hacer la validacion, ya que podria llegar a fallar con un separador propio
-                        string tempValue = element.Valor.Replace(element.SeparadorDecimalesEntrada, Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
+                        string tempValue = element.Value.Replace(element.InputDecimalSeparator, Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
 
                         if (!tempValue.IsDecimal())
                         {
-                            throw new OwlElementException(string.Format(ETexts.GT(ErrorType.LengthIsForNumbers), element.Valor), nElement.OuterXml, element.Nombre, _OutputSection);
+                            throw new OwlElementException(string.Format(ETexts.GT(ErrorType.LengthIsForNumbers), element.Value), nElement.OuterXml, element.Name, _OutputSection);
                         }
 
                         #endregion
@@ -819,16 +819,16 @@ namespace Fiive.Owl.Formats.Output
                         #region Procesar partes numero
 
                         // Se formatean con las longitudes
-                        if (element.Longitud.IntegerPart >= 0) { parteEntera = parteEntera.GetSafeSubstring(parteEntera.Length - element.Longitud.IntegerPart); }
+                        if (element.Length.IntegerPart >= 0) { parteEntera = parteEntera.GetSafeSubstring(parteEntera.Length - element.Length.IntegerPart); }
                         else { validateLength = false; }
-                        if (element.Longitud.DecimalPart >= 0) { parteDecimal = parteDecimal.GetSafeSubstring(0, element.Longitud.DecimalPart); }
+                        if (element.Length.DecimalPart >= 0) { parteDecimal = parteDecimal.GetSafeSubstring(0, element.Length.DecimalPart); }
                         else { validateLength = false; }
 
                         finalValue = parteEntera;
                         if (!parteDecimal.IsNullOrWhiteSpace())
                         {
                             if (string.IsNullOrEmpty(parteEntera)) { finalValue += parteDecimal; }
-                            else { finalValue += element.SeparadorDecimalesSalida + parteDecimal; }
+                            else { finalValue += element.OutputDecimalSeparator + parteDecimal; }
                             validateSeparator = false;
                         }
 
@@ -839,42 +839,42 @@ namespace Fiive.Owl.Formats.Output
 
                     if (validateLength)
                     {
-                        if (!string.IsNullOrEmpty(element.Valor) || (string.IsNullOrEmpty(element.Valor) && element.Longitud.PaddingWhenIsEmpty != FieldLength.Padding.NotPad))
+                        if (!string.IsNullOrEmpty(element.Value) || (string.IsNullOrEmpty(element.Value) && element.Length.PaddingWhenIsEmpty != FieldLength.Padding.NotPad))
                         {
                             int longitudFinal = 0;
-                            if (element.Longitud.IntegerPart > 0) { longitudFinal += element.Longitud.IntegerPart; }
-                            if (element.Longitud.DecimalPart > 0)
+                            if (element.Length.IntegerPart > 0) { longitudFinal += element.Length.IntegerPart; }
+                            if (element.Length.DecimalPart > 0)
                             {
                                 if (longitudFinal > 0) { longitudFinal++; } // 1 is then decimal separator character
-                                longitudFinal += element.Longitud.DecimalPart;
+                                longitudFinal += element.Length.DecimalPart;
                             }
 
-                            if (element.Longitud.Aligment == FieldLength.AligmentType.Right) { finalValue = finalValue.PadLeft(longitudFinal, element.Longitud.PaddingChar); }
-                            else if (element.Longitud.Aligment == FieldLength.AligmentType.Left) { finalValue = finalValue.PadRight(longitudFinal, element.Longitud.PaddingChar); }
-                            else if (element.Longitud.Aligment == FieldLength.AligmentType.Number || element.Longitud.Aligment == FieldLength.AligmentType.NumberWithoutSeparator)
+                            if (element.Length.Aligment == FieldLength.AligmentType.Right) { finalValue = finalValue.PadLeft(longitudFinal, element.Length.PaddingChar); }
+                            else if (element.Length.Aligment == FieldLength.AligmentType.Left) { finalValue = finalValue.PadRight(longitudFinal, element.Length.PaddingChar); }
+                            else if (element.Length.Aligment == FieldLength.AligmentType.Number || element.Length.Aligment == FieldLength.AligmentType.NumberWithoutSeparator)
                             {
-                                parteEntera = parteEntera.PadLeft(element.Longitud.IntegerPart, element.Longitud.PaddingChar);
-                                char padDecimal = element.Longitud.PaddingCharDecimalPart == char.MinValue ? element.Longitud.PaddingChar : element.Longitud.PaddingCharDecimalPart;
-                                parteDecimal = parteDecimal.PadRight(element.Longitud.DecimalPart, padDecimal);
+                                parteEntera = parteEntera.PadLeft(element.Length.IntegerPart, element.Length.PaddingChar);
+                                char padDecimal = element.Length.PaddingCharDecimalPart == char.MinValue ? element.Length.PaddingChar : element.Length.PaddingCharDecimalPart;
+                                parteDecimal = parteDecimal.PadRight(element.Length.DecimalPart, padDecimal);
 
-                                if (element.Longitud.Aligment == FieldLength.AligmentType.Number)
+                                if (element.Length.Aligment == FieldLength.AligmentType.Number)
                                 {
                                     // If the length is 0,0 return string.empty
-                                    if ((element.Longitud.IntegerPart + element.Longitud.DecimalPart) == 0) { finalValue = string.Empty; }
+                                    if ((element.Length.IntegerPart + element.Length.DecimalPart) == 0) { finalValue = string.Empty; }
                                     else
                                     {
                                         // When the Value is empty and the padding is PadWithoutSeparator, put space instead of decimal separator
-                                        if (string.IsNullOrEmpty(element.Valor) && element.Longitud.PaddingWhenIsEmpty == FieldLength.Padding.PadWithoutSeparator)
+                                        if (string.IsNullOrEmpty(element.Value) && element.Length.PaddingWhenIsEmpty == FieldLength.Padding.PadWithoutSeparator)
                                         {
-                                            if (element.Longitud.IntegerPart == 0) { finalValue = parteDecimal; }
-                                            else if (element.Longitud.DecimalPart == 0) { finalValue = parteEntera; }
-                                            else { finalValue = string.Concat(parteEntera, element.Longitud.PaddingChar, parteDecimal); }
+                                            if (element.Length.IntegerPart == 0) { finalValue = parteDecimal; }
+                                            else if (element.Length.DecimalPart == 0) { finalValue = parteEntera; }
+                                            else { finalValue = string.Concat(parteEntera, element.Length.PaddingChar, parteDecimal); }
                                         }
                                         else
                                         {
-                                            if (element.Longitud.IntegerPart == 0) { finalValue = parteDecimal; }
-                                            else if (element.Longitud.DecimalPart == 0) { finalValue = parteEntera; }
-                                            else { finalValue = string.Concat(parteEntera, element.SeparadorDecimalesSalida, parteDecimal); }
+                                            if (element.Length.IntegerPart == 0) { finalValue = parteDecimal; }
+                                            else if (element.Length.DecimalPart == 0) { finalValue = parteEntera; }
+                                            else { finalValue = string.Concat(parteEntera, element.OutputDecimalSeparator, parteDecimal); }
                                         }
                                     }
                                 }
@@ -883,7 +883,7 @@ namespace Fiive.Owl.Formats.Output
                         }
                     }
 
-                    element.Valor = finalValue;
+                    element.Value = finalValue;
 
                     #endregion
                 }
@@ -895,7 +895,7 @@ namespace Fiive.Owl.Formats.Output
 
             #region Valida Separador de decimales
 
-            if (validateSeparator) { element.Valor = element.Valor.Replace(element.SeparadorDecimalesEntrada, element.SeparadorDecimalesSalida); }
+            if (validateSeparator) { element.Value = element.Value.Replace(element.InputDecimalSeparator, element.OutputDecimalSeparator); }
 
             #endregion
         }
@@ -954,14 +954,14 @@ namespace Fiive.Owl.Formats.Output
         /// </summary>
         /// <param name="node">Configuration Node</param>
         /// <returns>Object</returns>
-        protected virtual EstructuraOutput GetStructure(XmlNode node) { return (EstructuraOutput)_handler.XPMLValidator.GetXPMLObject(new EstructuraOutput(), node, _handler); }
+        protected virtual StructureOutput GetStructure(XmlNode node) { return (StructureOutput)_handler.XPMLValidator.GetXPMLObject(new StructureOutput(), node, _handler); }
 
         /// <summary>
         /// Get the section object
         /// </summary>
         /// <param name="node">Configuration Node</param>
         /// <returns>Object</returns>
-        protected virtual SeccionOutput GetSection(XmlNode node) { return (SeccionOutput)_handler.XPMLValidator.GetXPMLObject(new SeccionOutput(), node, _handler); }
+        protected virtual SectionOutput GetSection(XmlNode node) { return (SectionOutput)_handler.XPMLValidator.GetXPMLObject(new SectionOutput(), node, _handler); }
 
         /// <summary>
         /// Termina la seccion
@@ -969,7 +969,7 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="section">Objeto con configuracion de la seccion</param>
         /// <param name="node">Nodo que se esta procesando</param>
         /// <returns>Contenido que cierra la seccion</returns>
-        protected virtual string CloseSection(SeccionOutput section, XmlNode node) { return string.Empty; }
+        protected virtual string CloseSection(SectionOutput section, XmlNode node) { return string.Empty; }
 
         #endregion
 
@@ -981,7 +981,7 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="section">Objeto con configuracion de la seccion</param>
         /// <param name="node">Nodo que se esta procesando</param>
         /// <returns>Contenido de la seccion</returns>
-        protected abstract string GenerateSection(SeccionOutput section, XmlNode node);
+        protected abstract string GenerateSection(SectionOutput section, XmlNode node);
 
         #endregion
 
@@ -1010,7 +1010,7 @@ namespace Fiive.Owl.Formats.Output
         /// </summary>
         protected void AddReservedVars()
         {
-            _handler["CONTADOR_SEGMENTOS"] = _segmentCount.ToString();
+            _handler["TOTAL_SEGMENTS"] = _segmentCount.ToString();
             AddReservedVarsOutput();
         }
 
@@ -1076,7 +1076,7 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="structure">Configuracion XPML</param>
         /// <param name="count">Cantidad de veces que se repite</param>
         /// <returns>true si se lanza el evento, de lo contrario false</returns>
-        protected bool LaunchStructureInitiated(EstructuraOutput structure, int count)
+        protected bool LaunchStructureInitiated(StructureOutput structure, int count)
         {
             if (StructureInitiated != null)
             {
@@ -1093,12 +1093,12 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="section">Seccion que lanza el evento</param>
         /// <param name="count">Cantidad de veces que se va a realizar la iteracion</param>
         /// <param name="consecutive">Numero de iteracion de la seccion padre</param>
-        protected bool LaunchSectionGroupInitiated(SeccionOutput section)
+        protected bool LaunchSectionGroupInitiated(SectionOutput section)
         {
             if (SectionGroupInitiated != null)
             {
                 bool launchEvent;
-                if (section.EventoGrupo.HasValue) { launchEvent = section.EventoGrupo.Value; } else { launchEvent = _currentEstructuraOutput.SeccionEventoGrupo; }
+                if (section.EventGroup.HasValue) { launchEvent = section.EventGroup.Value; } else { launchEvent = _currentEstructuraOutput.EventSectionGroup; }
                 if (!_handler.Settings.Instance && launchEvent)
                 {
                     SectionGroupInitiated(this, new OutputSectionEventArgs() { XPMLConfig = section });
@@ -1115,12 +1115,12 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="section">Seccion que lanza el evento</param>
         /// <param name="count">Cantidad de veces que se va a realizar la iteracion</param>
         /// <param name="consecutive">Numero de iteracion de la seccion padre</param>
-        protected bool LaunchSectionInitiated(SeccionOutput section)
+        protected bool LaunchSectionInitiated(SectionOutput section)
         {
             if (SectionInitiated != null)
             {
                 bool launchEvent;
-                if (section.EventoPrevio.HasValue) { launchEvent = section.EventoPrevio.Value; } else { launchEvent = _currentEstructuraOutput.SeccionEventoPrevio; }
+                if (section.EventPrevious.HasValue) { launchEvent = section.EventPrevious.Value; } else { launchEvent = _currentEstructuraOutput.EventSectionPrevious; }
                 if (!_handler.Settings.Instance && launchEvent)
                 {
                     SectionInitiated(this, new OutputSectionEventArgs() { XPMLConfig = section });
@@ -1141,12 +1141,12 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="descripcion">Descripcion adicional de la seccion</param>
         /// <param name="id">Id de la seccion</param>
         /// <returns>true si se lanza el evento, de lo contrario false</returns>
-        protected bool LaunchSectionProcessed(SeccionOutput section)
+        protected bool LaunchSectionProcessed(SectionOutput section)
         {
             if (SectionProcessed != null)
             {
                 bool launchEvent;
-                if (section.Evento.HasValue) { launchEvent = section.Evento.Value; } else { launchEvent = _currentEstructuraOutput.SeccionEvento; }
+                if (section.Event.HasValue) { launchEvent = section.Event.Value; } else { launchEvent = _currentEstructuraOutput.EventSection; }
                 if (!_handler.Settings.Instance && launchEvent)
                 {
                     section.Elements = _currentElements;
@@ -1164,19 +1164,19 @@ namespace Fiive.Owl.Formats.Output
         /// <param name="element">Elemento</param>
         /// <param name="section">Seccion</param>
         /// <returns>true si se lanza el evento, de lo contrario false</returns>
-        protected bool LaunchElementProcessed(ElementoOutput element, SeccionOutput section)
+        protected bool LaunchElementProcessed(ElementOutput element, SectionOutput section)
         {
             bool launchEvent;
-            if (element.Evento.HasValue) { launchEvent = element.Evento.Value; } else { launchEvent = _currentEstructuraOutput.ElementoEvento; }
+            if (element.Event.HasValue) { launchEvent = element.Event.Value; } else { launchEvent = _currentEstructuraOutput.EventElement; }
 
             if (!_handler.Settings.Instance && launchEvent)
             {
-                if (element.TipoDato == ElementoTipoDato.Alfanumerico && AlphanumericElementProcessed != null)
+                if (element.DataType == ElementDataType.Alphanumeric && AlphanumericElementProcessed != null)
                 {
                     AlphanumericElementProcessed(this, new OutputElementEventArgs() { XPMLConfig = element, Section = section });
                     return true;
                 }
-                else if (element.TipoDato == ElementoTipoDato.Numerico && NumericElementProcessed != null)
+                else if (element.DataType == ElementDataType.Numeric && NumericElementProcessed != null)
                 {
                     NumericElementProcessed(this, new OutputElementEventArgs() { XPMLConfig = element, Section = section });
                     return true;

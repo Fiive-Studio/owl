@@ -9,17 +9,17 @@ namespace Fiive.Owl.Formats.Output.XPML
     /// <summary>
     /// Represent a SQL Section configuration
     /// </summary>
-    public class SQLSeccionOutput : SeccionOutput
+    public class SqlSectionOutput : SectionOutput
     {
         #region Constructor
 
-        public SQLSeccionOutput() { TipoSQL = TipoSQL.Select; }
+        public SqlSectionOutput() { SqlType = SqlType.Select; }
 
         #endregion
 
         #region Properties
 
-        public TipoSQL TipoSQL { get; set; }
+        public SqlType SqlType { get; set; }
 
         #endregion
 
@@ -29,14 +29,14 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             XPMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "TipoSQL", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "sql-type", PropertyName = "SqlType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
 
             return signing;
         }
 
         public override void SetPropertyValue(string property, string value)
         {
-            if (property == "TipoSQL") { TipoSQL = (TipoSQL)Enum.Parse(typeof(TipoSQL), value); }
+            if (property == "SqlType") { SqlType = (SqlType)Enum.Parse(typeof(SqlType), value); }
             else { base.SetPropertyValue(property, value); }
         }
 
