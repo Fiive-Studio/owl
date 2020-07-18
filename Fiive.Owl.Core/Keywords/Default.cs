@@ -1,28 +1,30 @@
-﻿using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.XPML;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.Keywords;
+using System.Xml;
 
 namespace Fiive.Owl.Core.Keywords
 {
-    public class IndiceDe : IKeyword
+    /// <summary>
+    /// Valor Predeterminado
+    /// </summary>
+    public class Default : IKeyword
     {
+        #region Constructor
+
+        public Default() { KeywordType = KeywordsType.Default; }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
-        /// Obtiene / Establece el valor
+        /// Obtiene / Establece el Valor
         /// </summary>
-        public string Valor { get; set; }
-        /// <summary>
-		/// Obtiene / Establece la subcadena a buscar
-		/// </summary>
-        public string CadenaBuscar { get; set; }
-        /// <summary>
-		/// Obtiene / Establece la posicion desde donde se va a iniciar la busqueda
-		/// </summary>
-        public int Inicio { get; set; }
+        public string Value { get; set; }
 
         #endregion
 
@@ -38,9 +40,7 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "CadenaBuscar", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Inicio", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Int }
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
                 }
             };
         }
@@ -63,7 +63,7 @@ namespace Fiive.Owl.Core.Keywords
         /// <returns>Valor</returns>
         public string GetValue(object handler)
         {
-            return Valor.IndexOf(CadenaBuscar, Inicio).ToString();
+            return Value;
         }
 
         #endregion

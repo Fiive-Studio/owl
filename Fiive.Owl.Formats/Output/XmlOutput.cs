@@ -20,7 +20,7 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Nombre por defecto del elemento que trae el valor interno de la etiqueta
         /// </summary>
-        readonly string _defaultXmlValue = "PGA_ValorXML";
+        readonly string _defaultXmlValue = "Owl_ValorXML";
         /// <summary>
         /// Indica si se valida el nombre del atributo del nombre de los valores de las etiquetas
         /// </summary>

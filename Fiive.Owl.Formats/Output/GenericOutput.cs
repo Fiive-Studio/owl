@@ -10,7 +10,6 @@ using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Formats.Output.XPML;
 using Fiive.Owl.Core.XPML;
 using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Formats.Output.Auxiliar;
 using System.Threading;
 using Fiive.Owl.Core.Extensions;
@@ -158,7 +157,7 @@ namespace Fiive.Owl.Formats.Output
                         ProcessOutputSections();
                         _currentOutputValue.Insert(0, OpenContent());
                         _currentOutputValue.Append(CloseContent());
-                        yield return _currentOutputValue; // Se realiza yield return para que el que llame a PGA pueda leer las variables creadas antes de que sean borradas
+                        yield return _currentOutputValue; // Se realiza yield return para que el que llame a Owl pueda leer las variables creadas antes de que sean borradas
                         DeleteGlobalVarsCreated();  // Elimina las variables creadas dentro del archivo de configuracion
 
                         iteraCount++;
@@ -495,7 +494,7 @@ namespace Fiive.Owl.Formats.Output
                 {
                     element.Valor = element.TipoDato == ElementoTipoDato.Numerico ? _handler.KeywordsManager.DefaultNumericInstanceValue : element.Nombre;
                 }
-                else if (_handler.Settings.Instance && (keyword.KeywordType == KeywordsType.Variable || keyword.KeywordType == KeywordsType.Reservada))
+                else if (_handler.Settings.Instance && (keyword.KeywordType == KeywordsType.Variable || keyword.KeywordType == KeywordsType.Key))
                 {
                     string value = keyword.GetValue(_handler);
                     // Esta validacion se hace ya que cuando es una Variable o una palabra Reservada puede que no exista

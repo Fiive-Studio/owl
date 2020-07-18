@@ -11,11 +11,11 @@ namespace Fiive.Owl.Core.Keywords
     /// <summary>
     /// Substring Value
     /// </summary>
-    public class SubCadena : IKeyword
+    public class Substring : IKeyword
     {
         #region Constructor
 
-        public SubCadena() { Largo = -1; }
+        public Substring() { Length = -1; }
 
         #endregion
 
@@ -24,19 +24,19 @@ namespace Fiive.Owl.Core.Keywords
         /// <summary>
         /// Obtiene / Establece el valor
         /// </summary>
-        public string Valor { get; set; }
+        public string Value { get; set; }
         /// <summary>
 		/// Obtiene / Establece el inicio
 		/// </summary>
-        public int Inicio { get; set; }
+        public int Start { get; set; }
         /// <summary>
 		/// Obtiene / Establece el largo
 		/// </summary>
-        public int Largo { get; set; }
+        public int Length { get; set; }
         /// <summary>
 		/// Obtiene / Establece si se quitan los espacios en blanco despues de obtener la subcadena
 		/// </summary>
-        public bool Limpiar { get; set; }
+        public bool Trim { get; set; }
 
         #endregion
 
@@ -52,10 +52,10 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Inicio", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.Int },
-                    new XPMLSigning.XPMLRestriction { Name = "Largo", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Int },
-                    new XPMLSigning.XPMLRestriction { Name = "Limpiar", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean }
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "start", PropertyName = "Start", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.Int },
+                    new XPMLSigning.XPMLRestriction { TagName = "length", PropertyName = "Length", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Int },
+                    new XPMLSigning.XPMLRestriction { TagName = "trim", PropertyName = "Trim", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean }
                 }
             };
         }
@@ -78,8 +78,8 @@ namespace Fiive.Owl.Core.Keywords
         /// <returns>Valor</returns>
         public string GetValue(object handler)
         {
-            if (Largo == -1) { return Valor.GetSafeSubstring(Inicio, Limpiar); }
-            else { return Valor.GetSafeSubstring(Inicio, Largo, Limpiar); }
+            if (Length == -1) { return Value.GetSafeSubstring(Start, Trim); }
+            else { return Value.GetSafeSubstring(Start, Length, Trim); }
         }
 
         #endregion

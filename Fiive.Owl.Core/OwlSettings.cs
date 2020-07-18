@@ -7,7 +7,7 @@ using System.Xml;
 namespace Fiive.Owl.Core
 {
     /// <summary>
-    /// Configuracion para el mapeo que realiza PGA
+    /// Configuracion para el mapeo que realiza Owl
     /// </summary>
     public class OwlSettings
     {

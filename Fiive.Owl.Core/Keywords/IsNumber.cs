@@ -1,4 +1,5 @@
-﻿using Fiive.Owl.Core.Keywords;
+﻿using Fiive.Owl.Core.Extensions;
+using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Core.XPML;
 using System;
 using System.Collections.Generic;
@@ -7,26 +8,22 @@ using System.Text;
 
 namespace Fiive.Owl.Core.Keywords
 {
-    public class EsVacio : IKeyword
+    public class IsNumber : IKeyword
     {
         #region Properties
 
         /// <summary>
         /// Obtiene / Establece el valor
         /// </summary>
-        public string Valor { get; set; }
+        public string Value { get; set; }
         /// <summary>
 		/// Obtiene / Establece el valor retornado si se cumple la condicion
 		/// </summary>
-        public string ValorVerdadero { get; set; }
+        public string True { get; set; }
         /// <summary>
 		/// Obtiene / Establece el valor retornado si no se cumple la condicion
 		/// </summary>
-        public string ValorFalso { get; set; }
-        /// <summary>
-		/// Obtiene / Establece si se quitan los espacios en blanco antes de verificar si el valor es vacio
-		/// </summary>
-        public bool Limpiar { get; set; }
+        public string False { get; set; }
 
         #endregion
 
@@ -42,10 +39,9 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "ValorVerdadero", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "ValorFalso", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Limpiar", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean }
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "true", PropertyName = "True", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "false", PropertyName = "False", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String }
                 }
             };
         }
@@ -68,11 +64,10 @@ namespace Fiive.Owl.Core.Keywords
         /// <returns>Valor</returns>
         public string GetValue(object handler)
         {
-            if (ValorFalso == null) { ValorFalso = string.Empty; }
+            if (False == null) { False = string.Empty; }
 
-            if (Limpiar) { Valor = Valor.Trim(); }
-            if (string.IsNullOrEmpty(Valor)) { return ValorVerdadero; }
-            else { return ValorFalso; }
+            if (Value.IsDecimal()) { return True; }
+            else { return False; }
         }
 
         #endregion

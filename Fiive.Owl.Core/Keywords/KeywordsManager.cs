@@ -31,7 +31,7 @@ namespace Fiive.Owl.Core.Keywords
         /// <summary>
         /// Obtiene el valor por defecto para valores alfanumericos cuando se esta generando una instancia
         /// </summary>
-        public string DefaultAlphanumericInstanceValue { get { return "VALOR_INSTANCIA"; } }
+        public string DefaultAlphanumericInstanceValue { get { return "INSTANCE_VALUE"; } }
 
         /// <summary>
         /// Obtiene el valor por defecto para valores numericos cuando se esta generando una instancia
@@ -71,25 +71,25 @@ namespace Fiive.Owl.Core.Keywords
 
             #region Predeterminado
 
-            if (node.Attributes["Predeterminado"] != null) { return new Predeterminado { Valor = node.Attributes["Predeterminado"].Value }; }
+            if (node.Attributes["default"] != null) { return new Default { Value = node.Attributes["default"].Value }; }
 
             #endregion
 
             #region Variable
 
-            if (node.Attributes["Variable"] != null) { return new Variable { Valor = node.Attributes["Variable"].Value }; }
+            if (node.Attributes["variable"] != null) { return new Variable { Value = node.Attributes["variable"].Value }; }
 
             #endregion
 
             #region Reservada
 
-            if (node.Attributes["Reservada"] != null) { return new Reservada { Valor = node.Attributes["Reservada"].Value }; }
+            if (node.Attributes["key"] != null) { return new Key { Value = node.Attributes["key"].Value }; }
 
             #endregion
 
             #region Buscar
 
-            if (!handler.Settings.Instance && node.Attributes["Buscar"] != null) { return new Buscar { Valor = node.Attributes["Buscar"].Value }; }
+            if (!handler.Settings.Instance && node.Attributes["xpath"] != null) { return new Xpath { Value = node.Attributes["xpath"].Value }; }
 
             #endregion
 
@@ -108,25 +108,25 @@ namespace Fiive.Owl.Core.Keywords
         {
             #region Predeterminado
 
-            if (values.GetSafeValue(0) == "Predeterminado") { return new Predeterminado { Valor = values.GetSafeValue(1) }; }
+            if (values.GetSafeValue(0) == "default") { return new Default { Value = values.GetSafeValue(1) }; }
 
             #endregion
 
             #region Variable
 
-            if (values.GetSafeValue(0) == "Variable") { return new Variable { Valor = values.GetSafeValue(1) }; }
+            if (values.GetSafeValue(0) == "variable") { return new Variable { Value = values.GetSafeValue(1) }; }
 
             #endregion
 
             #region Reservada
 
-            if (values.GetSafeValue(0) == "Reservada") { return new Reservada { Valor = values.GetSafeValue(1) }; }
+            if (values.GetSafeValue(0) == "key") { return new Key { Value = values.GetSafeValue(1) }; }
 
             #endregion
 
             #region Buscar
 
-            if (!handler.Settings.Instance && values.GetSafeValue(0) == "Buscar") { return new Buscar { Valor = values.GetSafeValue(1) }; }
+            if (!handler.Settings.Instance && values.GetSafeValue(0) == "xpath") { return new Xpath { Value = values.GetSafeValue(1) }; }
 
             #endregion
 
@@ -146,18 +146,19 @@ namespace Fiive.Owl.Core.Keywords
             #region Instancia
 
             // Para las instancias solo se permite Predeterminado, Variable y Reservada
-            if (handler.Settings.Instance && (node.Name != "Predeterminado" && node.Name != "Variable" && node.Name != "Reservada")) { return null; }
+            if (handler.Settings.Instance && (node.Name != "default" && node.Name != "variable" && node.Name != "key")) { return null; }
 
             #endregion
 
             #region Value
 
-            if (KeywordsList.Contains(node.Name))
+            var className = string.Concat(node.Name[0].ToString().ToUpper(), node.Name.GetSafeSubstring(1));
+            if (KeywordsList.Contains(className))
             {
-                IXPMLObject keywordInstance = (IXPMLObject)Activator.CreateInstance(Type.GetType(string.Format("Fiive.Owl.Core.Keywords.{0}", node.Name)));
+                IXPMLObject keywordInstance = (IXPMLObject)Activator.CreateInstance(Type.GetType(string.Format("Fiive.Owl.Core.Keywords.{0}", className)));
                 IKeyword keyword = (IKeyword)handler.XPMLValidator.GetXPMLObject(keywordInstance, node, handler);
 
-                KeywordsType keywordType = (KeywordsType)Enum.Parse(typeof(KeywordsType), node.Name);
+                KeywordsType keywordType = (KeywordsType)Enum.Parse(typeof(KeywordsType), className);
                 keyword.KeywordType = keywordType;
                 return keyword;
             }

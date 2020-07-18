@@ -14,62 +14,58 @@ namespace Fiive.Owl.Core.Keywords
         /// <summary>
         /// Indica PalabraClave No Existente
         /// </summary>
-        NoEncontrada = 0,
+        NotFound = 0,
         /// <summary>
-        /// Indica Predeterminado
+        /// Indica Predeterminado - default
         /// </summary>
-        Predeterminado = 1,
+        Default = 1,
         /// <summary>
-        /// Indica Variable
+        /// Indica Variable - variable
         /// </summary>
         Variable = 2,
         /// <summary>
-        /// Indica Reservada
+        /// Indica Reservada - key
         /// </summary>
-        Reservada = 4,
+        Key = 4,
         /// <summary>
-        /// Indica Buscar
+        /// Indica Buscar - xpath
         /// </summary>
-        Buscar = 8,
+        Xpath = 8,
         /// <summary>
-        /// Indica Referencia
+        /// Indica Referencia - reference
         /// </summary>
-        Referencia = 16,
+        Reference = 16,
         /// <summary>
-        /// Indica Concatenar
+        /// Indica Concatenar - concatenate
         /// </summary>
-        Concatenar = 32,
+        Concatenate = 32,
         /// <summary>
-        /// Indica SubCadena
+        /// Indica SubCadena - substring
         /// </summary>
-        SubCadena = 64,
+        Substring = 64,
         /// <summary>
-        /// Indica Longitud
+        /// Indica Longitud - length
         /// </summary>
-        Longitud = 128,
+        Length = 128,
         /// <summary>
-        /// Indica si el valor representa un numero
+        /// Indica si el valor representa un numero - is-number
         /// </summary>
-        EsNumero = 256,
+        IsNumber = 256,
         /// <summary>
-        /// Indica la posicion donde se encuentra una subcadena
+        /// Indica la posicion donde se encuentra una subcadena - index-of
         /// </summary>
-        IndiceDe = 512,
+        IndexOf = 512,
         /// <summary>
-        /// Indica si la cadena esta vacia
+        /// Indica si la cadena esta vacia - is-empty
         /// </summary>
-        EsVacio = 1024,
+        IsEmpty = 1024,
         /// <summary>
-        /// Indica Limpiar Espacios
+        /// Indica Limpiar Espacios - trim
         /// </summary>
-        LimpiarEspacios = 2048,
+        Trim = 2048,
         /// <summary>
-        /// Indica validador Si
+        /// Indica validador Si - if
         /// </summary>
-        Si = 4096,
-        /// <summary>
-        /// Indica Expansion
-        /// </summary>
-        Expansion = 8192
+        If = 4096
     }
 }

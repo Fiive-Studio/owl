@@ -85,16 +85,16 @@ namespace Fiive.Owl.Formats.Output.XPML
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { Name = "Nombre", Attribute = true, Tag = false, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Nodo", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Itera", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Evento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "EventoPrevio", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "EventoGrupo", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "Descripcion", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Repeticiones", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Int },
-                    new XPMLSigning.XPMLRestriction { Name = "MostrarContenido", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "Id", Attribute = true, Tag = false, Mandatory = false, PropertyType = XPMLPropertyType.String }
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Nombre", Attribute = true, Tag = false, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Nodo", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Itera", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Evento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "EventoPrevio", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "EventoGrupo", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Descripcion", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Repeticiones", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Int },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "MostrarContenido", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Id", Attribute = true, Tag = false, Mandatory = false, PropertyType = XPMLPropertyType.String }
                 }
             };
         }

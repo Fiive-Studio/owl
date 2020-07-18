@@ -1,5 +1,4 @@
-﻿using Fiive.Owl.Core.Extensions;
-using Fiive.Owl.Core.Keywords;
+﻿using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Core.XPML;
 using System;
 using System.Collections.Generic;
@@ -8,22 +7,22 @@ using System.Text;
 
 namespace Fiive.Owl.Core.Keywords
 {
-    public class EsNumero : IKeyword
+    public class IndexOf : IKeyword
     {
         #region Properties
 
         /// <summary>
         /// Obtiene / Establece el valor
         /// </summary>
-        public string Valor { get; set; }
+        public string Value { get; set; }
         /// <summary>
-		/// Obtiene / Establece el valor retornado si se cumple la condicion
+		/// Obtiene / Establece la subcadena a buscar
 		/// </summary>
-        public string ValorVerdadero { get; set; }
+        public string StringSeek { get; set; }
         /// <summary>
-		/// Obtiene / Establece el valor retornado si no se cumple la condicion
+		/// Obtiene / Establece la posicion desde donde se va a iniciar la busqueda
 		/// </summary>
-        public string ValorFalso { get; set; }
+        public int Start { get; set; }
 
         #endregion
 
@@ -39,9 +38,9 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "ValorVerdadero", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "ValorFalso", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String }
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "string-seek", PropertyName = "StringSeek", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "start", PropertyName = "Start", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Int }
                 }
             };
         }
@@ -64,10 +63,7 @@ namespace Fiive.Owl.Core.Keywords
         /// <returns>Valor</returns>
         public string GetValue(object handler)
         {
-            if (ValorFalso == null) { ValorFalso = string.Empty; }
-
-            if (Valor.IsDecimal()) { return ValorVerdadero; }
-            else { return ValorFalso; }
+            return Value.IndexOf(StringSeek, Start).ToString();
         }
 
         #endregion

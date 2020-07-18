@@ -11,16 +11,16 @@ using Fiive.Owl.Core.Extensions;
 namespace Fiive.Owl.Core.Keywords
 {
     /// <summary>
-    /// Valor de variables reservadas de PGA
+    /// Valor de variables reservadas de Owl
     /// </summary>
-    public class Reservada : IKeyword
+    public class Key : IKeyword
     {
         #region Properties
 
         /// <summary>
         /// Obtiene / Establece el Valor
         /// </summary>
-        public string Valor { get; set; }
+        public string Value { get; set; }
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>() 
                 { 
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
                 }
             };
         }
@@ -60,11 +60,11 @@ namespace Fiive.Owl.Core.Keywords
         public string GetValue(object handler)
         {
             // Se hizo este metodo para poder darle soporte a la sintaxis vieja
-            string[] partsReturn = Valor.Split(new string[] { ":" }, 2, StringSplitOptions.None);
+            string[] partsReturn = Value.Split(new string[] { ":" }, 2, StringSplitOptions.None);
             string returnValue = partsReturn.GetSafeValue(0);
             string format = partsReturn.GetSafeValue(1);
 
-            if (returnValue == "FECHAHORA_SISTEMA")
+            if (returnValue == "DATETIME")
             {
                 if (format.IsNullOrWhiteSpace()) { return DateTime.Now.ToString("yyyyMMdd"); }
                 else { return DateTime.Now.ToString(format); }
@@ -77,7 +77,7 @@ namespace Fiive.Owl.Core.Keywords
                 if (config.Settings.Instance && !config.ExistVariable(returnValue)) { return config.KeywordsManager.DefaultAlphanumericInstanceValue; }
 
                 if (config.ExistVariable(returnValue)) { return config[returnValue]; }
-                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.ReservadaWordDoesNotSupport), returnValue), "Reservada"); }
+                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.ReservadaWordDoesNotSupport), returnValue), "Key"); }
             }
         }
         

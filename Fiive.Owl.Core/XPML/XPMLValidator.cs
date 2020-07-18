@@ -42,7 +42,7 @@ namespace Fiive.Owl.Core.XPML
                 #region Attribute
 
                 XmlAttribute nAttribute = null;
-                if (xr.Attribute) { nAttribute = GetXPMLAttribute(node, xr.Name); } // Validate if the field can be an attribute
+                if (xr.Attribute) { nAttribute = GetXPMLAttribute(node, xr.TagName); } // Validate if the field can be an attribute
 
                 if (nAttribute != null)
                 {
@@ -53,18 +53,18 @@ namespace Fiive.Owl.Core.XPML
                     {
                         value = ValidateInlineXPML(value, handler);
 
-                        if (xr.PropertyType == XPMLPropertyType.String) { SetProperty(xr.Name, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Char && value.Length > 0) { SetProperty(xr.Name, obj, value[0]); }
-                        else if (xr.PropertyType == XPMLPropertyType.Boolean) { SetBooleanProperty(xr.Name, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Int) { SetIntProperty(xr.Name, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Enum || xr.PropertyType == XPMLPropertyType.Object) { SetPropertyValue(xr.Name, obj, value); }
+                        if (xr.PropertyType == XPMLPropertyType.String) { SetProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XPMLPropertyType.Char && value.Length > 0) { SetProperty(xr.PropertyName, obj, value[0]); }
+                        else if (xr.PropertyType == XPMLPropertyType.Boolean) { SetBooleanProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XPMLPropertyType.Int) { SetIntProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XPMLPropertyType.Enum || xr.PropertyType == XPMLPropertyType.Object) { SetPropertyValue(xr.PropertyName, obj, value); }
                     }
                     else
                     {
                         List<string> values = new List<string>();
                         foreach (string v in value.Split(',')) { string val = ValidateInlineXPML(v, handler); values.Add(val); }
 
-                        SetProperty(xr.Name, obj, values);
+                        SetProperty(xr.PropertyName, obj, values);
                     }
                 }
 
@@ -74,23 +74,23 @@ namespace Fiive.Owl.Core.XPML
 
                 else if (xr.Tag && hasXPMLConfiguration) // Validate if the field can be an tag
                 {
-                    XmlNode nProperty = GetXPMLProperty(node, xr.Name);
+                    XmlNode nProperty = GetXPMLProperty(node, xr.TagName);
                     if (nProperty != null)
                     {
                         string value = string.Empty;
                         hasMandatoryValidation = true;
                         if (xr.PropertyType != XPMLPropertyType.List) { value = GetKeywordValue(nProperty, handler); }
 
-                        if (xr.PropertyType == XPMLPropertyType.String) { SetProperty(xr.Name, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Char && value.Length > 0) { SetProperty(xr.Name, obj, value[0]); }
-                        else if (xr.PropertyType == XPMLPropertyType.Boolean) { SetBooleanProperty(xr.Name, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Int) { SetIntProperty(xr.Name, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Enum || xr.PropertyType == XPMLPropertyType.Object) { SetPropertyValue(xr.Name, obj, value); }
+                        if (xr.PropertyType == XPMLPropertyType.String) { SetProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XPMLPropertyType.Char && value.Length > 0) { SetProperty(xr.PropertyName, obj, value[0]); }
+                        else if (xr.PropertyType == XPMLPropertyType.Boolean) { SetBooleanProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XPMLPropertyType.Int) { SetIntProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XPMLPropertyType.Enum || xr.PropertyType == XPMLPropertyType.Object) { SetPropertyValue(xr.PropertyName, obj, value); }
                         else if (xr.PropertyType == XPMLPropertyType.List)
                         {
                             List<string> values = new List<string>();
                             foreach (XmlNode valueNode in nProperty.SelectNodes(string.Concat(nProperty.Name, ".", "Valor"))) { values.Add(GetKeywordValue(valueNode, handler)); }
-                            SetProperty(xr.Name, obj, values);
+                            SetProperty(xr.PropertyName, obj, values);
                         }
                     }
                 }
@@ -100,7 +100,7 @@ namespace Fiive.Owl.Core.XPML
                 #region Final Validation
 
                 // Validate the field if doesn't exist in the configuration
-                if (!hasMandatoryValidation && xr.Mandatory) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyDoesNotExist), xr.Name)); }
+                if (!hasMandatoryValidation && xr.Mandatory) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyDoesNotExist), xr.PropertyName)); }
 
                 #endregion
             }

@@ -7,13 +7,13 @@ using System.Text;
 namespace Fiive.Owl.Core.Adapters
 {
     /// <summary>
-    /// Representa la configuracion de PGA Mapper
+    /// Representa la configuracion de Owl Mapper
     /// </summary>
     public class OwlAdapterSettings: ConfigurationSection
     {
         #region Statics
 
-        private static OwlAdapterSettings _settings = ConfigurationManager.GetSection("PGAMapperSettings") as OwlAdapterSettings;
+        private static OwlAdapterSettings _settings = ConfigurationManager.GetSection("OwlAdapterSettings") as OwlAdapterSettings;
 
         /// <summary>
         /// Obtiene la configuracion de log del App.config
@@ -35,21 +35,21 @@ namespace Fiive.Owl.Core.Adapters
         /// <summary>
         /// Maximo numero de detalles de log a agregar
         /// </summary>
-        [ConfigurationProperty("MapperEDILibrary", DefaultValue = "Carvajal.SI.PGA.Mapper.EDI.Segments.{0}, Carvajal.SI.PGA.Mapper.EDI", IsRequired = false)]
+        [ConfigurationProperty("OwlEDILibrary", DefaultValue = "Fiive.Owl.EDI.Segments.{0}, Fiive.Owl.EDI", IsRequired = false)]
         public string MapperEDILibrary
         {
-            get { return (string)this["MapperEDILibrary"]; }
-            set { this["MapperEDILibrary"] = value; }
+            get { return (string)this["OwlEDILibrary"]; }
+            set { this["OwlEDILibrary"] = value; }
         }
 
         /// <summary>
         /// Maximo numero de detalles de log a agregar
         /// </summary>
-        [ConfigurationProperty("MapperANSILibrary", DefaultValue = "Carvajal.SI.PGA.Mapper.ANSI.Segments.{0}, Carvajal.SI.PGA.Mapper.ANSI", IsRequired = false)]
+        [ConfigurationProperty("OwlANSILibrary", DefaultValue = "Fiive.Owl.ANSI.Segments.{0}, Fiive.Owl.ANSI", IsRequired = false)]
         public string MapperANSILibrary
         {
-            get { return (string)this["MapperANSILibrary"]; }
-            set { this["MapperANSILibrary"] = value; }
+            get { return (string)this["OwlANSILibrary"]; }
+            set { this["OwlANSILibrary"] = value; }
         }
 
         #endregion

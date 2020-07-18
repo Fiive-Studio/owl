@@ -33,9 +33,9 @@ namespace Fiive.Owl.Formats.Output.XPML
         public override XPMLSigning GetSigning()
         {
             XPMLSigning signing = base.GetSigning();
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "TipoElementoSQL", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "TipoWhere", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "ValorRequerido", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "TipoElementoSQL", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "TipoWhere", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "ValorRequerido", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
 
             return signing;
         }

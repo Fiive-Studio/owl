@@ -29,7 +29,7 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             XPMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "TipoEtiqueta", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "TipoEtiqueta", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
 
             return signing;
         }

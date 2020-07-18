@@ -40,18 +40,18 @@ namespace Fiive.Owl.Formats.Output.XPML
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>() 
                 { 
-                    new XPMLSigning.XPMLRestriction { Name = "Itera", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Linea", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "NumeroLinea", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "SeccionEvento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "SeccionEventoPrevio", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "SeccionEventoGrupo", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "ElementoEvento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "ElementoEventoSeccion", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
-                    new XPMLSigning.XPMLRestriction { Name = "SeparadorDecimalesEntrada", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char },
-                    new XPMLSigning.XPMLRestriction { Name = "SeparadorDecimalesSalida", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char },
-                    new XPMLSigning.XPMLRestriction { Name = "Id", Attribute = true, Tag = false, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Base", Attribute = true, Tag = false, Mandatory = false, PropertyType = XPMLPropertyType.String }
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Itera", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Linea", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "NumeroLinea", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "SeccionEvento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "SeccionEventoPrevio", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "SeccionEventoGrupo", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "ElementoEvento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "ElementoEventoSeccion", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "SeparadorDecimalesEntrada", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "SeparadorDecimalesSalida", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Id", Attribute = true, Tag = false, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { PropertyName = "Base", Attribute = true, Tag = false, Mandatory = false, PropertyType = XPMLPropertyType.String }
                 }
             };
         }

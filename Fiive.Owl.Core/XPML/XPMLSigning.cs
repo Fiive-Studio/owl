@@ -20,7 +20,8 @@ namespace Fiive.Owl.Core.XPML
         /// </summary>
         public class XPMLRestriction
         {
-            public string Name { get; set; }
+            public string TagName { get; set; }
+            public string PropertyName { get; set; }
             public bool Attribute { get; set; }
             public bool Tag { get; set; }
             public bool Mandatory { get; set; }

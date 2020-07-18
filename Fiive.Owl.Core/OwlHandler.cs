@@ -20,9 +20,9 @@ namespace Fiive.Owl.Core
         #region Vars
 
         /// <summary>
-        /// Storage PGA Vars
+        /// Storage Owl Vars
         /// </summary>
-        Dictionary<string, string> _PGAVars;
+        Dictionary<string, string> _OwlVars;
 
         #endregion
 
@@ -43,16 +43,16 @@ namespace Fiive.Owl.Core
         /// </summary>
         public InputValue CurrentValue { get; set; }
 
-        OwlSettings _pgaSettings;
+        OwlSettings _owlSettings;
         /// <summary>
         /// Obtiene / Establece la configuracion del mapeo
         /// </summary>
         public OwlSettings Settings
         {
-            get { return _pgaSettings; }
+            get { return _owlSettings; }
             set
             {
-                _pgaSettings = value;
+                _owlSettings = value;
                 ValidateNumberDecimalSeparator();
                 LoadConfigMap();
             }
@@ -87,7 +87,7 @@ namespace Fiive.Owl.Core
             Settings = settings;
             XPMLValidator = new XPMLValidator();
             KeywordsManager = new KeywordsManager();
-            _PGAVars = new Dictionary<string, string>();
+            _OwlVars = new Dictionary<string, string>();
         }
 
         #endregion
@@ -100,8 +100,8 @@ namespace Fiive.Owl.Core
         void ValidateNumberDecimalSeparator()
         {
             // Se valida si se establecio el separador de decimales, en caso de que no se haya asignado se coloca el que este configurado en el Thread
-            if (_pgaSettings.InputNumberDecimalSeparator == char.MinValue) { _pgaSettings.InputNumberDecimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]; }
-            if (_pgaSettings.OutputNumberDecimalSeparator == char.MinValue) { _pgaSettings.OutputNumberDecimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]; }
+            if (_owlSettings.InputNumberDecimalSeparator == char.MinValue) { _owlSettings.InputNumberDecimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]; }
+            if (_owlSettings.OutputNumberDecimalSeparator == char.MinValue) { _owlSettings.OutputNumberDecimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]; }
         }
 
         #endregion
@@ -114,12 +114,12 @@ namespace Fiive.Owl.Core
         /// <exception cref="OwlException">Error al cargar el archivo de Configuracion Xml</exception>
         public void LoadConfigMap()
         {
-            if (_pgaSettings == null) { throw new OwlException(ETexts.GT(ErrorType.OwlSettingsIsNull)); }
-            if (_pgaSettings.PathConfig.IsNullOrWhiteSpace() && _pgaSettings.XmlConfig == null) { throw new OwlException(ETexts.GT(ErrorType.PathConfigMapIsEmpty)); }
-            if (!_pgaSettings.PathConfig.IsNullOrWhiteSpace() && !File.Exists(_pgaSettings.PathConfig)) { throw new OwlException(string.Format(ETexts.GT(ErrorType.ConfigMapNotFound), _pgaSettings.PathConfig)); }
+            if (_owlSettings == null) { throw new OwlException(ETexts.GT(ErrorType.OwlSettingsIsNull)); }
+            if (_owlSettings.PathConfig.IsNullOrWhiteSpace() && _owlSettings.XmlConfig == null) { throw new OwlException(ETexts.GT(ErrorType.PathConfigMapIsEmpty)); }
+            if (!_owlSettings.PathConfig.IsNullOrWhiteSpace() && !File.Exists(_owlSettings.PathConfig)) { throw new OwlException(string.Format(ETexts.GT(ErrorType.ConfigMapNotFound), _owlSettings.PathConfig)); }
 
             ConfigMap = new OwlConfigMap(Settings);
-            ConfigMap.LoadConfigMap(_pgaSettings.Instance);
+            ConfigMap.LoadConfigMap(_owlSettings.Instance);
         }
 
         #endregion
@@ -149,14 +149,14 @@ namespace Fiive.Owl.Core
 
         #endregion
 
-        #region PGA Vars
+        #region Owl Vars
 
         /// <summary>
         /// Agrega variable global, en caso de que exista la actualiza
         /// </summary>
         /// <param name="key">Llave</param>
         /// <param name="value">Valor</param>
-        private void AddVariable(string key, string value) { _PGAVars[key] = value; }
+        private void AddVariable(string key, string value) { _OwlVars[key] = value; }
 
         /// <summary>
         /// Obtiene variable global
@@ -165,7 +165,7 @@ namespace Fiive.Owl.Core
         /// <exception cref="OwlException">La variable no existe</exception>
         private string GetVariable(string key)
         {
-            if (_PGAVars.ContainsKey(key)) { return _PGAVars[key]; }
+            if (_OwlVars.ContainsKey(key)) { return _OwlVars[key]; }
             throw new OwlException(string.Format(ETexts.GT(ErrorType.OwlVarUndefined), key));
         }
 
@@ -174,13 +174,13 @@ namespace Fiive.Owl.Core
         /// </summary>
         /// <param name="key">Llave</param>
         /// <returns>true si existe, de lo contrario false</returns>
-        public bool ExistVariable(string key) { return _PGAVars.ContainsKey(key); }
+        public bool ExistVariable(string key) { return _OwlVars.ContainsKey(key); }
 
         /// <summary>
         /// Quita una variable global
         /// </summary>
         /// <param name="key">Llave</param>
-        public void RemoveVariable(string key) { if (_PGAVars.ContainsKey(key)) { _PGAVars.Remove(key); } }
+        public void RemoveVariable(string key) { if (_OwlVars.ContainsKey(key)) { _OwlVars.Remove(key); } }
 
         /// <summary>
         /// Agrega u Obtiene la variable

@@ -8,18 +8,18 @@ using System.Text;
 
 namespace Fiive.Owl.Core.Keywords
 {
-    public class LimpiarEspacios : IKeyword
+    public class Trim : IKeyword
     {
         #region Properties
 
         /// <summary>
         /// Obtiene / Establece el valor
         /// </summary>
-        public string Valor { get; set; }
+        public string Value { get; set; }
         /// <summary>
 		/// Obtiene / Establece el inicio
 		/// </summary>
-        public TrimType Lado { get; set; }
+        public TrimType Type { get; set; }
 
         #endregion
 
@@ -35,16 +35,16 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Lado", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum }
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "type", PropertyName = "Type", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum }
                 }
             };
         }
 
         public void SetPropertyValue(string property, string value)
         {
-            if (property == "Lado") { Lado = (TrimType)Enum.Parse(typeof(TrimType), value); }
-            else { throw new OwlKeywordException(KeywordsType.LimpiarEspacios, string.Format(ETexts.GT(ErrorType.XPMLEnumInvalid), property)); }
+            if (property == "Type") { Type = (TrimType)Enum.Parse(typeof(TrimType), value); }
+            else { throw new OwlKeywordException(KeywordsType.Trim, string.Format(ETexts.GT(ErrorType.XPMLEnumInvalid), property)); }
         }
 
         #endregion
@@ -63,11 +63,11 @@ namespace Fiive.Owl.Core.Keywords
         /// <returns>Valor</returns>
         public string GetValue(object handler)
         {
-            if (Lado == TrimType.NoAplica) { return Valor.Trim(); }
-            else if (Lado == TrimType.Inicio) { return Valor.TrimStart(); }
-            else if (Lado == TrimType.Fin) { return Valor.TrimEnd(); }
+            if (Type == TrimType.NotApply) { return Value.Trim(); }
+            else if (Type == TrimType.Start) { return Value.TrimStart(); }
+            else if (Type == TrimType.End) { return Value.TrimEnd(); }
 
-            return Valor;
+            return Value;
         }
 
         #endregion
@@ -75,6 +75,6 @@ namespace Fiive.Owl.Core.Keywords
         /// <summary>
         /// Tipo de trim
         /// </summary>
-        public enum TrimType { NoAplica, Inicio, Fin }
+        public enum TrimType { NotApply, Start, End }
     }
 }

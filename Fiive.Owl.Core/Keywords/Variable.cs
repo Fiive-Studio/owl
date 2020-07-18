@@ -9,7 +9,7 @@ using System.Xml;
 namespace Fiive.Owl.Core.Keywords
 {
     /// <summary>
-    /// Valor de una Variable PGA
+    /// Valor de una Variable Owl
     /// </summary>
     public class Variable : IKeyword
     {
@@ -18,7 +18,7 @@ namespace Fiive.Owl.Core.Keywords
         /// <summary>
         /// Obtiene / Establece el Valor
         /// </summary>
-        public string Valor { get; set; }
+        public string Value { get; set; }
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>() 
                 { 
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
                 }
             };
         }
@@ -60,8 +60,8 @@ namespace Fiive.Owl.Core.Keywords
             OwlHandler config = (OwlHandler)handler;
 
             // Si es una instancia y no existe la variable se retorna un valor generico
-            if (config.Settings.Instance && !config.ExistVariable(Valor)) { return config.KeywordsManager.DefaultAlphanumericInstanceValue; }
-            return config[Valor];
+            if (config.Settings.Instance && !config.ExistVariable(Value)) { return config.KeywordsManager.DefaultAlphanumericInstanceValue; }
+            return config[Value];
         }
 
         #endregion

@@ -34,8 +34,8 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             XPMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "Separador", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "QuitarSeparadoresFinal", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "Separador", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "QuitarSeparadoresFinal", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
 
             return signing;
         }

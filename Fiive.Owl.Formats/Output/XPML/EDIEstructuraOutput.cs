@@ -30,10 +30,10 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             XPMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "SeparadorElementos", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "SeparadorSubElementos", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "TerminadorSegmento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { Name = "CaracterEscape", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "SeparadorElementos", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "SeparadorSubElementos", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "TerminadorSegmento", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
+            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { PropertyName = "CaracterEscape", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Char });
 
             return signing;
         }

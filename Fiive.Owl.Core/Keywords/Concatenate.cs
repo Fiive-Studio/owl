@@ -12,22 +12,22 @@ namespace Fiive.Owl.Core.Keywords
     /// <summary>
     /// Concatenate values
     /// </summary>
-    public class Concatenar : IKeyword
+    public class Concatenate : IKeyword
     {
         #region Properties
 
         /// <summary>
         /// Obtiene / Establece el caracter usado para separar los valores
         /// </summary>
-        public string Separador { get; set; }
+        public string Separator { get; set; }
         /// <summary>
         /// Obtiene / Establece el Formato de la cadena de salida
         /// </summary>
-        public string Formato { get; set; }
+        public string Format { get; set; }
         /// <summary>
         /// Obtiene / Establece los Valores a ser concatenados
         /// </summary>
-        public List<string> Valores { get; set; }
+        public List<string> Values { get; set; }
 
         #endregion
 
@@ -43,9 +43,9 @@ namespace Fiive.Owl.Core.Keywords
             {
                 Restrictions = new List<XPMLSigning.XPMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { Name = "Separador", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Formato", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { Name = "Valores", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.List }
+                    new XPMLSigning.XPMLRestriction { TagName = "separator", PropertyName = "Separator", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "format", PropertyName = "Format", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
+                    new XPMLSigning.XPMLRestriction { TagName = "values", PropertyName = "Values", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.List }
                 }
             };
         }
@@ -70,15 +70,15 @@ namespace Fiive.Owl.Core.Keywords
         {
             #region Validate values
 
-            if (Valores == null || Valores.Count == 0) { throw new OwlKeywordException(KeywordsType.Concatenar, string.Format(ETexts.GT(ErrorType.KeywordPropertyUndefined), "Valores")); }
+            if (Values == null || Values.Count == 0) { throw new OwlKeywordException(KeywordsType.Concatenate, string.Format(ETexts.GT(ErrorType.KeywordPropertyUndefined), "values")); }
 
             #endregion
 
-            if (!string.IsNullOrEmpty(Separador)) { return string.Join(Separador, Valores.ToArray()); }
+            if (!string.IsNullOrEmpty(Separator)) { return string.Join(Separator, Values.ToArray()); }
             else
             {
-                if (Formato.IsNullOrWhiteSpace()) { return string.Concat(Valores.ToArray()); }
-                else { return string.Format(Formato, Valores.ToArray()); }
+                if (Format.IsNullOrWhiteSpace()) { return string.Concat(Values.ToArray()); }
+                else { return string.Format(Format, Values.ToArray()); }
             }
         }
 

@@ -1,25 +1,23 @@
-﻿using System;
+﻿using Fiive.Owl.Core.Keywords;
+using Fiive.Owl.Core.XPML;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Fiive.Owl.Core.XPML;
-using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.Input;
-using System.Xml;
 
 namespace Fiive.Owl.Core.Keywords
 {
     /// <summary>
-    /// Valor del archivo de entrada
+    /// Length value
     /// </summary>
-    public class Buscar : IKeyword
+    public class Length : IKeyword
     {
         #region Properties
 
         /// <summary>
-        /// Obtiene / Establece el Valor
+        /// Obtiene / Establece el valor
         /// </summary>
-        public string Valor { get; set; }
+        public string Value { get; set; }
 
         #endregion
 
@@ -33,9 +31,9 @@ namespace Fiive.Owl.Core.Keywords
         {
             return new XPMLSigning
             {
-                Restrictions = new List<XPMLSigning.XPMLRestriction>() 
-                { 
-                    new XPMLSigning.XPMLRestriction { Name = "Valor", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                Restrictions = new List<XPMLSigning.XPMLRestriction>()
+                {
+                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String }
                 }
             };
         }
@@ -58,9 +56,9 @@ namespace Fiive.Owl.Core.Keywords
         /// <returns>Valor</returns>
         public string GetValue(object handler)
         {
-            return ((OwlHandler)handler).CurrentValue.GetValue(Valor);
+            return Value.Length.ToString();
         }
-        
+
         #endregion
     }
 }
