@@ -35,8 +35,8 @@ namespace Fiive.Owl.Formats.Output
                 _structureANSI = (ANSIStructureOutput)_currentEstructuraOutput;
                 _segmentProperties = new ANSISegmentProperties();
 
-                if (_structureANSI.SegmentSeparator == char.MinValue) { _structureANSI.SegmentSeparator = _segmentProperties.SegmentTerminator; }
-                else if (_structureANSI.SegmentSeparator != _segmentProperties.SegmentTerminator) { _segmentProperties.SegmentTerminator = _structureANSI.SegmentSeparator; }
+                if (_structureANSI.SegmentSeparator == char.MinValue) { _structureANSI.SegmentSeparator = _segmentProperties.SegmentSeparator; }
+                else if (_structureANSI.SegmentSeparator != _segmentProperties.SegmentSeparator) { _segmentProperties.SegmentSeparator = _structureANSI.SegmentSeparator; }
 
                 if (_structureANSI.ElementSeparator == char.MinValue) { _structureANSI.ElementSeparator = _segmentProperties.ElementSeparator; }
                 else if (_structureANSI.ElementSeparator != _segmentProperties.ElementSeparator) { _segmentProperties.ElementSeparator = _structureANSI.ElementSeparator; }

@@ -35,14 +35,14 @@ namespace Fiive.Owl.Formats.Output
                 _structureEDI = (EDIStructureOutput)_currentEstructuraOutput;
                 _segmentProperties = new EDISegmentProperties { DecimalSeparator = _structureEDI.OutputDecimalSeparator };
 
-                if (_structureEDI.SegmentSeparator == char.MinValue) { _structureEDI.SegmentSeparator = _segmentProperties.SegmentTerminator; }
-                else if (_structureEDI.SegmentSeparator != _segmentProperties.SegmentTerminator) { _segmentProperties.SegmentTerminator = _structureEDI.SegmentSeparator; }
+                if (_structureEDI.SegmentSeparator == char.MinValue) { _structureEDI.SegmentSeparator = _segmentProperties.SegmentSeparator; }
+                else if (_structureEDI.SegmentSeparator != _segmentProperties.SegmentSeparator) { _segmentProperties.SegmentSeparator = _structureEDI.SegmentSeparator; }
 
-                if (_structureEDI.ElementGroupSeparator == char.MinValue) { _structureEDI.ElementGroupSeparator = _segmentProperties.ElementSeparator; }
-                else if (_structureEDI.ElementGroupSeparator != _segmentProperties.ElementSeparator) { _segmentProperties.ElementSeparator = _structureEDI.ElementGroupSeparator; }
+                if (_structureEDI.ElementGroupSeparator == char.MinValue) { _structureEDI.ElementGroupSeparator = _segmentProperties.ElementGroupSeparator; }
+                else if (_structureEDI.ElementGroupSeparator != _segmentProperties.ElementGroupSeparator) { _segmentProperties.ElementGroupSeparator = _structureEDI.ElementGroupSeparator; }
 
-                if (_structureEDI.ElementSeparator == char.MinValue) { _structureEDI.ElementSeparator = _segmentProperties.SubElementSeparator; }
-                else if (_structureEDI.ElementSeparator != _segmentProperties.SubElementSeparator) { _segmentProperties.SubElementSeparator = _structureEDI.ElementSeparator; }
+                if (_structureEDI.ElementSeparator == char.MinValue) { _structureEDI.ElementSeparator = _segmentProperties.ElementSeparator; }
+                else if (_structureEDI.ElementSeparator != _segmentProperties.ElementSeparator) { _segmentProperties.ElementSeparator = _structureEDI.ElementSeparator; }
 
                 if (_structureEDI.ReleaseChar == char.MinValue) { _structureEDI.ReleaseChar = _segmentProperties.ReleaseChar; }
                 else if (_structureEDI.ReleaseChar != _segmentProperties.ReleaseChar) { _segmentProperties.ReleaseChar = _structureEDI.ReleaseChar; }

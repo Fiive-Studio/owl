@@ -24,9 +24,9 @@ namespace Fiive.Owl.Core.Adapters
         char _defaultSegmentTerminator = '\'', _defaultElementSeparator = '+', _defaultSubElementSeparator = ':',
             _defaultReleaseChar = '?', _defaultDecimalSeparator = '.';
 
+        public char ElementGroupSeparator { get; set; }
         public char ElementSeparator { get; set; }
-        public char SubElementSeparator { get; set; }
-        public char SegmentTerminator { get; set; }
+        public char SegmentSeparator { get; set; }
         public char ReleaseChar { get; set; }
         public char DecimalSeparator { get; set; }
         public bool SaveOriginalContent { get; set; }
@@ -38,9 +38,9 @@ namespace Fiive.Owl.Core.Adapters
 
         public EDISegmentProperties()
         {
-            ElementSeparator = _defaultElementSeparator;
-            SubElementSeparator = _defaultSubElementSeparator;
-            SegmentTerminator = _defaultSegmentTerminator;
+            ElementGroupSeparator = _defaultElementSeparator;
+            ElementSeparator = _defaultSubElementSeparator;
+            SegmentSeparator = _defaultSegmentTerminator;
             ReleaseChar = _defaultReleaseChar;
             DecimalSeparator = _defaultDecimalSeparator;
         }
