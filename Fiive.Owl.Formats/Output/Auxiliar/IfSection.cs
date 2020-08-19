@@ -95,8 +95,8 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                     #region Valores
 
                     // Obtienes nodos
-                    XmlNode valor1 = nodoHijo.SelectSingleNode("Valor1");
-                    XmlNode valor2 = nodoHijo.SelectSingleNode("Valor2");
+                    XmlNode valor1 = nodoHijo.SelectSingleNode("value-1");
+                    XmlNode valor2 = nodoHijo.SelectSingleNode("value-2");
 
                     if (valor1 == null || valor2 == null) { throw new OwlException(string.Format(ETexts.GT(ErrorType.TagsDoesNotExists), nodoHijo.Name)); }
 

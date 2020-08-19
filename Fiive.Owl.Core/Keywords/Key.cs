@@ -59,7 +59,6 @@ namespace Fiive.Owl.Core.Keywords
         /// <returns>Valor</returns>
         public string GetValue(object handler)
         {
-            // Se hizo este metodo para poder darle soporte a la sintaxis vieja
             string[] partsReturn = Value.Split(new string[] { ":" }, 2, StringSplitOptions.None);
             string returnValue = partsReturn.GetSafeValue(0);
             string format = partsReturn.GetSafeValue(1);
