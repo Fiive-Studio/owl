@@ -101,8 +101,8 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                     if (valor1 == null || valor2 == null) { throw new OwlException(string.Format(ETexts.GT(ErrorType.TagsDoesNotExists), nodoHijo.Name)); }
 
                     // Obtiene valores
-                    string strValor1 = handler.XPMLValidator.GetKeywordValue(valor1, handler);
-                    string strValor2 = handler.XPMLValidator.GetKeywordValue(valor2, handler);
+                    string strValor1 = handler.XOMLValidator.GetKeywordValue(valor1, handler);
+                    string strValor2 = handler.XOMLValidator.GetKeywordValue(valor2, handler);
 
                     #endregion
 
@@ -154,7 +154,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                         #endregion
 
                         default:
-                            throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), tipoComparacion, "TipoComparacion"));
+                            throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), tipoComparacion, "TipoComparacion"));
                     }
 
                     #endregion
@@ -173,7 +173,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                         bolEstado = bolEstado && bolValActual;
                         if (!bolEstado) { break; } // this validation is because if one validation is false in a "Y" Condition, all validation is false
                     }
-                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), operadorLogico, "OperadorLogico")); }
+                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), operadorLogico, "OperadorLogico")); }
                 }
 
                 #endregion

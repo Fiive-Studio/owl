@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Core.Exceptions;
 using System.Xml;
@@ -49,24 +49,24 @@ namespace Fiive.Owl.Core.Keywords
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
         /// <summary>
-        /// Obtiene la firma XPML del objeto
+        /// Obtiene la firma XOML del objeto
         /// </summary>
-        /// <returns>Firma XPML</returns>
-        public XPMLSigning GetSigning()
+        /// <returns>Firma XOML</returns>
+        public XOMLSigning GetSigning()
         {
-            return new XPMLSigning
+            return new XOMLSigning
             {
-                Restrictions = new List<XPMLSigning.XPMLRestriction>()
+                Restrictions = new List<XOMLSigning.XOMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { TagName = "table", PropertyName = "Table", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "default-value", PropertyName = "DefaultValue", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName= "format", PropertyName = "Format", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "fields-get", PropertyName = "FieldsGet", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.List },
-                    new XPMLSigning.XPMLRestriction { TagName = "fields-seek", PropertyName = "FieldsSeek", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.List },
-                    new XPMLSigning.XPMLRestriction { TagName = "values-seek", PropertyName = "ValuesSeek", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.List }
+                    new XOMLSigning.XOMLRestriction { TagName = "table", PropertyName = "Table", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "default-value", PropertyName = "DefaultValue", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName= "format", PropertyName = "Format", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "fields-get", PropertyName = "FieldsGet", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.List },
+                    new XOMLSigning.XOMLRestriction { TagName = "fields-seek", PropertyName = "FieldsSeek", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.List },
+                    new XOMLSigning.XOMLRestriction { TagName = "values-seek", PropertyName = "ValuesSeek", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.List }
                 }
             };
         }

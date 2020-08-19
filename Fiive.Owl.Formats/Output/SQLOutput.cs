@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Fiive.Owl.Formats.Output.XPML;
+using Fiive.Owl.Formats.Output.XOML;
 
 namespace Fiive.Owl.Formats.Output
 {
@@ -21,7 +21,7 @@ namespace Fiive.Owl.Formats.Output
 
             foreach (XmlNode nElement in _handler.ConfigMap.GetOutputElements(node))
             {
-                SqlElementOutput element = (SqlElementOutput)_handler.XPMLValidator.GetXPMLObject(new SqlElementOutput(), nElement, _handler);
+                SqlElementOutput element = (SqlElementOutput)_handler.XOMLValidator.GetXOMLObject(new SqlElementOutput(), nElement, _handler);
                 GetElementValue(element, nElement, section);
 
                 if (!element.Hidden)
@@ -166,6 +166,6 @@ namespace Fiive.Owl.Formats.Output
 
         protected override string ExtraInformation() { return Environment.NewLine; }
 
-        protected override SectionOutput GetSection(XmlNode node) { return (SqlSectionOutput)_handler.XPMLValidator.GetXPMLObject(new SqlSectionOutput(), node, _handler); }
+        protected override SectionOutput GetSection(XmlNode node) { return (SqlSectionOutput)_handler.XOMLValidator.GetXOMLObject(new SqlSectionOutput(), node, _handler); }
     }
 }

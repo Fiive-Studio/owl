@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Fiive.Owl.Formats.Output.XPML;
+using Fiive.Owl.Formats.Output.XOML;
 
 namespace Fiive.Owl.Formats.Output
 {
@@ -14,9 +14,9 @@ namespace Fiive.Owl.Formats.Output
         #region Propiedades
 
         /// <summary>
-        /// Configuracion XPML
+        /// Configuracion XOML
         /// </summary>
-        public StructureOutput XPMLConfig { get; internal set; }
+        public StructureOutput XOMLConfig { get; internal set; }
         
         /// <summary>
         /// Obtiene la cantidad de veces que se repite, si es -1 es porque es una instancia o fallo al obtener el valor

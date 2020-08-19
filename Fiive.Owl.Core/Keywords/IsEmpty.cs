@@ -1,5 +1,5 @@
 ﻿using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,22 +30,22 @@ namespace Fiive.Owl.Core.Keywords
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
         /// <summary>
-        /// Obtiene la firma XPML del objeto
+        /// Obtiene la firma XOML del objeto
         /// </summary>
-        /// <returns>Firma XPML</returns>
-        public XPMLSigning GetSigning()
+        /// <returns>Firma XOML</returns>
+        public XOMLSigning GetSigning()
         {
-            return new XPMLSigning
+            return new XOMLSigning
             {
-                Restrictions = new List<XPMLSigning.XPMLRestriction>()
+                Restrictions = new List<XOMLSigning.XOMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "true", PropertyName = "True", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "false", PropertyName = "False", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "trim", PropertyName = "Trim", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean }
+                    new XOMLSigning.XOMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "true", PropertyName = "True", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "false", PropertyName = "False", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "trim", PropertyName = "Trim", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.Boolean }
                 }
             };
         }

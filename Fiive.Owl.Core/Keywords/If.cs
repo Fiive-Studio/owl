@@ -1,4 +1,4 @@
-﻿using Fiive.Owl.Core.XPML;
+﻿using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Keywords;
 using System;
 using System.Collections.Generic;
@@ -36,23 +36,23 @@ namespace Fiive.Owl.Core.Keywords
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
         /// <summary>
-        /// Obtiene la firma XPML del objeto
+        /// Obtiene la firma XOML del objeto
         /// </summary>
-        /// <returns>Firma XPML</returns>
-        public XPMLSigning GetSigning()
+        /// <returns>Firma XOML</returns>
+        public XOMLSigning GetSigning()
         {
-            return new XPMLSigning
+            return new XOMLSigning
             {
-                Restrictions = new List<XPMLSigning.XPMLRestriction>()
+                Restrictions = new List<XOMLSigning.XOMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { TagName = "value-1", PropertyName = "Value1", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "value-2", PropertyName = "Value2", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "type", PropertyName = "Type", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.Enum },
-                    new XPMLSigning.XPMLRestriction { TagName = "true", PropertyName = "True", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "false", PropertyName = "False", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String }
+                    new XOMLSigning.XOMLRestriction { TagName = "value-1", PropertyName = "Value1", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "value-2", PropertyName = "Value2", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "type", PropertyName = "Type", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.Enum },
+                    new XOMLSigning.XOMLRestriction { TagName = "true", PropertyName = "True", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "false", PropertyName = "False", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.String }
                 }
             };
         }
@@ -60,7 +60,7 @@ namespace Fiive.Owl.Core.Keywords
         public void SetPropertyValue(string property, string value)
         {
             if (property == "Type") { Type = (ValidationType)Enum.Parse(typeof(ValidationType), value); }
-            else { throw new OwlKeywordException(KeywordsType.If, string.Format(ETexts.GT(ErrorType.XPMLEnumInvalid), property)); }
+            else { throw new OwlKeywordException(KeywordsType.If, string.Format(ETexts.GT(ErrorType.XOMLEnumInvalid), property)); }
         }
 
         #endregion

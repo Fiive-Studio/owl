@@ -126,7 +126,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 if (parts[3] == "pad") { PaddingWhenIsEmpty = Padding.Pad; }
                 else if (parts[3] == "not-pad") { PaddingWhenIsEmpty = Padding.NotPad; }
                 else if (parts[3] == "pad-s") { PaddingWhenIsEmpty = Padding.PadWithoutSeparator; }
-                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), parts[3], "PaddingWhenIsEmpty")); }
+                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), parts[3], "PaddingWhenIsEmpty")); }
             }
 
             if (parts.Length >= 3)
@@ -134,7 +134,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 if (parts[2].Length > 0)
                 {
                     string[] partsPadding = parts[2].Split(',');
-                    if (partsPadding.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), eval, "length")); }
+                    if (partsPadding.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), eval, "length")); }
 
                     if (partsPadding[0].Length > 0) { PaddingChar = partsPadding[0][0]; }
                     if (partsPadding.Length == 2 && partsPadding[1].Length > 0) { PaddingCharDecimalPart = partsPadding[1][0]; }
@@ -147,7 +147,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 else if (parts[1] == "right") { Aligment = AligmentType.Right; }
                 else if (parts[1] == "number") { Aligment = AligmentType.Number; }
                 else if (parts[1] == "number-s") { Aligment = AligmentType.NumberWithoutSeparator; }
-                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), parts[1], "Aligment")); }
+                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), parts[1], "Aligment")); }
             }
             else { Aligment = AligmentType.NotApply; }
 
@@ -167,7 +167,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
             // 5,2 <-- Expresion a evaluar
             string[] parts = eval.Split(',');
 
-            if (parts.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), eval, "length")); }
+            if (parts.Length > 2) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), eval, "length")); }
 
             #region Parte Decimal
 
@@ -178,7 +178,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 else
                 {
                     if (parts[1].IsInt()) { _decimalPart = Convert.ToInt32(parts[1]); }
-                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[1], "length")); }
+                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLNumericValue), parts[1], "length")); }
                 }
 
                 ValidateDecimalPart = true;
@@ -192,7 +192,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
             else
             {
                 if (parts[0].IsInt()) { _integerPart = Convert.ToInt32(parts[0]); }
-                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLNumericValue), parts[0], "length")); }
+                else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLNumericValue), parts[0], "length")); }
             }
 
             #endregion

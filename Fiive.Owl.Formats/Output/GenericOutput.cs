@@ -7,8 +7,8 @@ using Fiive.Owl.Core.Output;
 using Fiive.Owl.Core;
 using Fiive.Owl.Core.Input;
 using Fiive.Owl.Core.Exceptions;
-using Fiive.Owl.Formats.Output.XPML;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Formats.Output.XOML;
+using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Formats.Output.Auxiliar;
 using System.Threading;
@@ -68,13 +68,13 @@ namespace Fiive.Owl.Formats.Output
 
         #region Constructor
 
-        public GenericOutput() { XPMLOutputValidator = new XPMLOutputValidator(); }
+        public GenericOutput() { XOMLOutputValidator = new XOMLOutputValidator(); }
 
         #endregion
 
         #region Properties
 
-        protected XPMLOutputValidator XPMLOutputValidator { get; set; }
+        protected XOMLOutputValidator XOMLOutputValidator { get; set; }
 
         #endregion
 
@@ -954,14 +954,14 @@ namespace Fiive.Owl.Formats.Output
         /// </summary>
         /// <param name="node">Configuration Node</param>
         /// <returns>Object</returns>
-        protected virtual StructureOutput GetStructure(XmlNode node) { return (StructureOutput)_handler.XPMLValidator.GetXPMLObject(new StructureOutput(), node, _handler); }
+        protected virtual StructureOutput GetStructure(XmlNode node) { return (StructureOutput)_handler.XOMLValidator.GetXOMLObject(new StructureOutput(), node, _handler); }
 
         /// <summary>
         /// Get the section object
         /// </summary>
         /// <param name="node">Configuration Node</param>
         /// <returns>Object</returns>
-        protected virtual SectionOutput GetSection(XmlNode node) { return (SectionOutput)_handler.XPMLValidator.GetXPMLObject(new SectionOutput(), node, _handler); }
+        protected virtual SectionOutput GetSection(XmlNode node) { return (SectionOutput)_handler.XOMLValidator.GetXOMLObject(new SectionOutput(), node, _handler); }
 
         /// <summary>
         /// Termina la seccion
@@ -1073,14 +1073,14 @@ namespace Fiive.Owl.Formats.Output
         /// <summary>
         /// Lanza el evento StructureInitiated
         /// </summary>
-        /// <param name="structure">Configuracion XPML</param>
+        /// <param name="structure">Configuracion XOML</param>
         /// <param name="count">Cantidad de veces que se repite</param>
         /// <returns>true si se lanza el evento, de lo contrario false</returns>
         protected bool LaunchStructureInitiated(StructureOutput structure, int count)
         {
             if (StructureInitiated != null)
             {
-                StructureInitiated(this, new OutputStructureEventArgs(count) { XPMLConfig = structure });
+                StructureInitiated(this, new OutputStructureEventArgs(count) { XOMLConfig = structure });
                 return true;
             }
 
@@ -1101,7 +1101,7 @@ namespace Fiive.Owl.Formats.Output
                 if (section.EventGroup.HasValue) { launchEvent = section.EventGroup.Value; } else { launchEvent = _currentEstructuraOutput.EventSectionGroup; }
                 if (!_handler.Settings.Instance && launchEvent)
                 {
-                    SectionGroupInitiated(this, new OutputSectionEventArgs() { XPMLConfig = section });
+                    SectionGroupInitiated(this, new OutputSectionEventArgs() { XOMLConfig = section });
                     return true;
                 }
             }
@@ -1123,7 +1123,7 @@ namespace Fiive.Owl.Formats.Output
                 if (section.EventPrevious.HasValue) { launchEvent = section.EventPrevious.Value; } else { launchEvent = _currentEstructuraOutput.EventSectionPrevious; }
                 if (!_handler.Settings.Instance && launchEvent)
                 {
-                    SectionInitiated(this, new OutputSectionEventArgs() { XPMLConfig = section });
+                    SectionInitiated(this, new OutputSectionEventArgs() { XOMLConfig = section });
                     return true;
                 }
             }
@@ -1150,7 +1150,7 @@ namespace Fiive.Owl.Formats.Output
                 if (!_handler.Settings.Instance && launchEvent)
                 {
                     section.Elements = _currentElements;
-                    SectionProcessed(this, new OutputSectionEventArgs() { XPMLConfig = section });
+                    SectionProcessed(this, new OutputSectionEventArgs() { XOMLConfig = section });
                     return true;
                 }
             }
@@ -1173,12 +1173,12 @@ namespace Fiive.Owl.Formats.Output
             {
                 if (element.DataType == ElementDataType.Alphanumeric && AlphanumericElementProcessed != null)
                 {
-                    AlphanumericElementProcessed(this, new OutputElementEventArgs() { XPMLConfig = element, Section = section });
+                    AlphanumericElementProcessed(this, new OutputElementEventArgs() { XOMLConfig = element, Section = section });
                     return true;
                 }
                 else if (element.DataType == ElementDataType.Numeric && NumericElementProcessed != null)
                 {
-                    NumericElementProcessed(this, new OutputElementEventArgs() { XPMLConfig = element, Section = section });
+                    NumericElementProcessed(this, new OutputElementEventArgs() { XOMLConfig = element, Section = section });
                     return true;
                 }
             }

@@ -1,7 +1,7 @@
 ﻿using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Core.Extensions;
 using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,21 +31,21 @@ namespace Fiive.Owl.Core.Keywords
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
         /// <summary>
-        /// Obtiene la firma XPML del objeto
+        /// Obtiene la firma XOML del objeto
         /// </summary>
-        /// <returns>Firma XPML</returns>
-        public XPMLSigning GetSigning()
+        /// <returns>Firma XOML</returns>
+        public XOMLSigning GetSigning()
         {
-            return new XPMLSigning
+            return new XOMLSigning
             {
-                Restrictions = new List<XPMLSigning.XPMLRestriction>()
+                Restrictions = new List<XOMLSigning.XOMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { TagName = "separator", PropertyName = "Separator", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "format", PropertyName = "Format", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "values", PropertyName = "Values", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.List }
+                    new XOMLSigning.XOMLRestriction { TagName = "separator", PropertyName = "Separator", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "format", PropertyName = "Format", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "values", PropertyName = "Values", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.List }
                 }
             };
         }

@@ -7,7 +7,7 @@ using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Core.Input;
 using Fiive.Owl.Core.Output;
 using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Extensions;
 
 namespace Fiive.Owl.Core
@@ -69,9 +69,9 @@ namespace Fiive.Owl.Core
         public KeywordsManager KeywordsManager { get; private set; }
 
         /// <summary>
-        /// Get thw XPML Validator
+        /// Get thw XOML Validator
         /// </summary>
-        public XPMLValidator XPMLValidator { get; private set; }
+        public XOMLValidator XOMLValidator { get; private set; }
 
         #endregion
 
@@ -85,7 +85,7 @@ namespace Fiive.Owl.Core
         {
             ETexts.LoadTexts();
             Settings = settings;
-            XPMLValidator = new XPMLValidator();
+            XOMLValidator = new XOMLValidator();
             KeywordsManager = new KeywordsManager();
             _OwlVars = new Dictionary<string, string>();
         }

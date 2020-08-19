@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Fiive.Owl.Core.XPML
+namespace Fiive.Owl.Core.XOML
 {
     /// <summary>
-    /// Interfaz para los objetos que se definan por XPML
+    /// Interfaz para los objetos que se definan por XOML
     /// </summary>
-    public interface IXPMLObject
+    public interface IXOMLObject
     {
         /// <summary>
-        /// Obtiene la firma XPML del objeto
+        /// Obtiene la firma XOML del objeto
         /// </summary>
-        /// <returns>Firma XPML</returns>
-        XPMLSigning GetSigning();
+        /// <returns>Firma XOML</returns>
+        XOMLSigning GetSigning();
 
         /// <summary>
         /// Set the enums properties

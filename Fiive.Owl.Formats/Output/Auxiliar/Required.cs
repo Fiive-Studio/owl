@@ -152,7 +152,7 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                     string operadorLogico = nodoHijo.Attributes["OperadorLogico"] != null ? nodoHijo.Attributes["OperadorLogico"].Value : string.Empty;
                     if (operadorLogico == "O") { booEstado = booEstado || booValActual; }
                     else if (operadorLogico == "Y") { booEstado = booEstado && booValActual; }
-                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), operadorLogico, "OperadorLogico")); }
+                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), operadorLogico, "OperadorLogico")); }
                 }
 
                 intContador++;

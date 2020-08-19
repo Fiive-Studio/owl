@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Fiive.Owl.Core.XPML
+namespace Fiive.Owl.Core.XOML
 {
     /// <summary>
-    /// Tipos de Propiedades XPML
+    /// Tipos de Propiedades XOML
     /// </summary>
-    public enum XPMLPropertyType
+    public enum XOMLPropertyType
     {
         /// <summary>
         /// String field

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Fiive.Owl.Formats.Output.XPML;
+using Fiive.Owl.Formats.Output.XOML;
 using Fiive.Owl.Core.Adapters;
 using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Core.Extensions;
@@ -53,7 +53,7 @@ namespace Fiive.Owl.Formats.Output
 
             foreach (XmlNode nElement in _handler.ConfigMap.GetHiddenOutputElements(node))
             {
-                ElementOutput element = (ElementOutput)_handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, _handler);
+                ElementOutput element = (ElementOutput)_handler.XOMLValidator.GetXOMLObject(new ElementOutput(), nElement, _handler);
                 GetElementValue(element, nElement, section);
             }
 
@@ -73,7 +73,7 @@ namespace Fiive.Owl.Formats.Output
 
             if (segment != null)
             {
-                string value = XPMLOutputValidator.GetANSISegment(segment, node, _handler, section, this).ToString();
+                string value = XOMLOutputValidator.GetANSISegment(segment, node, _handler, section, this).ToString();
                 if (!value.IsNullOrWhiteSpace())
                 {
                     _segmentCount++;
@@ -83,7 +83,7 @@ namespace Fiive.Owl.Formats.Output
             return null;
         }
 
-        protected override StructureOutput GetStructure(XmlNode node) { return (ANSIStructureOutput)_handler.XPMLValidator.GetXPMLObject(new ANSIStructureOutput(), node, _handler); }
+        protected override StructureOutput GetStructure(XmlNode node) { return (ANSIStructureOutput)_handler.XOMLValidator.GetXOMLObject(new ANSIStructureOutput(), node, _handler); }
 
         protected override void StartNewStructure() { validateSeparator = true; }
     }

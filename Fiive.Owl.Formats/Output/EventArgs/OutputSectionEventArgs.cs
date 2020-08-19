@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Fiive.Owl.Formats.Output.XPML;
+using Fiive.Owl.Formats.Output.XOML;
 
 namespace Fiive.Owl.Formats.Output
 {
@@ -14,9 +14,9 @@ namespace Fiive.Owl.Formats.Output
         #region Properties
 
         /// <summary>
-        /// Configuracion XPML
+        /// Configuracion XOML
         /// </summary>
-        public SectionOutput XPMLConfig { get; internal set; }
+        public SectionOutput XOMLConfig { get; internal set; }
 
         #endregion
 

@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Fiive.Owl.Core.XPML
+namespace Fiive.Owl.Core.XOML
 {
     /// <summary>
-    /// Firma de una definicion XPML
+    /// Firma de una definicion XOML
     /// </summary>
-    public class XPMLSigning
+    public class XOMLSigning
     {
         /// <summary>
-        /// Obtiene / Establece las restricciones del XPML
+        /// Obtiene / Establece las restricciones del XOML
         /// </summary>
-        public List<XPMLRestriction> Restrictions { get; set; }
+        public List<XOMLRestriction> Restrictions { get; set; }
 
         /// <summary>
-        /// Restriccion de una definicion XPML
+        /// Restriccion de una definicion XOML
         /// </summary>
-        public class XPMLRestriction
+        public class XOMLRestriction
         {
             public string TagName { get; set; }
             public string PropertyName { get; set; }
             public bool Attribute { get; set; }
             public bool Tag { get; set; }
             public bool Mandatory { get; set; }
-            public XPMLPropertyType PropertyType { get; set; }
+            public XOMLPropertyType PropertyType { get; set; }
         }
     }
 }

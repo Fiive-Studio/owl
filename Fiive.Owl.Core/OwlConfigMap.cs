@@ -8,7 +8,7 @@ using System.Xml;
 using Fiive.Owl.Core.Input;
 using System.Data;
 using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using System.Xml.XPath;
 using Fiive.Owl.Core.Extensions;
 
@@ -38,9 +38,9 @@ namespace Fiive.Owl.Core
         readonly string _xpathOutputStructures = "/owl/structure";
         readonly string _xpathOutputBaseStructure = "/owl/structure[@id='{0}']";
         readonly string _xpathOutputNoBaseStructure = "/owl/structure[not(@id='{0}')]";
-        readonly string _xpathXPMLStructure = "*[starts-with(name(), 'structure.')]";
-        readonly string _xpathXPMLSection = "*[starts-with(name(), 'section.')]";
-        readonly string _xpathXPMLElement = "*[starts-with(name(), 'element.')]";
+        readonly string _xpathXOMLStructure = "*[starts-with(name(), 'structure.')]";
+        readonly string _xpathXOMLSection = "*[starts-with(name(), 'section.')]";
+        readonly string _xpathXOMLElement = "*[starts-with(name(), 'element.')]";
         readonly string _xpathSections = "section";
         readonly string _xpathElements = "element";
         readonly string _xpathSingleElement = "element[@name='{0}']";
@@ -262,7 +262,7 @@ namespace Fiive.Owl.Core
                     // Procesa las configuraciones para unirlas
                     ProcessAttributes(nStructureBase, nStructureChild, "id", "base");
                     ProcessSections(nStructureChild.SelectNodes(_xpathSections), string.Format(_xpathOutputBaseStructure, idConfigBase));
-                    ProcessXPMLConfiguration(nStructureChild.SelectNodes(_xpathXPMLStructure), nStructureBase);
+                    ProcessXOMLConfiguration(nStructureChild.SelectNodes(_xpathXOMLStructure), nStructureBase);
 
                     // Se borran las demas estructuras que estan en el config base para que solo quede la que heredo
                     XmlNodeList nEstructuras = _xmlConfig.SelectNodes(string.Format(_xpathOutputNoBaseStructure, idConfigBase));
@@ -345,7 +345,7 @@ namespace Fiive.Owl.Core
                     XmlNode nBase = _xmlConfigBase.SelectSingleNode(xpathSection);
                     ProcessAttributes(nBase, nChildNode, "name", "id", "overwrite", "before", "after");
                     ProcessUbications(xpathSection, ubicacion, strAttribute, ConfigTagType.Section);
-                    ProcessXPMLConfiguration(nChildNode.SelectNodes(_xpathXPMLSection), nBase);
+                    ProcessXOMLConfiguration(nChildNode.SelectNodes(_xpathXOMLSection), nBase);
 
                     ProcessSections(nChildNode.SelectNodes(_xpathSections), xpathSection);
 
@@ -379,7 +379,7 @@ namespace Fiive.Owl.Core
                             nBase = _xmlConfigBase.SelectSingleNode(xpathElemento);
                             ProcessElementsAttributes(nBase, nElement);
                             ProcessUbications(xpathElemento, ubicacion, strAttribute, ConfigTagType.Element);
-                            ProcessXPMLConfiguration(nElement.SelectNodes(_xpathXPMLElement), nBase);
+                            ProcessXOMLConfiguration(nElement.SelectNodes(_xpathXOMLElement), nBase);
                         }
                     }
 
@@ -624,7 +624,7 @@ namespace Fiive.Owl.Core
 
             #region Palabra Clave
 
-            // Si se ha configurado XPML se actualiza
+            // Si se ha configurado XOML se actualiza
             XmlNode nodoPC = nodoHijo.SelectSingleNode(_xpathElementValue);
             if (nodoPC != null)
             {
@@ -641,19 +641,19 @@ namespace Fiive.Owl.Core
         }
 
         /// <summary>
-        /// Procesa la configuracion XPML
+        /// Procesa la configuracion XOML
         /// </summary>
         /// <param name="nChildNodes">Configuracion</param>
         /// <param name="nBase">Base</param>
-        private void ProcessXPMLConfiguration(XmlNodeList nChildNodes, XmlNode nBase)
+        private void ProcessXOMLConfiguration(XmlNodeList nChildNodes, XmlNode nBase)
         {
             foreach (XmlNode nChild in nChildNodes)
             {
                 XmlNode nodoTemp = _xmlConfigBase.CreateNode(XmlNodeType.Element, _tmpValue, "");
                 nodoTemp.InnerXml = nChild.OuterXml;
 
-                XmlNode nodoXPMLBase = nBase.SelectSingleNode(nChild.Name);
-                if (nodoXPMLBase != null) { nBase.RemoveChild(nodoXPMLBase); }
+                XmlNode nodoXOMLBase = nBase.SelectSingleNode(nChild.Name);
+                if (nodoXOMLBase != null) { nBase.RemoveChild(nodoXOMLBase); }
 
                 nBase.AppendChild(nodoTemp.FirstChild);
             }

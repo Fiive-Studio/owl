@@ -1,10 +1,10 @@
-﻿using Fiive.Owl.Core.XPML;
+﻿using Fiive.Owl.Core.XOML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Fiive.Owl.Formats.Output.XPML
+namespace Fiive.Owl.Formats.Output.XOML
 {
     /// <summary>
     /// Represent a SQL Section configuration
@@ -23,13 +23,13 @@ namespace Fiive.Owl.Formats.Output.XPML
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
-        public override XPMLSigning GetSigning()
+        public override XOMLSigning GetSigning()
         {
-            XPMLSigning signing = base.GetSigning();
+            XOMLSigning signing = base.GetSigning();
 
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "sql-type", PropertyName = "SqlType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
+            signing.Restrictions.Add(new XOMLSigning.XOMLRestriction { TagName = "sql-type", PropertyName = "SqlType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.Enum });
 
             return signing;
         }

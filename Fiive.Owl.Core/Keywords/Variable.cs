@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Keywords;
 using System.Xml;
 
@@ -22,19 +22,19 @@ namespace Fiive.Owl.Core.Keywords
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
         /// <summary>
-        /// Obtiene la firma XPML del objeto
+        /// Obtiene la firma XOML del objeto
         /// </summary>
-        /// <returns>Firma XPML</returns>
-        public XPMLSigning GetSigning()
+        /// <returns>Firma XOML</returns>
+        public XOMLSigning GetSigning()
         {
-            return new XPMLSigning
+            return new XOMLSigning
             {
-                Restrictions = new List<XPMLSigning.XPMLRestriction>() 
+                Restrictions = new List<XOMLSigning.XOMLRestriction>() 
                 { 
-                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
                 }
             };
         }

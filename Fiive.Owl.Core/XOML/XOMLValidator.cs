@@ -10,12 +10,12 @@ using Fiive.Owl.Core.Keywords;
 using System.Xml.XPath;
 using Fiive.Owl.Core.Exceptions;
 
-namespace Fiive.Owl.Core.XPML
+namespace Fiive.Owl.Core.XOML
 {
     /// <summary>
-    /// Validador XPML
+    /// Validador XOML
     /// </summary>
-    public class XPMLValidator
+    public class XOMLValidator
     {
         #region Publics
 
@@ -26,43 +26,43 @@ namespace Fiive.Owl.Core.XPML
         /// <param name="node">Nodo con la configuracion</param>
         /// <param name="handler">Orquestador</param>
         /// <returns>Objeto con los datos</returns>
-        public IXPMLObject GetXPMLObject(IXPMLObject obj, XmlNode node, OwlHandler handler)
+        public IXOMLObject GetXOMLObject(IXOMLObject obj, XmlNode node, OwlHandler handler)
         {
-            XPMLSigning xs = obj.GetSigning();
+            XOMLSigning xs = obj.GetSigning();
             Type type = obj.GetType();
             List<XmlNode> valuesConf = new List<XmlNode>();
-            bool hasXPMLConfiguration = ValidateXPMLCount(node);
+            bool hasXOMLConfiguration = ValidateXOMLCount(node);
 
             #region Valida propiedades
 
-            foreach (XPMLSigning.XPMLRestriction xr in xs.Restrictions)
+            foreach (XOMLSigning.XOMLRestriction xr in xs.Restrictions)
             {
                 bool hasMandatoryValidation = false;
 
                 #region Attribute
 
                 XmlAttribute nAttribute = null;
-                if (xr.Attribute) { nAttribute = GetXPMLAttribute(node, xr.TagName); } // Validate if the field can be an attribute
+                if (xr.Attribute) { nAttribute = GetXOMLAttribute(node, xr.TagName); } // Validate if the field can be an attribute
 
                 if (nAttribute != null)
                 {
                     string value = nAttribute.Value;
                     hasMandatoryValidation = true;
 
-                    if (xr.PropertyType != XPMLPropertyType.List)
+                    if (xr.PropertyType != XOMLPropertyType.List)
                     {
-                        value = ValidateInlineXPML(value, handler);
+                        value = ValidateInlineXOML(value, handler);
 
-                        if (xr.PropertyType == XPMLPropertyType.String) { SetProperty(xr.PropertyName, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Char && value.Length > 0) { SetProperty(xr.PropertyName, obj, value[0]); }
-                        else if (xr.PropertyType == XPMLPropertyType.Boolean) { SetBooleanProperty(xr.PropertyName, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Int) { SetIntProperty(xr.PropertyName, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Enum || xr.PropertyType == XPMLPropertyType.Object) { SetPropertyValue(xr.PropertyName, obj, value); }
+                        if (xr.PropertyType == XOMLPropertyType.String) { SetProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XOMLPropertyType.Char && value.Length > 0) { SetProperty(xr.PropertyName, obj, value[0]); }
+                        else if (xr.PropertyType == XOMLPropertyType.Boolean) { SetBooleanProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XOMLPropertyType.Int) { SetIntProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XOMLPropertyType.Enum || xr.PropertyType == XOMLPropertyType.Object) { SetPropertyValue(xr.PropertyName, obj, value); }
                     }
                     else
                     {
                         List<string> values = new List<string>();
-                        foreach (string v in value.Split(',')) { string val = ValidateInlineXPML(v, handler); values.Add(val); }
+                        foreach (string v in value.Split(',')) { string val = ValidateInlineXOML(v, handler); values.Add(val); }
 
                         SetProperty(xr.PropertyName, obj, values);
                     }
@@ -72,21 +72,21 @@ namespace Fiive.Owl.Core.XPML
 
                 #region Tag
 
-                else if (xr.Tag && hasXPMLConfiguration) // Validate if the field can be an tag
+                else if (xr.Tag && hasXOMLConfiguration) // Validate if the field can be an tag
                 {
-                    XmlNode nProperty = GetXPMLProperty(node, xr.TagName);
+                    XmlNode nProperty = GetXOMLProperty(node, xr.TagName);
                     if (nProperty != null)
                     {
                         string value = string.Empty;
                         hasMandatoryValidation = true;
-                        if (xr.PropertyType != XPMLPropertyType.List) { value = GetKeywordValue(nProperty, handler); }
+                        if (xr.PropertyType != XOMLPropertyType.List) { value = GetKeywordValue(nProperty, handler); }
 
-                        if (xr.PropertyType == XPMLPropertyType.String) { SetProperty(xr.PropertyName, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Char && value.Length > 0) { SetProperty(xr.PropertyName, obj, value[0]); }
-                        else if (xr.PropertyType == XPMLPropertyType.Boolean) { SetBooleanProperty(xr.PropertyName, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Int) { SetIntProperty(xr.PropertyName, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.Enum || xr.PropertyType == XPMLPropertyType.Object) { SetPropertyValue(xr.PropertyName, obj, value); }
-                        else if (xr.PropertyType == XPMLPropertyType.List)
+                        if (xr.PropertyType == XOMLPropertyType.String) { SetProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XOMLPropertyType.Char && value.Length > 0) { SetProperty(xr.PropertyName, obj, value[0]); }
+                        else if (xr.PropertyType == XOMLPropertyType.Boolean) { SetBooleanProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XOMLPropertyType.Int) { SetIntProperty(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XOMLPropertyType.Enum || xr.PropertyType == XOMLPropertyType.Object) { SetPropertyValue(xr.PropertyName, obj, value); }
+                        else if (xr.PropertyType == XOMLPropertyType.List)
                         {
                             List<string> values = new List<string>();
                             foreach (XmlNode valueNode in nProperty.SelectNodes(string.Concat(nProperty.Name, ".", "Valor"))) { values.Add(GetKeywordValue(valueNode, handler)); }
@@ -100,7 +100,7 @@ namespace Fiive.Owl.Core.XPML
                 #region Final Validation
 
                 // Validate the field if doesn't exist in the configuration
-                if (!hasMandatoryValidation && xr.Mandatory) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyDoesNotExist), xr.PropertyName)); }
+                if (!hasMandatoryValidation && xr.Mandatory) { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyDoesNotExist), xr.PropertyName)); }
 
                 #endregion
             }
@@ -122,7 +122,7 @@ namespace Fiive.Owl.Core.XPML
             {
                 if (nProperty.FirstChild != null && nProperty.FirstChild.NodeType == XmlNodeType.Element)
                 {
-                    return handler.KeywordsManager.GetXPMLKeyword(nProperty.FirstChild, handler).GetValue(handler);
+                    return handler.KeywordsManager.GetXOMLKeyword(nProperty.FirstChild, handler).GetValue(handler);
                 }
                 else { return nProperty.InnerText; }
             }
@@ -156,7 +156,7 @@ namespace Fiive.Owl.Core.XPML
             bool boolValue;
             if (value == "true") { boolValue = true; }
             else if (value == "false") { boolValue = false; }
-            else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), value, property)); }
+            else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), value, property)); }
 
             SetProperty(property, obj, boolValue);
         }
@@ -171,7 +171,7 @@ namespace Fiive.Owl.Core.XPML
         {
             int number;
             if (int.TryParse(value, out number)) { SetProperty(property, obj, number); }
-            else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XPMLPropertyInvalidValue), value, property)); }
+            else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), value, property)); }
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Fiive.Owl.Core.XPML
             catch (TargetInvocationException e) { throw e.InnerException; }
         }
 
-        protected string ValidateInlineXPML(string value, OwlHandler handler)
+        protected string ValidateInlineXOML(string value, OwlHandler handler)
         {
             string[] parts = value.Split(new char[] { ':' }, 2);
             if (parts.Length == 1) { return value; }
@@ -209,7 +209,7 @@ namespace Fiive.Owl.Core.XPML
         /// <param name="node">Nodo con la configuracion</param>
         /// <param name="property">Propiedad a obtener</param>
         /// <returns>XmlNodo con la propiedad</returns>
-        protected XmlNode GetXPMLProperty(XmlNode node, string property)
+        protected XmlNode GetXOMLProperty(XmlNode node, string property)
         {
             return node.SelectSingleNode(string.Concat(node.Name, '.', property));
         }
@@ -220,17 +220,17 @@ namespace Fiive.Owl.Core.XPML
         /// <param name="node">Nodo con la configuracion</param>
         /// <param name="property">Propiedad a obtener</param>
         /// <returns>XmlAttribute con la propiedad</returns>
-        protected XmlAttribute GetXPMLAttribute(XmlNode node, string property)
+        protected XmlAttribute GetXOMLAttribute(XmlNode node, string property)
         {
             return node.Attributes[property];
         }
 
         /// <summary>
-        /// Validate if the node have XPML configuration
+        /// Validate if the node have XOML configuration
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>true if have, otherwise false</returns>
-        protected bool ValidateXPMLCount(XmlNode node)
+        protected bool ValidateXOMLCount(XmlNode node)
         {
             if (node.HasChildNodes)
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Fiive.Owl.Formats.Output.XPML
+namespace Fiive.Owl.Formats.Output.XOML
 {
     /// <summary>
 	/// Define el tipo de dato del elemento

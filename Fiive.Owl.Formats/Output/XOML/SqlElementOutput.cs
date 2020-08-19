@@ -1,10 +1,10 @@
-﻿using Fiive.Owl.Core.XPML;
+﻿using Fiive.Owl.Core.XOML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Fiive.Owl.Formats.Output.XPML
+namespace Fiive.Owl.Formats.Output.XOML
 {
     public class SqlElementOutput : ElementOutput
     {
@@ -28,14 +28,14 @@ namespace Fiive.Owl.Formats.Output.XPML
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
-        public override XPMLSigning GetSigning()
+        public override XOMLSigning GetSigning()
         {
-            XPMLSigning signing = base.GetSigning();
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "sql-element-type", PropertyName = "SqlElementType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "where-type", PropertyName = "WhereType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum });
-            signing.Restrictions.Add(new XPMLSigning.XPMLRestriction { TagName = "mandatory-value", PropertyName = "MandatoryValue", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Boolean });
+            XOMLSigning signing = base.GetSigning();
+            signing.Restrictions.Add(new XOMLSigning.XOMLRestriction { TagName = "sql-element-type", PropertyName = "SqlElementType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.Enum });
+            signing.Restrictions.Add(new XOMLSigning.XOMLRestriction { TagName = "where-type", PropertyName = "WhereType", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.Enum });
+            signing.Restrictions.Add(new XOMLSigning.XOMLRestriction { TagName = "mandatory-value", PropertyName = "MandatoryValue", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.Boolean });
 
             return signing;
         }

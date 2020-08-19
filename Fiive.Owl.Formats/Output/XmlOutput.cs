@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Fiive.Owl.Formats.Output.XPML;
+using Fiive.Owl.Formats.Output.XOML;
 using System.Text.RegularExpressions;
 using System.Security;
 using Fiive.Owl.Core.Extensions;
@@ -52,7 +52,7 @@ namespace Fiive.Owl.Formats.Output
 
             foreach (XmlNode nElement in _handler.ConfigMap.GetOutputElements(node))
             {
-                XmlElementOutput element = (XmlElementOutput)_handler.XPMLValidator.GetXPMLObject(new XmlElementOutput(), nElement, _handler);
+                XmlElementOutput element = (XmlElementOutput)_handler.XOMLValidator.GetXOMLObject(new XmlElementOutput(), nElement, _handler);
                 GetElementValue(element, nElement, section);
 
                 if (element.XmlValue)
@@ -99,9 +99,9 @@ namespace Fiive.Owl.Formats.Output
             return string.Empty;
         }
 
-        protected override SectionOutput GetSection(XmlNode node) { return (XmlSectionOutput)_handler.XPMLValidator.GetXPMLObject(new XmlSectionOutput(), node, _handler); }
+        protected override SectionOutput GetSection(XmlNode node) { return (XmlSectionOutput)_handler.XOMLValidator.GetXOMLObject(new XmlSectionOutput(), node, _handler); }
 
-        protected override StructureOutput GetStructure(XmlNode node) { return (XmlStructureOutput)_handler.XPMLValidator.GetXPMLObject(new XmlStructureOutput(), node, _handler); }
+        protected override StructureOutput GetStructure(XmlNode node) { return (XmlStructureOutput)_handler.XOMLValidator.GetXOMLObject(new XmlStructureOutput(), node, _handler); }
 
         protected override void StartNewStructure() { _validateStructure = true; }
 

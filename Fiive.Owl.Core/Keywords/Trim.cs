@@ -1,6 +1,6 @@
 ﻿using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Core.Keywords;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,20 +23,20 @@ namespace Fiive.Owl.Core.Keywords
 
         #endregion
 
-        #region IXPMLObject
+        #region IXOMLObject
 
         /// <summary>
-        /// Obtiene la firma XPML del objeto
+        /// Obtiene la firma XOML del objeto
         /// </summary>
-        /// <returns>Firma XPML</returns>
-        public XPMLSigning GetSigning()
+        /// <returns>Firma XOML</returns>
+        public XOMLSigning GetSigning()
         {
-            return new XPMLSigning
+            return new XOMLSigning
             {
-                Restrictions = new List<XPMLSigning.XPMLRestriction>()
+                Restrictions = new List<XOMLSigning.XOMLRestriction>()
                 {
-                    new XPMLSigning.XPMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XPMLPropertyType.String },
-                    new XPMLSigning.XPMLRestriction { TagName = "type", PropertyName = "Type", Attribute = true, Tag = true, Mandatory = false, PropertyType = XPMLPropertyType.Enum }
+                    new XOMLSigning.XOMLRestriction { TagName = "value", PropertyName = "Value", Attribute = true, Tag = true, Mandatory = true, PropertyType = XOMLPropertyType.String },
+                    new XOMLSigning.XOMLRestriction { TagName = "type", PropertyName = "Type", Attribute = true, Tag = true, Mandatory = false, PropertyType = XOMLPropertyType.Enum }
                 }
             };
         }
@@ -44,7 +44,7 @@ namespace Fiive.Owl.Core.Keywords
         public void SetPropertyValue(string property, string value)
         {
             if (property == "Type") { Type = (TrimType)Enum.Parse(typeof(TrimType), value); }
-            else { throw new OwlKeywordException(KeywordsType.Trim, string.Format(ETexts.GT(ErrorType.XPMLEnumInvalid), property)); }
+            else { throw new OwlKeywordException(KeywordsType.Trim, string.Format(ETexts.GT(ErrorType.XOMLEnumInvalid), property)); }
         }
 
         #endregion

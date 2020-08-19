@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using Fiive.Owl.Core.Input;
 using System.Xml;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Core.Extensions;
 using Fiive.Owl.Core.Exceptions;
@@ -57,12 +57,12 @@ namespace Fiive.Owl.Core.Keywords
         {
             if (node == null) { return null; }
 
-            #region XPML
+            #region XOML
 
             if (node.HasChildNodes)
             {
                 XmlNode nHijo = handler.ConfigMap.GetElementValueNode(node);
-                if (nHijo != null) { return GetXPMLKeyword(nHijo.FirstChild, handler); }
+                if (nHijo != null) { return GetXOMLKeyword(nHijo.FirstChild, handler); }
             }
 
             #endregion
@@ -139,7 +139,7 @@ namespace Fiive.Owl.Core.Keywords
         /// <param name="node">Configuration node</param>
         /// <param name="handler">Orquestation</param>
         /// <returns>Keyword Object</returns>
-        public IKeyword GetXPMLKeyword(XmlNode node, OwlHandler handler)
+        public IKeyword GetXOMLKeyword(XmlNode node, OwlHandler handler)
         {
             if (node == null) { return null; }
 
@@ -155,8 +155,8 @@ namespace Fiive.Owl.Core.Keywords
             var className = string.Concat(node.Name[0].ToString().ToUpper(), node.Name.GetSafeSubstring(1));
             if (KeywordsList.Contains(className))
             {
-                IXPMLObject keywordInstance = (IXPMLObject)Activator.CreateInstance(Type.GetType(string.Format("Fiive.Owl.Core.Keywords.{0}", className)));
-                IKeyword keyword = (IKeyword)handler.XPMLValidator.GetXPMLObject(keywordInstance, node, handler);
+                IXOMLObject keywordInstance = (IXOMLObject)Activator.CreateInstance(Type.GetType(string.Format("Fiive.Owl.Core.Keywords.{0}", className)));
+                IKeyword keyword = (IKeyword)handler.XOMLValidator.GetXOMLObject(keywordInstance, node, handler);
 
                 KeywordsType keywordType = (KeywordsType)Enum.Parse(typeof(KeywordsType), className);
                 keyword.KeywordType = keywordType;

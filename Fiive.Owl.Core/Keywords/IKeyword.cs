@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using System.Xml;
 
 namespace Fiive.Owl.Core.Keywords
@@ -11,7 +11,7 @@ namespace Fiive.Owl.Core.Keywords
     /// <summary>
     /// Interfaz para las palabras claves
     /// </summary>
-    public interface IKeyword : IXPMLObject
+    public interface IKeyword : IXOMLObject
     {
         /// <summary>
         /// Obtiene / Establece el tipo de palabra clave

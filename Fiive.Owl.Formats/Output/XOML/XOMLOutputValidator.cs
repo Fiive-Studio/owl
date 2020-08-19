@@ -1,5 +1,5 @@
 ﻿using Fiive.Owl.Core;
-using Fiive.Owl.Core.XPML;
+using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Adapters;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace Fiive.Owl.Formats.Output.XPML
+namespace Fiive.Owl.Formats.Output.XOML
 {
     /// <summary>
-    /// Output Validator XPML
+    /// Output Validator XOML
     /// </summary>
-    public class XPMLOutputValidator: XPMLValidator
+    public class XOMLOutputValidator: XOMLValidator
     {
         #region Publics
 
@@ -29,7 +29,7 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             foreach (XmlNode nElement in handler.ConfigMap.GetNotHiddenOutputElements(node))
             {
-                ElementOutput element = (ElementOutput)handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, handler);
+                ElementOutput element = (ElementOutput)handler.XOMLValidator.GetXOMLObject(new ElementOutput(), nElement, handler);
                 output.GetElementValue(element, nElement, section);
                 SetProperty(element.Name, segment, element.Value);
             }
@@ -50,7 +50,7 @@ namespace Fiive.Owl.Formats.Output.XPML
         {
             foreach (XmlNode nElement in handler.ConfigMap.GetNotHiddenOutputElements(node))
             {
-                ElementOutput element = (ElementOutput)handler.XPMLValidator.GetXPMLObject(new ElementOutput(), nElement, handler);
+                ElementOutput element = (ElementOutput)handler.XOMLValidator.GetXOMLObject(new ElementOutput(), nElement, handler);
                 output.GetElementValue(element, nElement, section);
                 SetProperty(element.Name, segment, element.Value);
             }
