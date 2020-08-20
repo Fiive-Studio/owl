@@ -115,8 +115,9 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
         /// <param name="eval">Expresion a evaluar</param>
         public FieldLength(string eval)
         {
-            // "5/Izquierda/ " <-- Expresion a evaluar (Texto)
-            // "5,2/Numero-S/ , " <-- Expresion a evaluar (Numero)
+            // "5/left/ " <-- Expresion a evaluar (Texto)
+            // "5,2/number-s/ , " <-- Expresion a evaluar (Numero)
+            // "5,2/right/ /pad" <-- Expresion a evaluar (Numero)
 
             string[] parts = eval.Split(new char[] { '/' }, 4);
             PaddingChar = ' ';

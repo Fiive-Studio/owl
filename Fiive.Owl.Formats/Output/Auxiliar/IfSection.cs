@@ -37,17 +37,16 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
         /// Valida los campos requeridos
         /// </summary>
         /// <param name="handler">Handler</param>
-        /// <param name="isPrevious">true if is a previous validation, otherwise false</param>
+        /// <param name="isLater">true if is a later validation, otherwise false</param>
         /// <returns>true si los valida correctamente, de lo contrario false</returns>
-        public bool Validate(OwlHandler handler, bool isPrevious)
+        public bool Validate(OwlHandler handler, bool isLater)
         {
             if (_node == null) { return true; }
 
-            XmlAttribute attr = _node.Attributes["Previo"];
-            string val = attr == null ? "No" : attr.Value;
+            XmlAttribute attr = _node.Attributes["later"];
+            string val = attr == null ? "no" : attr.Value;
 
-            if (isPrevious && val == "Si") { return ValidateNode(_node, handler); }
-            else if (!isPrevious && val == "No") { return ValidateNode(_node, handler); }
+            if ((isLater && val == "yes") || (!isLater && val == "no")) { return ValidateNode(_node, handler); }
 
             return true;
         }
@@ -71,20 +70,20 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 #region Vars and previous validation
 
                 bool bolValActual = false;
-                XmlAttribute attr = nodoHijo.Attributes["OperadorLogico"];
+                XmlAttribute attr = nodoHijo.Attributes["logical-operator"];
                 string operadorLogico = attr != null ? attr.Value : string.Empty;
 
                 if (intContador != 1)
                 {
                     // this validation is because if one validation is false in a "Y" Condition, all validation is false
-                    if (operadorLogico == "Y" && !bolEstado) { break; }
+                    if (operadorLogico == "and" && !bolEstado) { break; }
                 }
 
                 #endregion
 
                 #region Validate values
 
-                XmlNode subSi = nodoHijo.HasChildNodes ? nodoHijo.SelectSingleNode("Si") : null;
+                XmlNode subSi = nodoHijo.HasChildNodes ? nodoHijo.SelectSingleNode("if") : null;
                 if (subSi != null)
                 {
                     // Si el nodo tiene subnodo si, se valida el si de adentro para seguir con las demas condiciones
@@ -109,17 +108,17 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                     #region Tipo de comparacion
 
                     // Obtiene tipo de comparacion
-                    XmlAttribute attr2 = valor2.Attributes["TipoComparacion"];
+                    XmlAttribute attr2 = valor2.Attributes["compare-operator"];
                     string tipoComparacion = attr2 != null ? attr2.Value : string.Empty;
                     switch (tipoComparacion)
                     {
                         #region Texto
 
-                        case "Igual":
+                        case "equal":
                             if (strValor1 == strValor2) { bolValActual = true; } else { bolValActual = false; }
                             break;
 
-                        case "Diferente":
+                        case "different":
                             if (strValor1 != strValor2) { bolValActual = true; } else { bolValActual = false; }
                             break;
 
@@ -127,34 +126,34 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
 
                         #region Numericos
 
-                        case "Mayor":
-                        case "Menor":
-                        case "MayorIgual":
-                        case "MenorIgual":
+                        case "greater":
+                        case "less":
+                        case "greater-equal":
+                        case "less-equal":
 
                             decimal vValor1 = 0, vValor2 = 0;
 
                             #region Validaciones
 
-                            if (!strValor1.IsDecimal()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "TipoComparacion", strValor1, "Valor1")); }
+                            if (!strValor1.IsDecimal()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "compare-operator", strValor1, "value-1")); }
                             else { vValor1 = Convert.ToDecimal(strValor1); }
 
-                            if (!strValor2.IsDecimal()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "TipoComparacion", strValor2, "Valor2")); }
+                            if (!strValor2.IsDecimal()) { throw new OwlException(string.Format(ETexts.GT(ErrorType.IfNonNumericValue), tipoComparacion, "compare-operator", strValor2, "value-2")); }
                             else { vValor2 = Convert.ToDecimal(strValor2); }
 
                             #endregion
 
-                            if (tipoComparacion == "Mayor") { if (vValor1 > vValor2) { bolValActual = true; } else { bolValActual = false; } }
-                            else if (tipoComparacion == "Menor") { if (vValor1 < vValor2) { bolValActual = true; } else { bolValActual = false; } }
-                            else if (tipoComparacion == "MayorIgual") { if (vValor1 >= vValor2) { bolValActual = true; } else { bolValActual = false; } }
-                            else if (tipoComparacion == "MenorIgual") { if (vValor1 <= vValor2) { bolValActual = true; } else { bolValActual = false; } }
+                            if (tipoComparacion == "greater") { if (vValor1 > vValor2) { bolValActual = true; } else { bolValActual = false; } }
+                            else if (tipoComparacion == "less") { if (vValor1 < vValor2) { bolValActual = true; } else { bolValActual = false; } }
+                            else if (tipoComparacion == "greater-equal") { if (vValor1 >= vValor2) { bolValActual = true; } else { bolValActual = false; } }
+                            else if (tipoComparacion == "less-equal") { if (vValor1 <= vValor2) { bolValActual = true; } else { bolValActual = false; } }
 
                             break;
 
                         #endregion
 
                         default:
-                            throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), tipoComparacion, "TipoComparacion"));
+                            throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), tipoComparacion, "compare-operator"));
                     }
 
                     #endregion
@@ -167,13 +166,13 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
                 if (intContador == 1) { bolEstado = bolValActual; }
                 else if (intContador != 1)
                 {
-                    if (operadorLogico == "O") { bolEstado = bolEstado || bolValActual; }
-                    else if (operadorLogico == "Y")
+                    if (operadorLogico == "or") { bolEstado = bolEstado || bolValActual; }
+                    else if (operadorLogico == "and")
                     {
                         bolEstado = bolEstado && bolValActual;
                         if (!bolEstado) { break; } // this validation is because if one validation is false in a "Y" Condition, all validation is false
                     }
-                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), operadorLogico, "OperadorLogico")); }
+                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), operadorLogico, "logical-operator")); }
                 }
 
                 #endregion

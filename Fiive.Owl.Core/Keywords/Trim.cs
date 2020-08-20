@@ -1,4 +1,5 @@
 ﻿using Fiive.Owl.Core.Exceptions;
+using Fiive.Owl.Core.Extensions;
 using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Core.XOML;
 using System;
@@ -43,7 +44,7 @@ namespace Fiive.Owl.Core.Keywords
 
         public void SetPropertyValue(string property, string value)
         {
-            if (property == "Type") { Type = (TrimType)Enum.Parse(typeof(TrimType), value); }
+            if (property == "Type") { Type = (TrimType)Enum.Parse(typeof(TrimType), value.XOMLName()); }
             else { throw new OwlKeywordException(KeywordsType.Trim, string.Format(ETexts.GT(ErrorType.XOMLEnumInvalid), property)); }
         }
 

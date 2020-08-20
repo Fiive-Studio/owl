@@ -134,6 +134,17 @@ namespace Fiive.Owl.Core.Extensions
             return new string(arr);
         }
 
+        public static string XOMLName(this string value)
+        {
+            // input value val1-val2
+            // output value Val1Val2
+
+            var parts = value.Split('-');
+            StringBuilder newName = new StringBuilder();
+            foreach (string part in parts) { newName.Append(string.Concat(part[0].ToString().ToUpper(), part.GetSafeSubstring(1))); }
+            return newName.ToString();
+        }
+
         #endregion
     }
 }

@@ -9,6 +9,7 @@ using System.Data;
 using Fiive.Owl.Core.Keywords;
 using System.Xml.XPath;
 using Fiive.Owl.Core.Exceptions;
+using System.Net.NetworkInformation;
 
 namespace Fiive.Owl.Core.XOML
 {
@@ -142,6 +143,7 @@ namespace Fiive.Owl.Core.XOML
         protected void SetProperty(string property, object obj, object value)
         {
             PropertyInfo prop = obj.GetType().GetProperty(property);
+            if (prop == null) { throw new OwlException(string.Format(ETexts.GT(ErrorType.PropertyNotExist), property)); }
             prop.SetValue(obj, value, null);
         }
 

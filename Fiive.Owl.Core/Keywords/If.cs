@@ -59,7 +59,7 @@ namespace Fiive.Owl.Core.Keywords
 
         public void SetPropertyValue(string property, string value)
         {
-            if (property == "Type") { Type = (ValidationType)Enum.Parse(typeof(ValidationType), value); }
+            if (property == "Type") { Type = (ValidationType)Enum.Parse(typeof(ValidationType), value.XOMLName()); }
             else { throw new OwlKeywordException(KeywordsType.If, string.Format(ETexts.GT(ErrorType.XOMLEnumInvalid), property)); }
         }
 

@@ -1,4 +1,5 @@
-﻿using Fiive.Owl.Core.XOML;
+﻿using Fiive.Owl.Core.Extensions;
+using Fiive.Owl.Core.XOML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +43,8 @@ namespace Fiive.Owl.Formats.Output.XOML
 
         public override void SetPropertyValue(string property, string value)
         {
-            if (property == "SqlElementType") { SqlElementType = (SqlElementType)Enum.Parse(typeof(SqlElementType), value); }
-            else if (property == "WhereType") { WhereType = (WhereType)Enum.Parse(typeof(WhereType), value); }
+            if (property == "SqlElementType") { SqlElementType = (SqlElementType)Enum.Parse(typeof(SqlElementType), value.XOMLName()); }
+            else if (property == "WhereType") { WhereType = (WhereType)Enum.Parse(typeof(WhereType), value.XOMLName()); }
             else { base.SetPropertyValue(property, value); }
         }
 

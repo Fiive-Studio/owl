@@ -110,12 +110,12 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
         {
             foreach (XmlNode nodoHijo in nodo.ChildNodes)
             {
-                if (nodoHijo.Name != "Campo") { throw new OwlException(string.Format(ETexts.GT(ErrorType.TagInvalid), nodoHijo.Name, "Requeridos")); }
+                if (nodoHijo.Name != "item") { throw new OwlException(string.Format(ETexts.GT(ErrorType.TagInvalid), nodoHijo.Name, "required")); }
 
                 if (nodoHijo.FirstChild != null && nodoHijo.FirstChild.NodeType == XmlNodeType.Element)
                 {
-                    if (nodoHijo.FirstChild.Name == "Requeridos") { ProcessNode(nodoHijo.FirstChild); }
-                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.TagInvalid), nodoHijo.FirstChild.Name, "Requeridos")); }
+                    if (nodoHijo.FirstChild.Name == "required") { ProcessNode(nodoHijo.FirstChild); }
+                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.TagInvalid), nodoHijo.FirstChild.Name, "required")); }
                 }
                 else { if (!_fieldsRequireds.ContainsKey(nodoHijo.InnerText)) { _fieldsRequireds.Add(nodoHijo.InnerText, string.Empty); } }
             }
@@ -149,10 +149,10 @@ namespace Fiive.Owl.Formats.Output.Auxiliar
 
                 if (intContador != 1)
                 {
-                    string operadorLogico = nodoHijo.Attributes["OperadorLogico"] != null ? nodoHijo.Attributes["OperadorLogico"].Value : string.Empty;
-                    if (operadorLogico == "O") { booEstado = booEstado || booValActual; }
-                    else if (operadorLogico == "Y") { booEstado = booEstado && booValActual; }
-                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), operadorLogico, "OperadorLogico")); }
+                    string operadorLogico = nodoHijo.Attributes["logical-operator"] != null ? nodoHijo.Attributes["logical-operator"].Value : string.Empty;
+                    if (operadorLogico == "or") { booEstado = booEstado || booValActual; }
+                    else if (operadorLogico == "and") { booEstado = booEstado && booValActual; }
+                    else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLPropertyInvalidValue), operadorLogico, "logical-operator")); }
                 }
 
                 intContador++;

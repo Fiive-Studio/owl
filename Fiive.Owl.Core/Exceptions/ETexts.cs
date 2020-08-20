@@ -50,6 +50,7 @@ namespace Fiive.Owl.Core.Exceptions
                 Texts[ErrorType.CounterVariableModified] = "The Variable: '{0}' was modified with the alphanumeric value: '{1}' but it is being used by the Counter: '{2}'";
                 Texts[ErrorType.ReservadaWordDoesNotSupport] = "The Key: '{0}' is not supported by the output structure";
                 Texts[ErrorType.ErrorOutputSection] = "Error processing the output section";
+                Texts[ErrorType.PropertyNotExist] = "The property: '{0}' does not exist";
             }
         }
 
@@ -105,6 +106,7 @@ namespace Fiive.Owl.Core.Exceptions
         ReservadaWordDoesNotSupport = 32,
         ErrorOutputSection = 33,
         ErrorLoadConfigMapBase = 34,
+        PropertyNotExist = 35
     }
 
     #endregion

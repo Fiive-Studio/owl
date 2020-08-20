@@ -32,9 +32,6 @@ namespace Fiive.Owl.Core.Adapters
 
         #region Properties
 
-        /// <summary>
-        /// Maximo numero de detalles de log a agregar
-        /// </summary>
         [ConfigurationProperty("OwlEDILibrary", DefaultValue = "Fiive.Owl.EDI.Segments.{0}, Fiive.Owl.EDI", IsRequired = false)]
         public string MapperEDILibrary
         {
@@ -42,9 +39,6 @@ namespace Fiive.Owl.Core.Adapters
             set { this["OwlEDILibrary"] = value; }
         }
 
-        /// <summary>
-        /// Maximo numero de detalles de log a agregar
-        /// </summary>
         [ConfigurationProperty("OwlANSILibrary", DefaultValue = "Fiive.Owl.ANSI.Segments.{0}, Fiive.Owl.ANSI", IsRequired = false)]
         public string MapperANSILibrary
         {

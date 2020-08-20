@@ -152,7 +152,7 @@ namespace Fiive.Owl.Core.Keywords
 
             #region Value
 
-            var className = string.Concat(node.Name[0].ToString().ToUpper(), node.Name.GetSafeSubstring(1));
+            var className = node.Name.XOMLName();
             if (KeywordsList.Contains(className))
             {
                 IXOMLObject keywordInstance = (IXOMLObject)Activator.CreateInstance(Type.GetType(string.Format("Fiive.Owl.Core.Keywords.{0}", className)));

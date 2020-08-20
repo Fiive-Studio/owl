@@ -119,7 +119,7 @@ namespace Fiive.Owl.Core
             if (!_owlSettings.PathConfig.IsNullOrWhiteSpace() && !File.Exists(_owlSettings.PathConfig)) { throw new OwlException(string.Format(ETexts.GT(ErrorType.ConfigMapNotFound), _owlSettings.PathConfig)); }
 
             ConfigMap = new OwlConfigMap(Settings);
-            ConfigMap.LoadConfigMap(_owlSettings.Instance);
+            ConfigMap.LoadConfigMap();
         }
 
         #endregion

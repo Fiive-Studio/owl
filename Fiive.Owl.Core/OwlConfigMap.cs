@@ -69,14 +69,8 @@ namespace Fiive.Owl.Core
         /// <summary>
         /// Carga los archivos de configuracion, se debe llamar de primero
         /// </summary>
-        public void LoadConfigMap() { LoadConfigMap(false); }
-
-        /// <summary>
-        /// Carga los archivos de configuracion, se debe llamar de primero
-        /// </summary>
-        /// <param name="instance">true si se va a utilizar para generar una instancia, de lo contrario false</param>
         /// <exception cref="OwlException">Error al cargar el archivo de Configuracion Xml</exception>
-        public void LoadConfigMap(bool instance)
+        public void LoadConfigMap()
         {
             if (_settings.XmlConfig == null)
             {

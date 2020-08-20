@@ -6,6 +6,7 @@ using Fiive.Owl.Core.XOML;
 using Fiive.Owl.Core.Keywords;
 using Fiive.Owl.Core.Exceptions;
 using Fiive.Owl.Formats.Output.Auxiliar;
+using Fiive.Owl.Core.Extensions;
 
 namespace Fiive.Owl.Formats.Output.XOML
 {
@@ -101,7 +102,7 @@ namespace Fiive.Owl.Formats.Output.XOML
 
         public virtual void SetPropertyValue(string property, string value)
         {
-            if (property == "DataType") { DataType = (ElementDataType)Enum.Parse(typeof(ElementDataType), value); }
+            if (property == "DataType") { DataType = (ElementDataType)Enum.Parse(typeof(ElementDataType), value.XOMLName()); }
             else if (property == "Length") { Length = new FieldLength(value); }
             else { throw new OwlException(string.Format(ETexts.GT(ErrorType.XOMLEnumInvalid), property)); }
         }

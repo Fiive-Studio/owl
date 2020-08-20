@@ -333,7 +333,7 @@ namespace Fiive.Owl.Formats.Output
             #region Validate Previous If
 
             IfSection ifConfiguration = new IfSection(_handler.ConfigMap.GetIfNode(parentNode));
-            if (!_handler.Settings.Instance) { if (!ifConfiguration.Validate(_handler, true)) { return null; } }
+            if (!_handler.Settings.Instance) { if (!ifConfiguration.Validate(_handler, false)) { return null; } }
 
             #endregion
 
@@ -383,7 +383,7 @@ namespace Fiive.Owl.Formats.Output
                 #region Verificacion Si
 
                 // Condicion para saber si se genera la seccion o no
-                if (!ifConfiguration.Validate(_handler, false))
+                if (!ifConfiguration.Validate(_handler, true))
                 {
                     if (intCountCurrentSection != _segmentCount) { _segmentCount = intCountCurrentSection; }
                     StatusCancelSectionGroupProcessed(true);
