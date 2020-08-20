@@ -581,7 +581,7 @@ namespace Fiive.Owl.Formats.Output
 
             #endregion
 
-            #region Contador
+            #region Counter
 
             // Solo se crean los contadores si no es una instancia
             if (!_handler.Settings.Instance)
@@ -595,7 +595,7 @@ namespace Fiive.Owl.Formats.Output
                     // Sintaxis contador: Nombre/Incremento
                     if (parameters.Length != 2)
                     {
-                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorCountParametersNotValid), element.Counter, parameters.Length), nElement.OuterXml, element.Name, _OutputSection);
+                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.CounterCountParametersNotValid), element.Counter, parameters.Length), nElement.OuterXml, element.Name, _OutputSection);
                     }
 
                     #endregion
@@ -604,7 +604,7 @@ namespace Fiive.Owl.Formats.Output
 
                     if (parameters.GetSafeValue(0).IsNullOrWhiteSpace())
                     {
-                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorEmptyParameter), "1", element.Counter), nElement.OuterXml, element.Name, _OutputSection);
+                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.CounterEmptyParameter), "1", element.Counter), nElement.OuterXml, element.Name, _OutputSection);
                     }
 
                     #endregion
@@ -619,7 +619,7 @@ namespace Fiive.Owl.Formats.Output
 
                     if (!valor.IsDecimal())
                     {
-                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorParameterIsForNumbers), "2", element.Counter, valor), nElement.OuterXml, element.Name, _OutputSection);
+                        throw new OwlElementException(string.Format(ETexts.GT(ErrorType.CounterParameterIsForNumbers), "2", element.Counter, valor), nElement.OuterXml, element.Name, _OutputSection);
                     }
 
                     decimal valorIncremento = Convert.ToDecimal(valor);
@@ -631,7 +631,7 @@ namespace Fiive.Owl.Formats.Output
                     {
                         if (!_handler[parameters.GetSafeValue(0)].IsDecimal())
                         {
-                            throw new OwlElementException(string.Format(ETexts.GT(ErrorType.ContadorVariableModified), parameters.GetSafeValue(0), _handler[parameters.GetSafeValue(0)], element.Counter), nElement.OuterXml, element.Name, _OutputSection);
+                            throw new OwlElementException(string.Format(ETexts.GT(ErrorType.CounterVariableModified), parameters.GetSafeValue(0), _handler[parameters.GetSafeValue(0)], element.Counter), nElement.OuterXml, element.Name, _OutputSection);
                         }
 
                         // Si la variable ya existe se incrementa

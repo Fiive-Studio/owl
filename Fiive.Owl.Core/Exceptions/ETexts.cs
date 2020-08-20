@@ -16,8 +16,8 @@ namespace Fiive.Owl.Core.Exceptions
             lock (Texts)
             {
                 if (Texts.Count != 0) { return; }
-                Texts[ErrorType.IFormatInputIsNull] = "No se asigno estructura de entrada";
-                Texts[ErrorType.OwlSettingsIsNull] = "No se asigno la propiedad Settings en OwlHandler";
+                Texts[ErrorType.IFormatInputIsNull] = "Input structure was not assigned";
+                Texts[ErrorType.OwlSettingsIsNull] = "Settings property was not assigned in OwlHandler";
                 Texts[ErrorType.ConfigMapNotFound] = "The file: '{0}' configured in PathConfig does not exist";
                 Texts[ErrorType.PathConfigMapIsEmpty] = "You must to define PathConfig or XmlConfig";
                 Texts[ErrorType.OwlVarUndefined] = "The Variable: '{0}' is not defined";
@@ -29,7 +29,7 @@ namespace Fiive.Owl.Core.Exceptions
                 Texts[ErrorType.ReferenceTableDontExist] = "The table: '{0}' does not exist in the References DataSet";
                 Texts[ErrorType.ReferenceColumnDontExist] = "The column(s): '{0}' do not exist(s) in the References DataSet";
                 Texts[ErrorType.ReferenceDataSetNull] = "The References DataSet is null";
-                Texts[ErrorType.IfNonNumericValue] = "El operator: '{0}' configured in the property: '{1}' require than the value: '{2}' in the property: '{3}' be numeric";
+                Texts[ErrorType.IfNonNumericValue] = "The operator: '{0}' configured in the property: '{1}' require than the value: '{2}' in the property: '{3}' be numeric";
                 Texts[ErrorType.XOMLNumericValue] = "The value: '{0}' in the property: '{1}' must be numeric";
                 Texts[ErrorType.TagsDoesNotExists] = "It require the tags value-1 y value-2 in the parent tag: '{0}'";
                 Texts[ErrorType.TagInvalid] = "The tag: '{0}' is not valid in the block: '{1}'";
@@ -44,12 +44,12 @@ namespace Fiive.Owl.Core.Exceptions
                 Texts[ErrorType.FormatNotValid] = "The Format Configuration: '{0}' is not valid";
                 Texts[ErrorType.FormatIsForNumbers] = "The field has the value: '{0}' and the format: '{1}' only is allowed in numeric values";
                 Texts[ErrorType.LengthIsForNumbers] = "The field has the value: '{0}' and the element has data type or numeric length";
-                Texts[ErrorType.ContadorCountParametersNotValid] = "La configuración del Contador: '{0}' tiene: '{1}' parámetros y debe tener 2";
-                Texts[ErrorType.ContadorEmptyParameter] = "El Parametro: '{0}' del Contador: '{1}' esta vacio y su valor es obligatorio";
-                Texts[ErrorType.ContadorParameterIsForNumbers] = "El Parametro: '{0}' del Contador: '{1}' tiene el valor: '{2}' y su valor debe ser numérico";
-                Texts[ErrorType.ContadorVariableModified] = "La Variable: '{0}' fue modificada por el valor: '{1}' el cual es alfanumérico y esta siendo usada por el Contador: '{2}'";
+                Texts[ErrorType.CounterCountParametersNotValid] = "The Counter: '{0}' has: '{1}' parameters and it must have 2";
+                Texts[ErrorType.CounterEmptyParameter] = "The parameter: '{0}' in the Counter: '{1}' is empty and his value is mandatory";
+                Texts[ErrorType.CounterParameterIsForNumbers] = "The parameter: '{0}' in the Counter: '{1}' has the value: '{2}' and his value must be numeric";
+                Texts[ErrorType.CounterVariableModified] = "The Variable: '{0}' was modified with the alphanumeric value: '{1}' but it is being used by the Counter: '{2}'";
                 Texts[ErrorType.ReservadaWordDoesNotSupport] = "The Key: '{0}' is not supported by the output structure";
-                Texts[ErrorType.ErrorOutputSection] = "Error al procesar la seccion de salida";
+                Texts[ErrorType.ErrorOutputSection] = "Error processing the output section";
             }
         }
 
@@ -98,10 +98,10 @@ namespace Fiive.Owl.Core.Exceptions
         FormatNotValid = 25,
         FormatIsForNumbers = 26,
         LengthIsForNumbers = 27,
-        ContadorCountParametersNotValid = 28,
-        ContadorEmptyParameter = 29,
-        ContadorParameterIsForNumbers = 30,
-        ContadorVariableModified = 31,
+        CounterCountParametersNotValid = 28,
+        CounterEmptyParameter = 29,
+        CounterParameterIsForNumbers = 30,
+        CounterVariableModified = 31,
         ReservadaWordDoesNotSupport = 32,
         ErrorOutputSection = 33,
         ErrorLoadConfigMapBase = 34,

@@ -72,5 +72,7 @@ namespace Fiive.Owl.Formats.Output
         protected override string OpenContent() { return "{"; }
 
         protected override string CloseContent() { return "}"; }
+
+        protected override SectionOutput GetSection(XmlNode node) { return (JsonSectionOutput)_handler.XOMLValidator.GetXOMLObject(new JsonSectionOutput(), node, _handler); }
     }
 }
