@@ -90,7 +90,7 @@ namespace Fiive.Owl.Core.XOML
                         else if (xr.PropertyType == XOMLPropertyType.List)
                         {
                             List<string> values = new List<string>();
-                            foreach (XmlNode valueNode in nProperty.SelectNodes(string.Concat(nProperty.Name, ".", "Valor"))) { values.Add(GetKeywordValue(valueNode, handler)); }
+                            foreach (XmlNode valueNode in nProperty.SelectNodes(string.Concat(nProperty.Name, ".", "value"))) { values.Add(GetKeywordValue(valueNode, handler)); }
                             SetProperty(xr.PropertyName, obj, values);
                         }
                     }
