@@ -132,7 +132,7 @@ namespace Fiive.Owl.Formats.Input
             }
             catch (Exception e)
             {
-                throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.ErrorExecuteExpression), eval), "", _xml.Name, "Documento/Entrada", e);
+                throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.ErrorExecuteExpression), eval), "", _xml.Name, "owl", e);
             }
         }
 
@@ -147,7 +147,7 @@ namespace Fiive.Owl.Formats.Input
             try { nodes = _xml.SelectNodes(eval, _nsmgr); }
             catch (Exception e)
             {
-                throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.ErrorExecuteExpression), eval), "", _xml.Name, "Documento/Entrada", e);
+                throw new OwlSectionException(string.Format(ETexts.GT(ErrorType.ErrorExecuteExpression), eval), "", _xml.Name, "owl", e);
             }
 
             foreach (XmlNode node in nodes) { yield return new XmlInputValue(node, _nsmgr); }

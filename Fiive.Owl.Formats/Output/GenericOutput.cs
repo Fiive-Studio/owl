@@ -614,7 +614,7 @@ namespace Fiive.Owl.Formats.Output
                     #region Incremento
 
                     string valor;
-                    if (parameters.GetSafeValue(1) == "CurrentValue") { valor = element.Value; }
+                    if (parameters.GetSafeValue(1) == "current-value") { valor = element.Value; }
                     else { valor = parameters.GetSafeValue(1); }
 
                     if (!valor.IsDecimal())
@@ -1010,7 +1010,7 @@ namespace Fiive.Owl.Formats.Output
         /// </summary>
         protected void AddReservedVars()
         {
-            _handler["TOTAL_SEGMENTS"] = _segmentCount.ToString();
+            _handler["TOTAL_SECTIONS"] = _segmentCount.ToString();
             AddReservedVarsOutput();
         }
 
