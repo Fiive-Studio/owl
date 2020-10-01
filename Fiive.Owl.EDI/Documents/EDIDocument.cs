@@ -31,7 +31,7 @@ namespace Fiive.Owl.EDI.Documents
 
             if (config == null) { throw new ArgumentNullException("config", "El parametro 'config' no puede ser nulo"); }
             if (config.Sections.Count == 0) { throw new OwlAdapterException("El Owl Input Config no tiene Secciones configuradas"); }
-            if (content.IsNullOrWhiteSpace()) { throw new OwlAdapterException("El documento EDI no contiene información"); }
+            if (content.IsNullOrWhiteSpace()) { throw new OwlContentException("El documento EDI no contiene información"); }
 
             #endregion
 
@@ -53,7 +53,7 @@ namespace Fiive.Owl.EDI.Documents
                 string message = string.Format("Se encontró un contenido no válido en la posición '{0}'.", _currentPos);
                 if (_lastValidSegment != null) { message += string.Format(" El último segmento válido fue '{0}'", _lastValidSegment.Name); }
 
-                throw new OwlAdapterException(message);
+                throw new OwlContentException(message);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Fiive.Owl.EDI.Documents
         EDISegmentBase GetSegmentInstance(string content, string segmentName)
         {
             Type type = Type.GetType(string.Format(OwlAdapterSettings.Settings.MapperEDILibrary, segmentName));
-            if (type == null) { throw new OwlAdapterException(string.Format("El segmento '{0}' no es válido para un documento EDI", segmentName)); }
+            if (type == null) { throw new OwlContentException(string.Format("El segmento '{0}' no es válido para un documento EDI", segmentName)); }
 
             EDISegmentBase iSegment = (EDISegmentBase)Activator.CreateInstance(type);
             iSegment.Properties = (EDISegmentProperties)Properties.Clone(); // TODO: Validate clone

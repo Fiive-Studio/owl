@@ -27,7 +27,7 @@ namespace Fiive.Owl.FlatFile.Structure
             #region Validate params
 
             if (config == null) { throw new ArgumentNullException("config", "config is null"); }
-            if (config.Sections.Count == 0) { throw new Exception("Owl config does not have sections configured"); }
+            if (config.Sections.Count == 0) { throw new OwlAdapterException("Owl config does not have sections configured"); }
             if (string.IsNullOrEmpty(content)) { throw new OwlContentException("The document is empty"); }
 
             #endregion

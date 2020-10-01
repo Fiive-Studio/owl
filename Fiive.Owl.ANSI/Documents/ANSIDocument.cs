@@ -31,7 +31,7 @@ namespace Fiive.Owl.ANSI.Documents
 
             if (config == null) { throw new ArgumentNullException("config", "El parametro 'config' no puede ser nulo"); }
             if (config.Sections.Count == 0) { throw new OwlAdapterException("El Owl Input Config no tiene Secciones configuradas"); }
-            if (content.IsNullOrWhiteSpace()) { throw new OwlAdapterException("El documento ANSI no contiene información"); }
+            if (content.IsNullOrWhiteSpace()) { throw new OwlContentException("El documento ANSI no contiene información"); }
 
             #endregion
 
@@ -61,7 +61,7 @@ namespace Fiive.Owl.ANSI.Documents
                 string message = string.Format("Se encontró un contenido no válido en la posición '{0}'.", _currentPos);
                 if (_lastValidSegment != null) { message += string.Format(" El último segmento válido fue '{0}'", _lastValidSegment.Name); }
 
-                throw new OwlAdapterException(message);
+                throw new OwlContentException(message);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Fiive.Owl.ANSI.Documents
         {
             if (segmentName == "CON") { segmentName = "CON_"; }
             Type type = Type.GetType(string.Format(OwlAdapterSettings.Settings.MapperANSILibrary, segmentName));
-            if (type == null) { throw new OwlAdapterException(string.Format("El segmento '{0}' no es válido para un documento ANSI", segmentName)); }
+            if (type == null) { throw new OwlContentException(string.Format("El segmento '{0}' no es válido para un documento ANSI", segmentName)); }
 
             ANSISegmentBase iSegment = (ANSISegmentBase)Activator.CreateInstance(type);
             iSegment.Properties = (ANSISegmentProperties)Properties.Clone();
