@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Fiive.Owl.EDI.Config
+namespace Fiive.Owl.Core.Adapters
 {
     [Serializable]
     [XmlRoot("owl")]
@@ -11,9 +11,6 @@ namespace Fiive.Owl.EDI.Config
     {
         [XmlAttribute("version")]
         public string Version { get; set; }
-
-        [XmlElement("section")]
-        public List<OwlSection> Sections { get; set; }
     }
 
     [Serializable]
@@ -24,12 +21,6 @@ namespace Fiive.Owl.EDI.Config
 
         [XmlAttribute("id")]
         public string Id { get; set; }
-
-        [XmlElement("section")]
-        public List<OwlSection> Sections { get; set; }
-
-        [XmlElement("element")]
-        public List<OwlElement> Elements { get; set; }
     }
 
     [Serializable]

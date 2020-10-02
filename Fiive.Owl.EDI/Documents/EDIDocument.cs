@@ -19,13 +19,13 @@ namespace Fiive.Owl.EDI.Documents
         #region Vars
 
         int _currentPos;
-        OwlSection _lastValidSegment;
+        OwlEDISection _lastValidSegment;
 
         #endregion
 
         #region Publics
 
-        public void LoadContent(OwlConfig config, string content)
+        public void LoadContent(OwlEDIConfig config, string content)
         {
             #region Validate params
 
@@ -63,10 +63,10 @@ namespace Fiive.Owl.EDI.Documents
 
         #region Privates
 
-        List<EDISegmentBase> Load(List<OwlSection> sections, StringBuilder content)
+        List<EDISegmentBase> Load(List<OwlEDISection> sections, StringBuilder content)
         {
             List<EDISegmentBase> listSegments = new List<EDISegmentBase>();
-            foreach (OwlSection section in sections)
+            foreach (OwlEDISection section in sections)
             {
                 if (content.Length == 0) { break; }
                 string segmentContent = string.Empty;
@@ -115,7 +115,7 @@ namespace Fiive.Owl.EDI.Documents
             return iSegment;
         }
 
-        string GetSegmentContent(StringBuilder content, OwlSection section)
+        string GetSegmentContent(StringBuilder content, OwlEDISection section)
         {
             if (!content.StartsWith(section.Name)) { return string.Empty; } // If the content doesn't start with the section name break the process
 

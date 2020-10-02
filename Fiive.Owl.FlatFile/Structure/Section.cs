@@ -16,7 +16,7 @@ namespace Fiive.Owl.FlatFile.Structure
         [XmlIgnore]
         public OwlProperties Properties { get; set; }
         [XmlIgnore]
-        public OwlSection Configuration { get; set; }
+        public OwlFlatFileSection Configuration { get; set; }
 
         #region Properties
 
@@ -46,7 +46,7 @@ namespace Fiive.Owl.FlatFile.Structure
             {
                 string[] fields = content.Split(new string[] { Configuration.Separator }, StringSplitOptions.None);
                 int pos = 0;
-                foreach (OwlElement element in Configuration.Elements)
+                foreach (OwlFlatFileElement element in Configuration.Elements)
                 {
                     if (pos == fields.Length) { break; }
 
@@ -58,7 +58,7 @@ namespace Fiive.Owl.FlatFile.Structure
             }
             else
             {
-                foreach (OwlElement element in Configuration.Elements)
+                foreach (OwlFlatFileElement element in Configuration.Elements)
                 {
                     string value = content.GetSafeSubstring(element.StartPosition, element.Length);
                     ValidateElement(element, value);
@@ -98,7 +98,7 @@ namespace Fiive.Owl.FlatFile.Structure
 
         #region Privates
 
-        void ValidateElement(OwlElement element, string value, bool validateLength = false)
+        void ValidateElement(OwlFlatFileElement element, string value, bool validateLength = false)
         {
             // Required
             if (element.Required && string.IsNullOrWhiteSpace(value)) { throw new OwlRequiredException($"The element: '{element.Name}' - section: '{Configuration.Name}' is required"); }

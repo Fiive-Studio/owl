@@ -28,7 +28,8 @@ namespace Fiive.Owl.Formats.Output
                 if (!element.Hidden)
                 {
                     if (addSeparator) { sb.Append(","); }
-                    sb.Append($"\"{element.Name}\":\"{element.Value}\"");
+                    if (element.DataType == ElementDataType.Numeric) { sb.Append($"\"{element.Name}\":{element.Value}"); }
+                    else { sb.Append($"\"{element.Name}\":\"{element.Value}\""); }
                     addSeparator = true;
                 }
             }

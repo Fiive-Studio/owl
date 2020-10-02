@@ -19,13 +19,13 @@ namespace Fiive.Owl.ANSI.Documents
         #region Vars
 
         int _currentPos;
-        OwlSection _lastValidSegment;
+        OwlANSISection _lastValidSegment;
 
         #endregion
 
         #region Publics
 
-        public void LoadContent(OwlConfig config, string content)
+        public void LoadContent(OwlANSIConfig config, string content)
         {
             #region Validate params
 
@@ -71,10 +71,10 @@ namespace Fiive.Owl.ANSI.Documents
 
         #region Privates
 
-        List<ANSISegmentBase> Load(List<OwlSection> sections, StringBuilder content)
+        List<ANSISegmentBase> Load(List<OwlANSISection> sections, StringBuilder content)
         {
             List<ANSISegmentBase> listSegments = new List<ANSISegmentBase>();
-            foreach (OwlSection section in sections)
+            foreach (OwlANSISection section in sections)
             {
                 if (content.Length == 0) { break; }
                 string segmentContent = string.Empty;
@@ -124,7 +124,7 @@ namespace Fiive.Owl.ANSI.Documents
             return iSegment;
         }
 
-        string GetSegmentContent(StringBuilder content, OwlSection section)
+        string GetSegmentContent(StringBuilder content, OwlANSISection section)
         {
             if (!content.StartsWith(section.Name)) { return string.Empty; } // If the content doesn't start with the section name break the process
 

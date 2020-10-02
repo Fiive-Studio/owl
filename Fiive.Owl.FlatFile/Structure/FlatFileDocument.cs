@@ -16,13 +16,13 @@ namespace Fiive.Owl.FlatFile.Structure
         #region Vars
 
         int _currentPos;
-        OwlSection _lastValidSegment;
+        OwlFlatFileSection _lastValidSegment;
 
         #endregion
 
         #region Publics
 
-        public void LoadContent(OwlConfig config, string content)
+        public void LoadContent(OwlFlatFileConfig config, string content)
         {
             #region Validate params
 
@@ -53,10 +53,10 @@ namespace Fiive.Owl.FlatFile.Structure
 
         #region Privates
 
-        List<Section> Load(List<OwlSection> sections, StringBuilder content)
+        List<Section> Load(List<OwlFlatFileSection> sections, StringBuilder content)
         {
             List<Section> listSegments = new List<Section>();
-            foreach (OwlSection section in sections)
+            foreach (OwlFlatFileSection section in sections)
             {
                 if (content.Length == 0) { break; }
                 string segmentContent = string.Empty;
@@ -93,7 +93,7 @@ namespace Fiive.Owl.FlatFile.Structure
             return listSegments;
         }
 
-        Section GetSegmentInstance(string content, OwlSection section)
+        Section GetSegmentInstance(string content, OwlFlatFileSection section)
         {
             Section iSegment = new Section();
             iSegment.Properties = (OwlProperties)Properties.Clone(); // TODO: Validate clone
@@ -104,7 +104,7 @@ namespace Fiive.Owl.FlatFile.Structure
             return iSegment;
         }
 
-        string GetSegmentContent(StringBuilder content, OwlSection section)
+        string GetSegmentContent(StringBuilder content, OwlFlatFileSection section)
         {
             // Two options
                 // Content start with the section id

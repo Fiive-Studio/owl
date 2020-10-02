@@ -1,4 +1,5 @@
-﻿using Fiive.Owl.Core.Structure;
+﻿using Fiive.Owl.Core.Adapters;
+using Fiive.Owl.Core.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,40 +11,28 @@ namespace Fiive.Owl.FlatFile.Config
 {
     [Serializable]
     [XmlRoot("owl")]
-    public class OwlConfig
+    public class OwlFlatFileConfig : OwlConfig
     {
-        [XmlAttribute("version")]
-        public string Version { get; set; }
-
         [XmlElement("section")]
-        public List<OwlSection> Sections { get; set; }
+        public List<OwlFlatFileSection> Sections { get; set; }
     }
 
     [Serializable]
-    public class OwlSection
+    public class OwlFlatFileSection : OwlSection
     {
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-
-        [XmlAttribute("id")]
-        public string Id { get; set; }
-
         [XmlAttribute("separator")]
         public string Separator { get; set; }
 
         [XmlElement("section")]
-        public List<OwlSection> Sections { get; set; }
+        public List<OwlFlatFileSection> Sections { get; set; }
 
         [XmlElement("element")]
-        public List<OwlElement> Elements { get; set; }
+        public List<OwlFlatFileElement> Elements { get; set; }
     }
 
     [Serializable]
-    public class OwlElement
+    public class OwlFlatFileElement : OwlElement
     {
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-
         [XmlAttribute("start-position")]
         public int StartPosition { get; set; }
 
