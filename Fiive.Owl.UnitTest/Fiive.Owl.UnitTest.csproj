@@ -8,8 +8,8 @@
     <ProjectGuid>{A3604B85-28F9-40AD-8C7E-B39E4F53EF79}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Owl.FlatFile.UnitTest</RootNamespace>
-    <AssemblyName>Owl.FlatFile.UnitTest</AssemblyName>
+    <RootNamespace>Fiive.Owl.UnitTest</RootNamespace>
+    <AssemblyName>Fiive.Owl.UnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,58 +51,70 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StringTests.cs" />
+    <Compile Include="FlatFileAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="examples\1\owl-config-flatfile.xml">
+    <Content Include="examples\flatfile\1\owl-config-flatfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\1\test.txt">
+    <Content Include="examples\flatfile\1\test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\2\owl-config-flatfile.xml">
+    <Content Include="examples\flatfile\2\owl-config-flatfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\2\test.txt">
+    <Content Include="examples\flatfile\2\test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\3\owl-config-flatfile.xml">
+    <Content Include="examples\flatfile\3\owl-config-flatfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\3\test.txt">
+    <Content Include="examples\flatfile\3\test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\4\owl-config-flatfile.xml">
+    <Content Include="examples\flatfile\4\owl-config-flatfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\4\test.txt">
+    <Content Include="examples\flatfile\4\test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\5\owl-config-flatfile.xml">
+    <Content Include="examples\flatfile\5\owl-config-flatfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\5\test.txt">
+    <Content Include="examples\flatfile\5\test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\6\owl-config-flatfile.xml">
+    <Content Include="examples\flatfile\6\owl-config-flatfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="examples\6\test.txt">
+    <Content Include="examples\flatfile\6\test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fiive.Owl.ANSI\Fiive.Owl.ANSI.csproj">
+      <Project>{5e86202a-4058-4de3-ad5d-5a4bd7dc0484}</Project>
+      <Name>Fiive.Owl.ANSI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fiive.Owl.Core\Fiive.Owl.Core.csproj">
       <Project>{b65d25fe-d62b-4860-9529-d000664426cf}</Project>
       <Name>Fiive.Owl.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fiive.Owl.EDI\Fiive.Owl.EDI.csproj">
+      <Project>{5ddfe4af-83e4-4425-87a0-9a8cf6f753e5}</Project>
+      <Name>Fiive.Owl.EDI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fiive.Owl.FlatFile\Fiive.Owl.FlatFile.csproj">
       <Project>{4b4a4a8e-e23a-404a-8226-9cb9a8cd5583}</Project>
       <Name>Fiive.Owl.FlatFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fiive.Owl.Formats\Fiive.Owl.Formats.csproj">
+      <Project>{5b2e68c1-8d25-40f6-a033-5461ab167f91}</Project>
+      <Name>Fiive.Owl.Formats</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

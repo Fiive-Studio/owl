@@ -7,10 +7,10 @@ using Fiive.Owl.Core.Extensions;
 using Fiive.Owl.FlatFile.Config;
 using Fiive.Owl.FlatFile.Structure;
 
-namespace Fiive.Owl.FlatFile.UnitTest
+namespace Fiive.Owl.UnitTest
 {
     [TestClass]
-    public class StringTests
+    public class FlatFileAdapter
     {
         OwlFlatFileConfig GetConfig(string filename)
         {
@@ -29,10 +29,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         [TestMethod]
         public void ValidateContent_1()
         {
-            OwlFlatFileConfig owlConfig = GetConfig(@"examples\1\owl-config-flatfile.xml");
+            OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\1\owl-config-flatfile.xml");
 
             FlatFileDocument document = new FlatFileDocument();
-            string original = GetContent(@"examples\1\test.txt");
+            string original = GetContent(@"examples\flatfile\1\test.txt");
             document.LoadContent(owlConfig, original);
 
             string content = document.ToString();
@@ -43,10 +43,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         [ExpectedException(typeof(OwlRequiredException))]
         public void ValidateRequiredException_2()
         {
-            OwlFlatFileConfig owlConfig = GetConfig(@"examples\2\owl-config-flatfile.xml");
+            OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\2\owl-config-flatfile.xml");
 
             FlatFileDocument document = new FlatFileDocument();
-            string original = GetContent(@"examples\2\test.txt");
+            string original = GetContent(@"examples\flatfile\2\test.txt");
             document.LoadContent(owlConfig, original);
 
             string content = document.ToString();
@@ -57,10 +57,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         {
             try
             {
-                OwlFlatFileConfig owlConfig = GetConfig(@"examples\2\owl-config-flatfile.xml");
+                OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\2\owl-config-flatfile.xml");
 
                 FlatFileDocument document = new FlatFileDocument();
-                string original = GetContent(@"examples\2\test.txt");
+                string original = GetContent(@"examples\flatfile\2\test.txt");
                 document.LoadContent(owlConfig, original);
 
                 string content = document.ToString();
@@ -75,10 +75,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         [ExpectedException(typeof(OwlDataTypeException))]
         public void ValidateDataTypeException_3()
         {
-            OwlFlatFileConfig owlConfig = GetConfig(@"examples\3\owl-config-flatfile.xml");
+            OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\3\owl-config-flatfile.xml");
 
             FlatFileDocument document = new FlatFileDocument();
-            string original = GetContent(@"examples\3\test.txt");
+            string original = GetContent(@"examples\flatfile\3\test.txt");
             document.LoadContent(owlConfig, original);
 
             string content = document.ToString();
@@ -89,10 +89,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         {
             try
             {
-                OwlFlatFileConfig owlConfig = GetConfig(@"examples\3\owl-config-flatfile.xml");
+                OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\3\owl-config-flatfile.xml");
 
                 FlatFileDocument document = new FlatFileDocument();
-                string original = GetContent(@"examples\3\test.txt");
+                string original = GetContent(@"examples\flatfile\3\test.txt");
                 document.LoadContent(owlConfig, original);
 
                 string content = document.ToString();
@@ -107,10 +107,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         [ExpectedException(typeof(OwlLengthException))]
         public void ValidateLengthException_4()
         {
-            OwlFlatFileConfig owlConfig = GetConfig(@"examples\4\owl-config-flatfile.xml");
+            OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\4\owl-config-flatfile.xml");
 
             FlatFileDocument document = new FlatFileDocument();
-            string original = GetContent(@"examples\4\test.txt");
+            string original = GetContent(@"examples\flatfile\4\test.txt");
             document.LoadContent(owlConfig, original);
 
             string content = document.ToString();
@@ -121,10 +121,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         {
             try
             {
-                OwlFlatFileConfig owlConfig = GetConfig(@"examples\4\owl-config-flatfile.xml");
+                OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\4\owl-config-flatfile.xml");
 
                 FlatFileDocument document = new FlatFileDocument();
-                string original = GetContent(@"examples\4\test.txt");
+                string original = GetContent(@"examples\flatfile\4\test.txt");
                 document.LoadContent(owlConfig, original);
 
                 string content = document.ToString();
@@ -138,10 +138,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         [TestMethod]
         public void ValidateContent_5()
         {
-            OwlFlatFileConfig owlConfig = GetConfig(@"examples\5\owl-config-flatfile.xml");
+            OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\5\owl-config-flatfile.xml");
 
             FlatFileDocument document = new FlatFileDocument();
-            string original = GetContent(@"examples\5\test.txt");
+            string original = GetContent(@"examples\flatfile\5\test.txt");
             document.LoadContent(owlConfig, original);
 
             string content = document.ToString();
@@ -152,10 +152,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         [ExpectedException(typeof(OwlContentException))]
         public void ValidateOwlContentException_6()
         {
-            OwlFlatFileConfig owlConfig = GetConfig(@"examples\6\owl-config-flatfile.xml");
+            OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\6\owl-config-flatfile.xml");
 
             FlatFileDocument document = new FlatFileDocument();
-            string original = GetContent(@"examples\6\test.txt");
+            string original = GetContent(@"examples\flatfile\6\test.txt");
             document.LoadContent(owlConfig, original);
         }
 
@@ -164,10 +164,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         {
             try
             {
-                OwlFlatFileConfig owlConfig = GetConfig(@"examples\6\owl-config-flatfile.xml");
+                OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\6\owl-config-flatfile.xml");
 
                 FlatFileDocument document = new FlatFileDocument();
-                string original = GetContent(@"examples\6\test.txt");
+                string original = GetContent(@"examples\flatfile\6\test.txt");
                 document.LoadContent(owlConfig, original);
             }
             catch (OwlContentException e)
@@ -179,10 +179,10 @@ namespace Fiive.Owl.FlatFile.UnitTest
         [TestMethod]
         public void ValidateSerialize()
         {
-            OwlFlatFileConfig owlConfig = GetConfig(@"examples\1\owl-config-flatfile.xml");
+            OwlFlatFileConfig owlConfig = GetConfig(@"examples\flatfile\1\owl-config-flatfile.xml");
 
             FlatFileDocument document = new FlatFileDocument();
-            document.LoadContent(owlConfig, GetContent(@"examples\1\test.txt"));
+            document.LoadContent(owlConfig, GetContent(@"examples\flatfile\1\test.txt"));
 
             XmlDocument xmlResult = XmlExtension.Serialize(document);
         }
