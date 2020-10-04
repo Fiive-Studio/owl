@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<owl>
+  <structure itera="mail">
+    <section name="header" separator="|">
+      <element name="id" default="ENC" />
+      <element name="office" xpath="office" />
+      <element name="address" xpath="address" />
+      <element name="var" variable="var" />
+    </section>
+    <section name="items" itera="letters/letter" separator="|">
+      <element name="id" key="CONSECUTIVE_ITERA" />
+      <element name="greetings" xpath="greetings" />
+      <element name="signature" xpath="signature" />
+      <element name="address" xpath="address" />
+      <element name="weblink" xpath="weblink" />
+    </section>
+  </structure>
+</owl>
