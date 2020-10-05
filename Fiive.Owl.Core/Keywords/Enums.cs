@@ -6,7 +6,7 @@ using System.Text;
 namespace Fiive.Owl.Core.Keywords
 {
     /// <summary>
-    /// Define las palabras claves aceptadas
+    /// Keywords list
     /// </summary>
     [Flags]
     public enum KeywordsType

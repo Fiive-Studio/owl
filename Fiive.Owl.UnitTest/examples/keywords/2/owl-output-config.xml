@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<owl>
+  <structure itera="mail">
+    <section name="header" separator="|">
+      <element name="default" default="default" />
+      <element name="variable" variable="variable" />
+      <element name="key" key="CONSECUTIVE_ITERA" />
+      <element name="xpath" xpath="xpath" />
+      <element name="reference">
+        <element.value>
+          <reference table="table" fields-seek="field_1" values-seek="field_1" fields-get="field_2" />
+        </element.value>
+      </element>
+      <element name="concatenate">
+        <element.value>
+          <concatenate values="concat,enate" format="{0}{1}" />
+        </element.value>
+      </element>
+      <element name="substring">
+        <element.value>
+          <substring value=" substring   " start="1" length="9" trim="true" />
+        </element.value>
+      </element>
+      <element name="length">
+        <element.value>
+          <length value="length" />
+        </element.value>
+      </element>
+      <element name="is-number">
+        <element.value>
+          <is-number value="1" true="is-number" />
+        </element.value>
+      </element>
+      <element name="index-of">
+        <element.value>
+          <index-of value="   index-of" string-seek="index" />
+        </element.value>
+      </element>
+      <element name="is-empty">
+        <element.value>
+          <is-empty value="   " trim="true" true="is-empty" />
+        </element.value>
+      </element>
+      <element name="trim">
+        <element.value>
+          <trim value="  trim  " />
+        </element.value>
+      </element>
+      <element name="if">
+        <element.value>
+          <if value-1="1" value-2="1" type="equal" true="if" />
+        </element.value>
+      </element>
+    </section>
+  </structure>
+</owl>

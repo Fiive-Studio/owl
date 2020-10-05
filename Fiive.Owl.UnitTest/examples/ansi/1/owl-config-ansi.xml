@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<owl version="1.0">
+  <section name="ISA" />
+  <section name="GS" />
+  <section name="ST" />
+  <section name="N1" />
+  <section name="SE" />
+  <section name="GE" />
+  <section name="IEA" />
+</owl>

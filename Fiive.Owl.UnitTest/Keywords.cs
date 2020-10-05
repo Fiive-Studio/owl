@@ -5,6 +5,7 @@ using Fiive.Owl.Formats.Output;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -56,6 +57,35 @@ namespace Fiive.Owl.UnitTest
         {
             var owl = GetHandler(@"examples\keywords\1\owl-output-config.xml", @"examples\keywords\1\input.xml");
             foreach (GenericOutputValue value in owl.WriteOutput(new FlatFileOutput())) { }
+        }
+
+        [TestMethod]
+        public void ValidateEachMapKeyword_3()
+        {
+            var owl = GetHandler(@"examples\keywords\2\owl-output-config.xml", @"examples\keywords\2\input.xml");
+            owl["variable"] = "variable";
+
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable("table");
+            dt.Columns.Add("field_1", typeof(string));
+            dt.Columns.Add("field_2", typeof(string));
+            ds.Tables.Add(dt);
+
+            dt.Rows.Add("field_1", "reference");
+
+            owl.Settings.References = ds;
+
+            var filesGenerated = 0;
+            var expectedResult = @"default|variable|1|xpath|reference|concatenate|substring|6|is-number|3|is-empty|trim|if
+";
+
+            foreach (GenericOutputValue value in owl.WriteOutput(new FlatFileOutput()))
+            {
+                Assert.AreEqual(expectedResult, value.Content);
+                filesGenerated++;
+            }
+
+            Assert.AreEqual(1, filesGenerated);
         }
     }
 }
