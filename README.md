@@ -20,11 +20,23 @@ Las librerias del framework se encuentran disponibles via Nuget Package:
 
 Core: [nuget](https://www.nuget.org/packages/Fiive.Owl.Core/)
 
-    Install-Package Fiive.Owl.Core -Version 1.0.0
+    Install-Package Fiive.Owl.Core -Version 1.0.1
+
+Output Formats: [nuget](https://www.nuget.org/packages/Fiive.Owl.Formats/)
+
+    Install-Package Fiive.Owl.Formats -Version 1.0.0
 
 FlatFile Adapter: [nuget](https://www.nuget.org/packages/Fiive.Owl.Flatfile/)
 
-    Install-Package Fiive.Owl.Flatfile -Version 1.0.0
+    Install-Package Fiive.Owl.Flatfile -Version 1.0.1
+
+EDI Adapter: [nuget](https://www.nuget.org/packages/Fiive.Owl.EDI/)
+
+    Install-Package Fiive.Owl.EDI -Version 1.0.0
+
+ANSI Adapter: [nuget](https://www.nuget.org/packages/Fiive.Owl.ANSI/)
+
+    Install-Package Fiive.Owl.ANSI -Version 1.0.0
 
 ## Ejecutando las pruebas ⚙️
 
