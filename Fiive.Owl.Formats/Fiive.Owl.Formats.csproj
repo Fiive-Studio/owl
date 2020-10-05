@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Fiive</Authors>
+    <Company>Fiive</Company>
+    <Product>Owl</Product>
+    <Description>Core Mapping library</Description>
+    <Copyright>Fiive 2020</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Fiive-Studio/owl</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>owl mapping validations output flatfile edi ansi json xml sql</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fiive.Owl.Core\Fiive.Owl.Core.csproj" />
+  </ItemGroup>
+
+</Project>

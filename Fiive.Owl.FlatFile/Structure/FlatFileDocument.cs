@@ -16,18 +16,18 @@ namespace Fiive.Owl.FlatFile.Structure
         #region Vars
 
         int _currentPos;
-        OwlSection _lastValidSegment;
+        OwlFlatFileSection _lastValidSegment;
 
         #endregion
 
         #region Publics
 
-        public void LoadContent(OwlConfig config, string content)
+        public void LoadContent(OwlFlatFileConfig config, string content)
         {
             #region Validate params
 
             if (config == null) { throw new ArgumentNullException("config", "config is null"); }
-            if (config.Sections.Count == 0) { throw new Exception("Owl config does not have sections configured"); }
+            if (config.Sections.Count == 0) { throw new OwlAdapterException("Owl config does not have sections configured"); }
             if (string.IsNullOrEmpty(content)) { throw new OwlContentException("The document is empty"); }
 
             #endregion
@@ -53,10 +53,10 @@ namespace Fiive.Owl.FlatFile.Structure
 
         #region Privates
 
-        List<Section> Load(List<OwlSection> sections, StringBuilder content)
+        List<Section> Load(List<OwlFlatFileSection> sections, StringBuilder content)
         {
             List<Section> listSegments = new List<Section>();
-            foreach (OwlSection section in sections)
+            foreach (OwlFlatFileSection section in sections)
             {
                 if (content.Length == 0) { break; }
                 string segmentContent = string.Empty;
@@ -93,7 +93,7 @@ namespace Fiive.Owl.FlatFile.Structure
             return listSegments;
         }
 
-        Section GetSegmentInstance(string content, OwlSection section)
+        Section GetSegmentInstance(string content, OwlFlatFileSection section)
         {
             Section iSegment = new Section();
             iSegment.Properties = (OwlProperties)Properties.Clone(); // TODO: Validate clone
@@ -104,10 +104,12 @@ namespace Fiive.Owl.FlatFile.Structure
             return iSegment;
         }
 
-        string GetSegmentContent(StringBuilder content, OwlSection section)
+        string GetSegmentContent(StringBuilder content, OwlFlatFileSection section)
         {
-            // If the content doesn't start with the section name break the process
-            if (!content.StartsWith(string.Concat(section.Id, section.Separator)) && !string.IsNullOrEmpty(section.Name)) { return string.Empty; }
+            // Two options
+                // Content start with the section id
+                // Id is empty and the process get always the line
+            if (!content.StartsWith(string.Concat(section.Id, section.Separator)) && !string.IsNullOrEmpty(section.Id)) { return string.Empty; }
 
             int intEndSegment = content.IndexOf(Properties.SegmentTerminator);
             if (intEndSegment == -1) { return string.Empty; } // if the index is 0 the segment terminator wasn't found

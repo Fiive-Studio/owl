@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mail>
+  <office>south</office>
+  <address>Avenue 5</address>
+  <letters>
+    <letter>
+      <greetings>Yours sincerely,</greetings>
+      <signature> Paul Smith</signature>
+      <address>Smith Company Ltd.</address>
+      <weblink>http://www.smith-company-ltd.com</weblink>
+    </letter>
+    <letter>
+      <greetings>Yours sincerely,</greetings>
+      <signature> Paul Smith</signature>
+      <address>Smith &amp; Company Ltd.</address>
+      <weblink>http://www.smith-company-ltd.com</weblink>
+    </letter>
+  </letters>
+</mail>

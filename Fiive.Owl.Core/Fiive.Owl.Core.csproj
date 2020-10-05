@@ -4,14 +4,26 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Fiive</Authors>
     <Product>Owl</Product>
-    <Copyright>Fiive 2019</Copyright>
-    <RepositoryUrl>https://github.com/fiivestudio/owl-flatfile</RepositoryUrl>
+    <Copyright>Fiive 2019-2020</Copyright>
+    <RepositoryUrl>https://github.com/Fiive-Studio/owl</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <PackageTags>owl flatfile mapping validations</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Fiive.Owl.Core</PackageId>
     <Description>Core Mapping library</Description>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Keywords\ve-18F5.tmp" />
+    <None Remove="Keywords\ve-4859.tmp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
 
 </Project>
